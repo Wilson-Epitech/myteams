@@ -1,0 +1,22 @@
+# Object file
+*.o
+
+# VS Code
+.vscode
+
+# Coverage
+*.gcda
+*.gcno
+
+# Valgrind
+vgcore*
+
+# Clangd
+.cache
+compile_commands.json
+.clang-format
+
+# Binary
+unit_tests
+myteams_server
+myteams_cli
