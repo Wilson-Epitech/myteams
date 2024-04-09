@@ -10,7 +10,7 @@
 #include "libs/mem.h"
 #include "libs/str.h"
 
-char **split(char *str, char del)
+char **split(const char *str, char del)
 {
     size_t count = strcount(str, del);
     char **arr = arr_alloc(sizeof(char *), count + 2);

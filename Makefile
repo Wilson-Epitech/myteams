@@ -20,7 +20,7 @@ LIB_DIR		=	$(realpath ./libs)
 LIB_PREFIX	=	my
 LIB_MY_DIR	=	$(LIB_DIR)/$(LIB_PREFIX)
 LIB_NAME	=	$(realpath ./libs)/libmy.a
-LIB_FLAGS	=	-L $(LIB_DIR)/ -l $(LIB_PREFIX)
+LIB_FLAGS	+=	-L $(LIB_DIR)/ -l $(LIB_PREFIX)
 
 # -------------------------------------------------------------------------- #
 
@@ -51,6 +51,7 @@ clean:
 	$(MAKE) -C $(LIB_MY_DIR) clean
 	$(MAKE) -C $(SERVER_DIR) clean
 	$(MAKE) -C $(CLIENT_DIR) clean
+	$(RM) vgcore*
 
 
 .PHONY: fclean

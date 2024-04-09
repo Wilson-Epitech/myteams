@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+
 enum context {
     NONE = 1,
     TEAM = 2,
@@ -15,5 +17,7 @@ enum context {
 };
 
 typedef struct client_s {
-    int context;
+    int fd;
+    char *username;
+    enum context context;
 } client_t;

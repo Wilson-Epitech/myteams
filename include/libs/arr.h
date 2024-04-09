@@ -10,4 +10,4 @@
 #include <stddef.h>
 
 size_t arrlen(const void *arr);
-void arrdebug(char **arr);
+void arrdebug(char *const *arr);

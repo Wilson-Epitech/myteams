@@ -6,11 +6,11 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 
-#include "libs/arr.h"
 #include "libs/def.h"
 #include "libs/mem.h"
-#include "libs/str.h"
+#include "server.h"
 
 void display_help(void)
 {
@@ -22,11 +22,19 @@ void display_help(void)
         "\n");
 }
 
-int main(UNUSED int argc, UNUSED const char *argv[])
+int main(int argc, const char *argv[])
 {
-    SMART char **arr = split("je suis marius", ' ');
+    SMART server_t *server = create_server();
 
-    arrdebug(arr);
-
-    return SUCCESS;
+    if (argc != 2) {
+        return FAILURE;
+    }
+    if (argc == 2 && strcmp(argv[1], "-help") == 0) {
+        display_help();
+        return SUCCESS;
+    }
+    if (init_server(server, argv[1]) == FAILURE) {
+        return FAILURE;
+    }
+    return run_server(server);
 }

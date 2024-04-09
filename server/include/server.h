@@ -7,8 +7,31 @@
 
 #pragma once
 
+#include <netinet/in.h>
+
 #include "client.h"
 
+#define MAX_CLIENT 100
+
 typedef struct server_s {
-    client_t client;
+    client_t **clients;
+    unsigned nb_client;
+    int port;
+    int fd;
+    fd_set read_fd;
+    struct sockaddr_in adress;
 } server_t;
+
+// Server Init
+int init_server(server_t *server, const char *port);
+int run_server(server_t *server);
+
+// Commands
+void handle_command(server_t *server, client_t *client);
+
+// Memory Management
+server_t *create_server(void);
+void server_free(void *ptr);
+
+void create_client(server_t *server, int client_fd);
+void client_free(void *ptr);

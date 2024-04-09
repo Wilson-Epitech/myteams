@@ -22,9 +22,9 @@ int strall(const char *str, int (*fn)(char c));
 /*
     concat 2 strings
 */
-char *strconcat(char *left, char *right);
+char *strconcat(const char *left, const char *right);
 
 /*
     split a string according to a delimiter
 */
-char **split(char *str, char del);
+char **split(const char *str, char del);

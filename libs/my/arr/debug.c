@@ -9,7 +9,7 @@
 
 #include "libs/arr.h"
 
-void arrdebug(char **arr)
+void arrdebug(char *const *arr)
 {
     for (size_t i = 0; arr[i]; i++) {
         printf("index=[%ld] str=[%s]\n", i, arr[i]);
