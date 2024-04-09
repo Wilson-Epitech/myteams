@@ -16,9 +16,22 @@ CLIENT_DIR	=	./client/
 
 # -------------------------------------------------------------------------- #
 
+LIB_DIR		=	./libs
+LIB_MY_DIR	=	$(LIB_DIR)/my
+LIB_NAME	=	$(realpath $(LIB_DIR)/libmy.a)
+
+# -------------------------------------------------------------------------- #
+
+
 .PHONY: all
+all: lib
 all: server
 all: client
+
+
+.PHONY: lib
+lib: $(LIB_MY_DIR)
+	$(MAKE) -c $^ NAME="$(LIB_NAME)" INCLUDE="$(INCLUDE)"
 
 
 .PHONY: server
@@ -33,12 +46,14 @@ client: $(CLIENT_DIR)
 
 .PHONY: clean
 clean:
+	$(MAKE) -C $(LIB_MY_DIR) clean
 	$(MAKE) -C $(SERVER_DIR) clean
 	$(MAKE) -C $(CLIENT_DIR) clean
 
 
 .PHONY: fclean
 fclean: clean
+	$(MAKE) -C $(LIB_MY_DIR) fclean
 	$(MAKE) -C $(SERVER_DIR) fclean
 	$(MAKE) -C $(CLIENT_DIR) fclean
 

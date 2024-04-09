@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "def.h"
+#include "libs/def.h"
 
 int main(int argc, const char *argv[])
 {
