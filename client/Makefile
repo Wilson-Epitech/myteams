@@ -8,7 +8,7 @@
 # -------------------------------------------------------------------------- #
 
 CC			=	gcc
-CPPFLAGS	=	-iquote $(INCLUDE)
+CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/
 CFLAGS		=	-Wall -Wextra -Werror
 
 # -------------------------------------------------------------------------- #
