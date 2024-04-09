@@ -13,9 +13,7 @@
 #define MAX_DESCRIPTION_LENGTH 255
 #define MAX_BODY_LENGTH 512
 
-static const struct cmd_s {
+typedef struct cmd_s {
     const char *name;
     void (*function)(server_t *, char **);
-} CMD = {
-
-};
+} cmd_t;
