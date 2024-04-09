@@ -12,7 +12,7 @@ void set_destructor(void *ptr, destructor_t destructor)
     ((destructor_t *)ptr)[-1] = destructor;
 }
 
-destructor_t get_ptr_type(void *ptr)
+destructor_t get_destructor(void *ptr)
 {
     return ((destructor_t *)ptr)[-1];
 }

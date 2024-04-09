@@ -25,7 +25,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIB)
 
 
 .PHONY: clean

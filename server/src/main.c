@@ -7,7 +7,10 @@
 
 #include <stdio.h>
 
+#include "libs/arr.h"
 #include "libs/def.h"
+#include "libs/mem.h"
+#include "libs/str.h"
 
 void display_help(void)
 {
@@ -15,17 +18,15 @@ void display_help(void)
         "\n"
         "USAGE: ./myteams_server port"
         "\n  "
-        "port is the port number on which the server socket listens."
+        "\tport is the port number on which the server socket listens."
         "\n");
 }
 
-int main(int argc, const char *argv[])
+int main(UNUSED int argc, UNUSED const char *argv[])
 {
-    printf("server\n");
-    printf("argc=[%d]\n", argc);
-    while (*argv) {
-        printf("%s\n", *argv);
-        argv++;
-    }
+    SMART char **arr = split("je suis marius", ' ');
+
+    arrdebug(arr);
+
     return SUCCESS;
 }

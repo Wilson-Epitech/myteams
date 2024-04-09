@@ -8,7 +8,7 @@
 # -------------------------------------------------------------------------- #
 
 CC			=	gcc
-CPPFLAGS	+=	-iquote $(INCLUDE) -iquote ./include/
+CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/
 CFLAGS		=	-Wall -Wextra -Werror
 
 # -------------------------------------------------------------------------- #
@@ -25,7 +25,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIB)
 
 
 .PHONY: clean

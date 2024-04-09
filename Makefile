@@ -16,32 +16,34 @@ CLIENT_DIR	=	./client/
 
 # -------------------------------------------------------------------------- #
 
-LIB_DIR		=	./libs
-LIB_MY_DIR	=	$(LIB_DIR)/my
-LIB_NAME	=	$(realpath $(LIB_DIR)/libmy.a)
+LIB_DIR		=	$(realpath ./libs)
+LIB_PREFIX	=	my
+LIB_MY_DIR	=	$(LIB_DIR)/$(LIB_PREFIX)
+LIB_NAME	=	$(realpath ./libs)/libmy.a
+LIB_FLAGS	=	-L $(LIB_DIR)/ -l $(LIB_PREFIX)
 
 # -------------------------------------------------------------------------- #
 
 
 .PHONY: all
 all: lib
-all: server
-all: client
+	$(MAKE) server
+	$(MAKE) client
 
 
 .PHONY: lib
 lib: $(LIB_MY_DIR)
-	$(MAKE) -c $^ NAME="$(LIB_NAME)" INCLUDE="$(INCLUDE)"
+	$(MAKE) -C $^ NAME="$(LIB_NAME)" INCLUDE="$(INCLUDE)"
 
 
 .PHONY: server
 server: $(SERVER_DIR)
-	$(MAKE) -C $^ INCLUDE="$(INCLUDE)"
+	$(MAKE) -C $^ INCLUDE="$(INCLUDE)" LIB="$(LIB_FLAGS)"
 
 
 .PHONY: client
 client: $(CLIENT_DIR)
-	$(MAKE) -C $^ INCLUDE="$(INCLUDE)"
+	$(MAKE) -C $^ INCLUDE="$(INCLUDE)" LIB="$(LIB_FLAGS)"
 
 
 .PHONY: clean
@@ -53,7 +55,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	$(MAKE) -C $(LIB_MY_DIR) fclean
+	$(MAKE) -C $(LIB_MY_DIR) fclean NAME="$(LIB_NAME)"
 	$(MAKE) -C $(SERVER_DIR) fclean
 	$(MAKE) -C $(CLIENT_DIR) fclean
 
