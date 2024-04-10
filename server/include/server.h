@@ -11,7 +11,8 @@
 
 #include "client.h"
 
-#define MAX_CLIENT 100
+#define MAX_CLIENT 128
+#define READ_SIZE 4096
 
 typedef struct server_s {
     client_t **clients;

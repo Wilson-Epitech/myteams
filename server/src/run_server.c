@@ -51,15 +51,15 @@ static void handle_server(server_t *server)
 
 static void handle_client(server_t *server)
 {
-    client_t *tmp;
+    client_t *client;
 
     for (size_t i = 0; i < MAX_CLIENT; i++) {
-        tmp = server->clients[i];
-        if (tmp == NULL) {
+        client = server->clients[i];
+        if (client == NULL) {
             continue;
         }
-        if (FD_ISSET(tmp->fd, &server->read_fd)) {
-            handle_command(server, tmp);
+        if (FD_ISSET(client->fd, &server->read_fd)) {
+            handle_command(server, client);
         }
     }
 }

@@ -5,6 +5,7 @@ import os
 import sys
 import telnetlib
 import subprocess as sb
+import time
 from termcolor import colored
 
 INPUT_DIR = "tests/input/"
@@ -33,17 +34,40 @@ def getInputOutput(filename: str):
                     output += prefix_output
                     imports += 1
                 else:
-                    input.append(tmp_i[i])
+                    input.append(tmp_i[i].encode())
                     try:
-                        output.append(tmp_o[i - imports])
+                        output.append(tmp_o[i - imports].encode())
                     except:
                         print(f"Invalid Test File:{filename}")
                         exit(1)
             return input, output
 
 
-def test(testName: str, input: list[str], output: list[str]):
-    CONNECTION_SUCCESS = "client accepted"
+def b2s(b: bytes):
+    return str(b)[2:-1]
+
+
+def formatResult(input: bytes, expected: bytes, got: bytes):
+    res: str = colored(f" > ", on_color="on_blue")
+    res += colored(f" {b2s(input)}\n", "blue")
+    res += colored(f" + ", on_color="on_green")
+    res += colored(f" {b2s(expected)}\n", "green")
+    res += colored(f" - ", on_color="on_red")
+    res += colored(f" {b2s(got)}\n", "red")
+
+    return res
+
+
+def isCommand(bs: bytes):
+    return bs.startswith(". ".encode())
+
+
+def executeCommand(cmd: bytes):
+    sb.run(str(cmd), shell=True)
+
+
+def test(testName: str, input: list[bytes], output: list[bytes]):
+    CONNECTION_SUCCESS = "client accepted\n".encode()
     # print(input)
     # print(output)
     try:
@@ -56,41 +80,34 @@ def test(testName: str, input: list[str], output: list[str]):
             raise ValueError(colored(f'Invalid Test File: "{testName}"', "magenta"))
 
         client = telnetlib.Telnet(HOST, PORT)
-        got = client.read_until(CONNECTION_SUCCESS.encode(), TIMEOUT)
-        
-        if got != CONNECTION_SUCCESS.encode():
+        got = client.read_until(CONNECTION_SUCCESS, TIMEOUT)
+
+        if got != CONNECTION_SUCCESS:
             client.close()
             raise ValueError(
-                    colored(f" > ", on_color="on_blue")
-                    + colored(f" {str("connection message".encode())[2:-1]}\n", "blue")
-                    + colored(f" + ", on_color="on_green")
-                    + colored(f" {str(CONNECTION_SUCCESS)[:-1]}\n", "green")
-                    + colored(f" - ", on_color="on_red")
-                    + colored(f" {str(got)[2:-1]}\n", "red")
+                formatResult(
+                    "Connection Received (Client Birth)".encode(),
+                    CONNECTION_SUCCESS,
+                    got,
                 )
+            )
 
         for i in range(len(input)):
-            if input[i].startswith(". "):
-                sb.run(input[i][2:], shell=True)
+            if isCommand(input[i]):
+                executeCommand(input[i])  # should wait the end of the command
                 continue
-            expected = f"{output[i]}\n".encode()
-            client.write(f"{input[i]}\n".encode())
+            expected = output[i] + "\n".encode()
+            client.write(input[i] + "\n".encode())
             got = client.read_until(expected, TIMEOUT)
             if expected != got:
                 client.close()
-                raise ValueError(
-                    colored(f" > ", on_color="on_blue")
-                    + colored(f" {str(input[i].encode())[2:-1]}\n", "blue")
-                    + colored(f" + ", on_color="on_green")
-                    + colored(f" {str(expected)[2:-1]}\n", "green")
-                    + colored(f" - ", on_color="on_red")
-                    + colored(f" {str(got)[2:-1]}\n", "red")
-                )
+                raise ValueError(formatResult(input[i], expected, got))
+
         client.close()
         print(colored(f"[{SUCCESS_ICON}] {testName}", "green"))
-    except Exception as e:
+    except Exception as err:
         print(colored(f"[{FAILURE_ICON}] {testName}:\n", "red"), end="")
-        print(e)
+        print(err)
 
 
 def testAll():

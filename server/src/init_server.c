@@ -5,7 +5,6 @@
 ** init
 */
 
-#include <asm-generic/socket.h>
 #include <ctype.h>
 #include <stdatomic.h>
 #include <stdio.h>
