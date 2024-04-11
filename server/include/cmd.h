@@ -28,11 +28,11 @@ typedef struct cmd_s {
 #define BRACKET_RIGHT }
 #define ARGUMENTS(name, argc) BRACKET_LEFT "/" #name, argc, &name BRACKET_RIGHT
 
-void login(server_t *, client_t *, char **, size_t);
+DECLARE(login);
 DECLARE(logout);
 
 static const cmd_t COMMANDS[] = {
-    {"/login", 1, &login},
+    ARGUMENTS(login, 1),
     ARGUMENTS(logout, 0),
 };
 
