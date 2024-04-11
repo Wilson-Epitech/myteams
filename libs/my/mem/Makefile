@@ -15,6 +15,8 @@ SRC		=	alloc.c				\
 			destructor.c		\
 			setget.c			\
 			try_free.c			\
+			ptrlen.c			\
+			alloc_resize.c		\
 
 OBJ		=	$(SRC:.c=.o)
 

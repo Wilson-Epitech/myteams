@@ -16,3 +16,11 @@ void destroy(void *ptr)
     }
     get_destructor(ptr)(ptr);
 }
+
+void destroy_parent(void *ptr)
+{
+    if (ptr == NULL) {
+        return;
+    }
+    ptr_free(ptr);
+}

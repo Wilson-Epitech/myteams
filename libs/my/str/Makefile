@@ -8,10 +8,12 @@
 
 # -------------------------------------------------------------------------- #
 
-SRC		=	all.c		\
-			concat.c	\
-			count.c		\
-			split.c		\
+SRC		=	all.c				\
+			concat.c			\
+			count.c				\
+			split.c				\
+			add.c		\
+			create.c			\
 
 OBJ		=	$(SRC:.c=.o)
 

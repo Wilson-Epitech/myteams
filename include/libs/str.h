@@ -28,3 +28,18 @@ char *strconcat(const char *left, const char *right);
     split a string according to a delimiter
 */
 char **split(const char *str, char del);
+
+/*
+    split but not inside double-quotes
+*/
+char **split_teams(const char *str, char del);
+
+/*
+    append a char to a string
+*/
+char *stradd_c(char **str, char c);
+
+/*
+    create a string from init with the string destructor
+*/
+char *strcreate(const char *init);

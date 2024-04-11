@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <stdlib.h>
+
 #include "server.h"
 
 #define MAX_NAME_LENGTH 32
@@ -15,5 +17,15 @@
 
 typedef struct cmd_s {
     const char *name;
-    void (*function)(server_t *, char **);
+    size_t argc;
+    void (*function)(server_t *, client_t *, char **);
 } cmd_t;
+
+void login(server_t *server, client_t *client, char **args);
+void logout(server_t *server, client_t *client, char **args);
+
+static const cmd_t COMMANDS[] = {
+    // {"/login", 1, login},
+};
+
+static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
