@@ -15,17 +15,25 @@
 #define MAX_DESCRIPTION_LENGTH 255
 #define MAX_BODY_LENGTH 512
 
+int reply(int fd, const char *msg);
+
 typedef struct cmd_s {
     const char *name;
     size_t argc;
-    void (*function)(server_t *, client_t *, char **);
+    void (*function)(server_t *, client_t *, char **, size_t);
 } cmd_t;
 
-void login(server_t *server, client_t *client, char **args);
-void logout(server_t *server, client_t *client, char **args);
+#define DECLARE(name) void name(server_t *, client_t *, char **, size_t)
+#define BRACKET_LEFT {
+#define BRACKET_RIGHT }
+#define ARGUMENTS(name, argc) BRACKET_LEFT "/" #name, argc, &name BRACKET_RIGHT
+
+void login(server_t *, client_t *, char **, size_t);
+DECLARE(logout);
 
 static const cmd_t COMMANDS[] = {
-    // {"/login", 1, login},
+    {"/login", 1, &login},
+    ARGUMENTS(logout, 0),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

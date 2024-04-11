@@ -8,12 +8,12 @@
 
 # -------------------------------------------------------------------------- #
 
-SRC		=	all.c				\
-			concat.c			\
-			count.c				\
-			split.c				\
-			add.c		\
-			create.c			\
+SRC		=	str_all.c		\
+			str_concat.c	\
+			str_count.c		\
+			str_add.c		\
+			str_create.c	\
+			split.c			\
 
 OBJ		=	$(SRC:.c=.o)
 

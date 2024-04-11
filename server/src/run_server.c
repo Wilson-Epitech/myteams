@@ -12,9 +12,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "cmd.h"
 #include "libs/def.h"
-#include "reply.h"
 #include "server.h"
+#include "success.h"
 
 static void reset_socket(server_t *server)
 {
@@ -40,7 +41,7 @@ static void handle_server(server_t *server)
             PERR_NORET("Accept Failed");
             return;
         }
-        if (reply(client_fd, "client accepted\n") == FAILURE) {
+        if (reply(client_fd, _SUCCESS_000) == FAILURE) {
             PERR_NORET("Write failed");
             close(client_fd);
             return;

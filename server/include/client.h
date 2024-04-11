@@ -10,7 +10,7 @@
 #include <stdbool.h>
 
 enum context {
-    NONE = 1,
+    ROOT = 1,
     TEAM = 2,
     CHANNEL = 4,
     THREAD = 8,

@@ -22,6 +22,10 @@ SRC			=	$(SRC_DIR)main.c				\
 				$(SRC_DIR)run_server.c			\
 				$(SRC_DIR)reply.c				\
 				$(SRC_DIR)cmd_handler.c			\
+				$(CMD)
+
+CMD_DIR		=	$(SRC_DIR)cmd/
+CMD			=	$(CMD_DIR)login.c				\
 
 # -------------------------------------------------------------------------- #
 

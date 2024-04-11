@@ -5,8 +5,6 @@
 ** reply
 */
 
-#include "reply.h"
-
 #include <string.h>
 #include <unistd.h>
 

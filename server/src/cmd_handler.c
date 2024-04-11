@@ -5,6 +5,7 @@
 ** cmd_handler
 */
 
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -13,7 +14,6 @@
 #include "libs/arr.h"
 #include "libs/mem.h"
 #include "libs/str.h"
-#include "reply.h"
 #include "server.h"
 
 // the clients become zombies when disconnected without quitting
@@ -34,7 +34,7 @@ static char **get_input(int fd)
         return NULL;
     }
     *end = '\0';
-    return split_teams(buff, ' ');
+    return split_keep_quote(buff, ' ');
 }
 
 void handle_command(server_t *server, client_t *client)
@@ -45,12 +45,17 @@ void handle_command(server_t *server, client_t *client)
     if (argv == NULL || *argv == NULL) {
         return;
     }
-    argc = arrlen(*argv + 1);
+    argc = arrlen(argv + 1);
     for (size_t i = 0; i < NB_COMMANDS; i++) {
-        if (strcmp(COMMANDS[i].name, *argv) == 0 && COMMANDS[i].argc <= argc) {
-            COMMANDS[i].function(server, client, argv + 1);
-            return;
+        if (strcmp(COMMANDS[i].name, *argv) != 0) {
+            continue;
         }
+        if (COMMANDS[i].argc > argc) {
+            reply(client->fd, _ERROR_101);
+        } else {
+            COMMANDS[i].function(server, client, argv + 1, argc);
+        }
+        return;
     }
     reply(client->fd, _ERROR_100);
 }

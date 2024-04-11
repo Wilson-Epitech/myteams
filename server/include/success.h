@@ -2,9 +2,9 @@
 ** MYTEAMS PROJECT, 2024
 ** teams
 ** File description:
-** reply
+** success
 */
 
 #pragma once
 
-int reply(int fd, const char *msg);
+#define _SUCCESS_000 "000 Service ready.\n"

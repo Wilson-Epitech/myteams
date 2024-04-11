@@ -31,8 +31,9 @@ char **split(const char *str, char del);
 
 /*
     split but not inside double-quotes
+    doesnt support [\"]
 */
-char **split_teams(const char *str, char del);
+char **split_keep_quote(const char *str, char del);
 
 /*
     append a char to a string

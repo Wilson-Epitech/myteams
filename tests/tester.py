@@ -51,9 +51,9 @@ def formatResult(input: bytes, expected: bytes, got: bytes):
     res: str = colored(f" > ", on_color="on_blue")
     res += colored(f" {b2s(input)}\n", "blue")
     res += colored(f" + ", on_color="on_green")
-    res += colored(f" {b2s(expected)}\n", "green")
+    res += colored(f" {b2s(expected)[:-2]}\n", "green")
     res += colored(f" - ", on_color="on_red")
-    res += colored(f" {b2s(got)}\n", "red")
+    res += colored(f" {b2s(got)[:-2]}\n", "red")
 
     return res
 
@@ -67,7 +67,7 @@ def executeCommand(cmd: bytes):
 
 
 def test(testName: str, input: list[bytes], output: list[bytes]):
-    CONNECTION_SUCCESS = "client accepted\n".encode()
+    CONNECTION_SUCCESS = "000 Service ready.\n".encode()
     # print(input)
     # print(output)
     try:

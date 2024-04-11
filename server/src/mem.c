@@ -21,10 +21,12 @@ void server_free(void *ptr)
     if (server != NULL && server->fd != -1) {
         close(server->fd);
     }
+    destroy(server->usernames);
     destroy(server->clients);
     ptr_free(server);
 }
 
+// should load the db
 server_t *create_server(void)
 {
     server_t *server = alloc(sizeof(server_t), server_free);
@@ -32,6 +34,7 @@ server_t *create_server(void)
     if (server == NULL) {
         return NULL;
     }
+    server->usernames = arr_alloc(sizeof(char *), 1);
     server->fd = -1;
     server->nb_client = 0;
     server->clients = arr_alloc(sizeof(client_t *), MAX_CLIENT);

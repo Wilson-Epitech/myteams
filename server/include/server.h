@@ -15,6 +15,7 @@
 #define READ_SIZE 4096
 
 typedef struct server_s {
+    char **usernames;
     client_t **clients;
     unsigned nb_client;
     int port;
