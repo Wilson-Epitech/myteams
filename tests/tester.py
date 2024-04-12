@@ -35,11 +35,7 @@ def getInputOutput(filename: str):
                     imports += 1
                 else:
                     input.append(tmp_i[i].encode())
-                    try:
-                        output.append(tmp_o[i - imports].encode())
-                    except:
-                        print(f"Invalid Test File:{filename}")
-                        exit(1)
+                    output.append(tmp_o[i - imports].replace("\\n", "\n").encode())
             return input, output
 
 
@@ -112,6 +108,7 @@ def test(testName: str, input: list[bytes], output: list[bytes]):
 
 def testAll():
     tests = os.listdir(INPUT_DIR)
+    tests.sort()
     for testName in tests:
         if testName[0] == ".":
             continue

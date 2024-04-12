@@ -44,6 +44,7 @@ char **split_keep_quote(const char *str, char del)
     for (; *str; str++) {
         if (*str == '"') {
             in_quote = !in_quote;
+            stradd_c(&token, '"');
             continue;
         }
         if (*str == del && !in_quote) {

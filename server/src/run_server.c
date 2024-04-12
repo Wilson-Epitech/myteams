@@ -13,10 +13,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include "cmd.h"
 #include "libs/def.h"
+#include "reply.h"
 #include "server.h"
-#include "success.h"
 
 static bool is_running(bool running)
 {
@@ -58,7 +57,7 @@ static void handle_server(server_t *server)
             PERR_NORET("Accept Failed");
             return;
         }
-        if (reply(client_fd, _SUCCESS_000) == FAILURE) {
+        if (dprintf(client_fd, _000_) == FAILURE) {
             PERR_NORET("Write failed");
             close(client_fd);
             return;

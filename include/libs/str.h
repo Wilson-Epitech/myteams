@@ -44,3 +44,8 @@ char *stradd_c(char **str, char c);
     create a string from init with the string destructor
 */
 char *strcreate(const char *init);
+
+/*
+    create a string of len n from init with the string destructor
+*/
+char *strncreate(const char *init, size_t n);

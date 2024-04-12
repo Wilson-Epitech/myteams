@@ -10,10 +10,11 @@
 #include <unistd.h>
 
 #include "cmd.h"
-#include "error.h"
 #include "libs/arr.h"
+#include "libs/def.h"
 #include "libs/mem.h"
 #include "libs/str.h"
+#include "reply.h"
 #include "server.h"
 
 // the clients become zombies when disconnected without quitting
@@ -37,25 +38,49 @@ static char **get_input(int fd)
     return split_keep_quote(buff, ' ');
 }
 
+// doesnt accept empty args like ""
+static bool is_quoted(char *str)
+{
+    size_t len = strlen(str);
+
+    if (len <= 2 || str[0] != '"' || str[len - 1] != '"') {
+        return false;
+    }
+    return true;
+}
+
+static int valid_argv(char **argv)
+{
+    while (*argv) {
+        if (!is_quoted(*argv)) {
+            return FAILURE;
+        }
+        argv++;
+    }
+    return SUCCESS;
+}
+
+// todo: should an empty command be responded with an error or ignored ?
 void handle_command(server_t *server, client_t *client)
 {
     SMART char **argv = get_input(client->fd);
     size_t argc;
 
-    if (argv == NULL || *argv == NULL) {
+    if (argv == NULL || *argv == NULL)
+        return;
+    if (valid_argv(argv + 1) == FAILURE) {
+        dprintf(client->fd, _102_);
         return;
     }
     argc = arrlen(argv + 1);
     for (size_t i = 0; i < NB_COMMANDS; i++) {
-        if (strcmp(COMMANDS[i].name, *argv) != 0) {
+        if (strcmp(COMMANDS[i].name, *argv) != 0)
             continue;
-        }
         if (COMMANDS[i].argc > argc) {
-            reply(client->fd, _ERROR_101);
-        } else {
+            dprintf(client->fd, _101_);
+        } else
             COMMANDS[i].function(server, client, argv + 1, argc);
-        }
         return;
     }
-    reply(client->fd, _ERROR_100);
+    dprintf(client->fd, _100_);
 }

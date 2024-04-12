@@ -5,14 +5,13 @@
 ** mem
 */
 
-#include "libs/mem.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "libs/arr.h"
 #include "libs/def.h"
+#include "libs/mem.h"
 #include "server.h"
 
 void server_free(void *ptr)
@@ -25,9 +24,9 @@ void server_free(void *ptr)
     if (server->fd != -1) {
         close(server->fd);
     }
-    destroy(server->usernames);
     destroy(server->clients);
-    ptr_free(server);
+    destroy(server->users);
+    ptr_free(ptr);
 }
 
 // should load the db
@@ -38,7 +37,7 @@ server_t *create_server(void)
     if (server == NULL) {
         return NULL;
     }
-    server->usernames = arr_alloc(sizeof(char *), 1);
+    server->users = arr_alloc(sizeof(user_t *), 1);
     server->clients = arr_alloc(sizeof(client_t *), 1);
     server->port = 0;
     server->fd = -1;
@@ -57,7 +56,6 @@ void client_free(void *ptr)
     if (client->fd != -1) {
         close(client->fd);
     }
-    destroy(client->username);
     ptr_free(ptr);
 }
 
@@ -77,7 +75,7 @@ void create_client(server_t *server, int client_fd)
         return;
     }
     client->fd = client_fd;
-    client->username = NULL;
+    client->user = NULL;
     client->context = ROOT;
     arr_pushback(&(server->clients), client);
 }

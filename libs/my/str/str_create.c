@@ -17,3 +17,12 @@ char *strcreate(const char *init)
 
     return strcpy(str, init);
 }
+
+char *strncreate(const char *init, size_t n)
+{
+    char *str = ptr_alloc((n + 1) * sizeof(char));
+
+    strncpy(str, init, n);
+    str[n] = '\0';
+    return str;
+}

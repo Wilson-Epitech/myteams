@@ -20,7 +20,11 @@ LIB_DIR		=	$(realpath ./libs)
 LIB_PREFIX	=	my
 LIB_MY_DIR	=	$(LIB_DIR)/$(LIB_PREFIX)
 LIB_NAME	=	$(realpath ./libs)/libmy.a
-LIB_FLAGS	+=	-L $(LIB_DIR)/ -l $(LIB_PREFIX)
+
+LIB_SO_DIR	=	$(LIB_DIR)/myteams
+LIB_SO_PRE	=	myteams
+
+LIB_FLAGS	+=	-L $(LIB_DIR)/ -l $(LIB_PREFIX) -L $(LIB_SO_DIR)/ -l $(LIB_SO_PRE)
 
 # -------------------------------------------------------------------------- #
 
@@ -48,17 +52,17 @@ client: $(CLIENT_DIR)
 
 .PHONY: clean
 clean:
-	$(MAKE) -C $(LIB_MY_DIR) clean
-	$(MAKE) -C $(SERVER_DIR) clean
-	$(MAKE) -C $(CLIENT_DIR) clean
-	$(RM) vgcore*
+	@ $(MAKE) -C $(LIB_MY_DIR) clean > /dev/null
+	@ $(MAKE) -C $(SERVER_DIR) clean > /dev/null
+	@ $(MAKE) -C $(CLIENT_DIR) clean > /dev/null
+	@ $(RM) vgcore*
 
 
 .PHONY: fclean
 fclean: clean
-	$(MAKE) -C $(LIB_MY_DIR) fclean NAME="$(LIB_NAME)"
-	$(MAKE) -C $(SERVER_DIR) fclean
-	$(MAKE) -C $(CLIENT_DIR) fclean
+	@ $(MAKE) -C $(LIB_MY_DIR) fclean NAME="$(LIB_NAME)" > /dev/null
+	@ $(MAKE) -C $(SERVER_DIR) fclean > /dev/null
+	@ $(MAKE) -C $(CLIENT_DIR) fclean > /dev/null
 
 
 .PHONY: re
