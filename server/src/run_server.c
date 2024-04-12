@@ -5,7 +5,8 @@
 ** run
 */
 
-#include <arpa/inet.h>
+#include <signal.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/select.h>
@@ -17,12 +18,28 @@
 #include "server.h"
 #include "success.h"
 
+static bool is_running(bool running)
+{
+    static int curr = true;
+    static int next = true;
+
+    curr = next;
+    next = running;
+    return curr;
+}
+
+static void sig_handler(int signal)
+{
+    (void)signal;
+    is_running(false);
+}
+
 static void reset_socket(server_t *server)
 {
     FD_ZERO(&server->read_fd);
     FD_SET(server->fd, &server->read_fd);
-    for (size_t i = 0; i < MAX_CLIENT; i++) {
-        if (server->clients[i] != NULL && server->clients[i]->fd != 1) {
+    for (size_t i = 0; server->clients[i]; i++) {
+        if (server->clients[i]->fd != 1) {
             FD_SET(server->clients[i]->fd, &server->read_fd);
         }
     }
@@ -54,11 +71,8 @@ static void handle_client(server_t *server)
 {
     client_t *client;
 
-    for (size_t i = 0; i < MAX_CLIENT; i++) {
+    for (size_t i = 0; server->clients[i]; i++) {
         client = server->clients[i];
-        if (client == NULL) {
-            continue;
-        }
         if (FD_ISSET(client->fd, &server->read_fd)) {
             handle_command(server, client);
         }
@@ -67,7 +81,8 @@ static void handle_client(server_t *server)
 
 int run_server(server_t *server)
 {
-    while (1) {
+    signal(SIGINT, sig_handler);
+    while (is_running(true)) {
         reset_socket(server);
         if (select(MAX_CLIENT, &(server->read_fd), NULL, NULL, NULL) == -1) {
             return PERR("Select Failed");

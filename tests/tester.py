@@ -127,9 +127,8 @@ def testOne(testName: str):
 
 def main():
     if sys.argv.__len__() > 1:
-        testOne(sys.argv[1])
-    else:
-        testAll()
+        PORT = sys.argv[1]
+    testAll()
 
 
 if __name__ == "__main__":

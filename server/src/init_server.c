@@ -18,10 +18,10 @@
 
 static int bind_server_socket(server_t *server)
 {
-    server->adress.sin_family = AF_INET;
-    server->adress.sin_addr.s_addr = INADDR_ANY;
-    server->adress.sin_port = htons(server->port);
-    if (bind(server->fd, (struct sockaddr *)(&(server->adress)),
+    server->address.sin_family = AF_INET;
+    server->address.sin_addr.s_addr = INADDR_ANY;
+    server->address.sin_port = htons(server->port);
+    if (bind(server->fd, (struct sockaddr *)(&(server->address)),
             sizeof(struct sockaddr_in)) == -1) {
         return PERR("Binding Failed");
     }

@@ -26,7 +26,7 @@ typedef struct cmd_s {
 #define DECLARE(name) void name(server_t *, client_t *, char **, size_t)
 #define BRACKET_LEFT {
 #define BRACKET_RIGHT }
-#define ARGUMENTS(name, argc) BRACKET_LEFT "/" #name, argc, &name BRACKET_RIGHT
+#define ARGUMENTS(name, argc) BRACKET_LEFT "/" #name, argc, name BRACKET_RIGHT
 
 DECLARE(login);
 DECLARE(logout);

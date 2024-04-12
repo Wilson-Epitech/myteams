@@ -11,6 +11,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "libs/arr.h"
 #include "libs/def.h"
 #include "server.h"
 
@@ -18,7 +19,10 @@ void server_free(void *ptr)
 {
     server_t *server = ptr;
 
-    if (server != NULL && server->fd != -1) {
+    if (server == NULL) {
+        return;
+    }
+    if (server->fd != -1) {
         close(server->fd);
     }
     destroy(server->usernames);
@@ -35,10 +39,11 @@ server_t *create_server(void)
         return NULL;
     }
     server->usernames = arr_alloc(sizeof(char *), 1);
+    server->clients = arr_alloc(sizeof(client_t *), 1);
+    server->port = 0;
     server->fd = -1;
-    server->nb_client = 0;
-    server->clients = arr_alloc(sizeof(client_t *), MAX_CLIENT);
-    memset(server->clients, 0, sizeof(client_t *) * MAX_CLIENT);
+    FD_ZERO(&(server->read_fd));
+    memset(&(server->address), 0, sizeof(server->address));
     return server;
 }
 
@@ -46,10 +51,13 @@ void client_free(void *ptr)
 {
     client_t *client = ptr;
 
-    if (client != NULL && client->fd != -1) {
+    if (client == NULL) {
+        return;
+    }
+    if (client->fd != -1) {
         close(client->fd);
     }
-    try_free(client->username);
+    destroy(client->username);
     ptr_free(ptr);
 }
 
@@ -61,15 +69,15 @@ void client_free(void *ptr)
 // }
 void create_client(server_t *server, int client_fd)
 {
-    client_t *new = alloc(sizeof(client_t), client_free);
+    client_t *client = alloc(sizeof(client_t), client_free);
 
-    if (new == NULL) {
+    if (client == NULL) {
         PERR_NORET("Couldn't Alloc Client");
         close(client_fd);
         return;
     }
-    new->fd = client_fd;
-    new->username = NULL;
-    server->clients[server->nb_client] = new;
-    server->nb_client += 1;
+    client->fd = client_fd;
+    client->username = NULL;
+    client->context = ROOT;
+    arr_pushback(&(server->clients), client);
 }

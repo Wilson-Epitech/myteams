@@ -17,11 +17,10 @@
 typedef struct server_s {
     char **usernames;
     client_t **clients;
-    unsigned nb_client;
     int port;
     int fd;
     fd_set read_fd;
-    struct sockaddr_in adress;
+    struct sockaddr_in address;
 } server_t;
 
 // Server Init
