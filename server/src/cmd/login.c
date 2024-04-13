@@ -49,12 +49,8 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
     SMART char *username = strncreate((*argv) + 1, strlen(*argv) - 2);
 
-    if (argc != 1) {
-        dprintf(client->fd, _101_);
-        return;
-    }
-    if (client->user != NULL) {
-        dprintf(client->fd, _104_);
+    if (argc != 1 || client->user != NULL) {
+        dprintf(client->fd, argc != 1 ? _101_ : _104_);
         return;
     }
     if (try_load_user(server, client, username) == FAILURE) {

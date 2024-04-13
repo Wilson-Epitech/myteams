@@ -24,7 +24,8 @@ LIB_NAME	=	$(realpath ./libs)/libmy.a
 LIB_SO_DIR	=	$(LIB_DIR)/myteams
 LIB_SO_PRE	=	myteams
 
-LIB_FLAGS	+=	-L $(LIB_DIR)/ -l $(LIB_PREFIX) -L $(LIB_SO_DIR)/ -l $(LIB_SO_PRE)
+LIB_FLAGS	+=	-L $(LIB_DIR)/ -l $(LIB_PREFIX)		\
+				-L $(LIB_SO_DIR)/ -l $(LIB_SO_PRE)
 
 # -------------------------------------------------------------------------- #
 

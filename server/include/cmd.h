@@ -53,13 +53,16 @@
 // 0000000000001980 T server_event_user_logged_out
 /* __done__ */
 
+/* __in_progress__ */
+// 00000000000017c0 T server_event_team_created
+// 0000000000001890 T server_event_user_subscribed
+// 00000000000018c0 T server_event_user_unsubscribed
+/* __in_progress__ */
+
 // 00000000000017f0 T server_event_channel_created
 // 00000000000019b0 T server_event_private_message_sended
 // 0000000000001860 T server_event_reply_created
-// 00000000000017c0 T server_event_team_created
 // 0000000000001820 T server_event_thread_created
-// 0000000000001890 T server_event_user_subscribed
-// 00000000000018c0 T server_event_user_unsubscribed
 
 typedef struct cmd_s {
     const char *name;
