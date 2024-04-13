@@ -13,6 +13,7 @@
 #define _102_ "102 Invalid arguments.\n"
 #define _103_ "103 Invalid context.\n"
 #define _104_ "104 Unauthorized.\n"
+#define _105_ "105 Invalid uuid.\n"
 
 // Connection
 #define _000_ "000 Service ready.\n"
