@@ -1,0 +1,1 @@
+001 User ghost (001) created.\n002 User ghost (001) loaded.\n003 User ghost (001) logged in, proceed.

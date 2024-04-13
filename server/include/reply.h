@@ -19,8 +19,9 @@
 
 // Login
 #define _001_ "001 User %s (%s) created.\n"
-#define _002_ "002 %s (%s) logged in, proceed.\n"
+#define _002_ "002 User %s (%s) loaded.\n"
+#define _003_ "003 User %s (%s) logged in, proceed.\n"
 
 // Logout
-#define _003_ "003 User disconnected.\n"
-#define _004_ "004 Service closed.\n"
+#define _004_ "004 User disconnected.\n"
+#define _005_ "005 Service closed.\n"

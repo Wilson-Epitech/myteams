@@ -29,7 +29,9 @@ def getInputOutput(filename: str):
             imports = 0
             for i in range(len(tmp_i)):
                 if tmp_i[i].startswith("import "):
-                    prefix_input, prefix_output = getInputOutput(tmp_i[i][7:])
+                    prefix_input, prefix_output = getInputOutput(
+                        tmp_i[i][len("import ") :] + ".txt"
+                    )
                     input += prefix_input
                     output += prefix_output
                     imports += 1
@@ -119,7 +121,7 @@ def testAll():
 
 def testOne(testName: str):
     input, output = getInputOutput(testName)
-    test(testName, input, output)
+    test(testName[:-4], input, output)
 
 
 def main():
