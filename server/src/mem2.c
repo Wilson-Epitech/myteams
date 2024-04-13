@@ -17,23 +17,9 @@
 static char *generate_uuid(server_t *server)
 {
     size_t uuid_nb = arrlen(server->users);
-    char *uuid;
+    char *uuid = ptr_alloc(sizeof(char) * (36 + 1));
 
-    if (uuid_nb == 0) {
-        return strcreate("000");
-    } else {
-        uuid = strcreate("");
-    }
-    if (uuid_nb < 10) {
-        stradd_c(&uuid, '0');
-    }
-    if (uuid_nb < 100) {
-        stradd_c(&uuid, '0');
-    }
-    while (uuid_nb) {
-        stradd_c(&uuid, '0' + uuid_nb % 10);
-        uuid_nb /= 10;
-    }
+    sprintf(uuid, "%036ld", uuid_nb);
     return uuid;
 }
 

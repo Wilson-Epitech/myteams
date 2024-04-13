@@ -33,6 +33,15 @@ typedef struct client_s {
     enum context context;
 } client_t;
 
+typedef struct thread_s {
+} thread_t;
+
+typedef struct channel_s {
+} channel_t;
+
+typedef struct team_s {
+} team_t;
+
 // missing teams, channels, thread, reply, dms
 typedef struct server_s {
     user_t **users;
