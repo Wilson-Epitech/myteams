@@ -78,11 +78,13 @@ typedef struct cmd_s {
 DECLARE(login);
 DECLARE(logout);
 DECLARE(help);
+DECLARE(users);
 
 static const cmd_t COMMANDS[] = {
     ARGUMENTS(login, 1),
     ARGUMENTS(logout, 0),
     ARGUMENTS(help, 0),
+    ARGUMENTS(users, 0),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

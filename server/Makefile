@@ -29,6 +29,7 @@ CMD_DIR		=	$(SRC_DIR)cmd/
 CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)logout.c				\
 				$(CMD_DIR)help.c				\
+				$(CMD_DIR)users.c				\
 
 # -------------------------------------------------------------------------- #
 

@@ -49,3 +49,8 @@ char *strcreate(const char *init);
     create a string of len n from init with the string destructor
 */
 char *strncreate(const char *init, size_t n);
+
+/*
+    append a string to a string
+*/
+char *stradd_s(char **str, char *add);
