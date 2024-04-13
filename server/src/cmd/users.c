@@ -25,7 +25,7 @@ static void display_users(server_t *server, client_t *client)
         stradd_c(&data, '\n');
         users++;
     }
-    dprintf(client->fd, "%s", data);
+    dprintf(client->fd, _007_, data);
 }
 
 void users(server_t *server, client_t *client, char **argv, size_t argc)

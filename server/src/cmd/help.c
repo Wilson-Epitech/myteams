@@ -26,7 +26,7 @@ static void display_help(int fd)
         stradd_c(&str, c);
     }
     fclose(file);
-    dprintf(fd, "%s", str);
+    dprintf(fd, _006_, str);
 }
 
 void help(server_t *server, client_t *client, char **argv, size_t argc)

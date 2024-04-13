@@ -25,3 +25,12 @@
 // Logout
 #define _004_ "004 User disconnected.\n"
 #define _005_ "005 Service closed.\n"
+
+// Help
+#define _006_ "006 %s\n"
+
+// Users
+#define _007_ "007 %s\n"
+
+// User
+#define _008_ "008 %s (%s) %d\n"
