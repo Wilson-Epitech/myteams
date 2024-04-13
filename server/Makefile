@@ -9,14 +9,14 @@
 
 CC			=	gcc
 CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g3
 
 # -------------------------------------------------------------------------- #
 
 SRC_DIR		=	./src/
 NAME		=	../myteams_server
 OBJ			=	$(SRC:.c=.o)
-SRC			=	$(SRC_DIR)main.c				\
+SRC			=	$(SRC_DIR)server.c				\
 				$(SRC_DIR)mem1.c				\
 				$(SRC_DIR)mem2.c				\
 				$(SRC_DIR)init_server.c			\
@@ -27,6 +27,7 @@ SRC			=	$(SRC_DIR)main.c				\
 
 CMD_DIR		=	$(SRC_DIR)cmd/
 CMD			=	$(CMD_DIR)login.c				\
+				$(CMD_DIR)logout.c				\
 
 # -------------------------------------------------------------------------- #
 

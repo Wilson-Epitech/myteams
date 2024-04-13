@@ -7,7 +7,6 @@
 
 #include <string.h>
 
-#include "../libs/myteams/logging_server.h"
 #include "server.h"
 
 user_t *find_user(server_t *server, char *username)
@@ -27,6 +26,5 @@ user_t *save_user(server_t *server, char *name)
 {
     user_t *user = create_user(server, name);
 
-    server_event_user_created(user->uuid, user->name);
     return user;
 }

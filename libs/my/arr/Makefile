@@ -11,6 +11,8 @@
 SRC		=	arr_debug.c		\
 			arr_len.c		\
 			arr_add.c		\
+			arr_rm.c		\
+			arr_shift.c		\
 
 OBJ		=	$(SRC:.c=.o)
 

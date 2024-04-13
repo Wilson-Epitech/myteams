@@ -29,14 +29,13 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     } else {
         client->user = user;
         user->loged = true;
-        server_event_user_loaded(user->uuid, user->name);
-        dprintf(client->fd, _002_, user->name, user->uuid);
     }
     return SUCCESS;
 }
 
 /*
 1 argument
+
 error:
 argc is not 1
 user already set
@@ -61,7 +60,12 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
     if (try_load_user(server, client, username) == FAILURE) {
         save_user(server, username);
         client->user = find_user(server, username);
+        server_event_user_created(client->user->uuid, client->user->name);
         dprintf(client->fd, _001_, client->user->name, client->user->uuid);
+    }
+    if (client->user) {
+        server_event_user_loaded(client->user->uuid, client->user->name);
+        server_event_user_logged_in(client->user->uuid);
         dprintf(client->fd, _002_, client->user->name, client->user->uuid);
     }
 }

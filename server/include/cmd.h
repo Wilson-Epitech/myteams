@@ -46,11 +46,12 @@
 // 0000000000001300 T client_team_print_channels
 // 0000000000001390 T client_thread_print_replies
 
+/* __done__ */
 // 0000000000001950 T server_event_user_logged_in
-// 0000000000001980 T server_event_user_logged_out
-
 // 00000000000018f0 T server_event_user_created
 // 0000000000001920 T server_event_user_loaded
+// 0000000000001980 T server_event_user_logged_out
+/* __done__ */
 
 // 00000000000017f0 T server_event_channel_created
 // 00000000000019b0 T server_event_private_message_sended
