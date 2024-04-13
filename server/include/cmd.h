@@ -64,6 +64,22 @@
 // 0000000000001860 T server_event_reply_created
 // 0000000000001820 T server_event_thread_created
 
+/* __done__ */
+//   - help
+//   - login
+//   - logout
+//   - users
+//   - user
+//   - info
+/* __done__ */
+//   - send
+//   - messages
+//   - subscribe
+//   - unsubscribe
+//   - use
+//   - create
+//   - list
+
 typedef struct cmd_s {
     const char *name;
     size_t argc;
@@ -80,13 +96,12 @@ DECLARE(logout);
 DECLARE(help);
 DECLARE(users);
 DECLARE(user);
+// DECLARE(create);
 
 static const cmd_t COMMANDS[] = {
-    ARGUMENTS(login, 1),
-    ARGUMENTS(logout, 0),
-    ARGUMENTS(help, 0),
-    ARGUMENTS(users, 0),
-    ARGUMENTS(user, 1),
+    ARGUMENTS(login, 1), ARGUMENTS(logout, 0), ARGUMENTS(help, 0),
+    ARGUMENTS(users, 0), ARGUMENTS(user, 1),
+    // ARGUMENTS(create, 1),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

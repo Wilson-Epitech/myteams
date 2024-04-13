@@ -21,10 +21,10 @@ typedef struct user_s {
 } user_t;
 
 enum context {
-    ROOT = 1,
-    TEAM = 2,
-    CHANNEL = 4,
-    THREAD = 8,
+    NONE,
+    TEAM,
+    CHANNEL,
+    THREAD,
 };
 
 typedef struct client_s {

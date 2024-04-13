@@ -33,18 +33,6 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     return SUCCESS;
 }
 
-/*
-1 argument
-
-error:
-argc is not 1
-user already set
-user already logged
-
-success
-user created | loaded
-user logs in
-*/
 void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
     SMART char *username = strncreate((*argv) + 1, strlen(*argv) - 2);
@@ -53,16 +41,17 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, argc != 1 ? _101_ : _104_);
         return;
     }
+    if (strlen(username) > MAX_NAME_LENGTH) {
+        dprintf(client->fd, _102_);
+        return;
+    }
     if (try_load_user(server, client, username) == FAILURE) {
-        save_user(server, username);
-        client->user = find_user(server, username);
+        client->user = save_user(server, username);
         server_event_user_created(client->user->uuid, client->user->name);
         dprintf(client->fd, _001_, client->user->name, client->user->uuid);
     }
-    if (client->user) {
-        server_event_user_loaded(client->user->uuid, client->user->name);
-        server_event_user_logged_in(client->user->uuid);
-        dprintf(client->fd, _002_, client->user->name, client->user->uuid);
-        dprintf(client->fd, _003_, client->user->name, client->user->uuid);
-    }
+    server_event_user_loaded(client->user->uuid, client->user->name);
+    server_event_user_logged_in(client->user->uuid);
+    dprintf(client->fd, _002_, client->user->name, client->user->uuid);
+    dprintf(client->fd, _003_, client->user->name, client->user->uuid);
 }

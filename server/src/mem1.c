@@ -76,6 +76,6 @@ void create_client(server_t *server, int client_fd)
     }
     client->fd = client_fd;
     client->user = NULL;
-    client->context = ROOT;
+    client->context = NONE;
     arr_pushback(&(server->clients), client);
 }
