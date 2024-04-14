@@ -15,8 +15,8 @@
 #include <stdbool.h>
 
 typedef struct user_s {
-    char *name;
     char *uuid;
+    char *name;
     bool loged;
 } user_t;
 
@@ -27,25 +27,47 @@ enum context {
     THREAD,
 };
 
-typedef struct client_s {
-    int fd;
-    user_t *user;
-    enum context context;
-} client_t;
+typedef struct reply_s {
+    char *uuid;
+    char *body;
+} reply_t;
 
 typedef struct thread_s {
+    char *uuid;
+    char *title;
+    char *message;
+    reply_t **reply;
 } thread_t;
 
 typedef struct channel_s {
+    char *uuid;
+    char *name;
+    char *description;
+    thread_t **threads;
 } channel_t;
 
 typedef struct team_s {
+    char *uuid;
+    char *name;
+    char *description;
+    user_t *creator;
+    user_t **subscribers;
+    channel_t **channel;
 } team_t;
+
+typedef struct client_s {
+    int fd;
+    user_t *user;
+    team_t *team_ctx;
+    channel_t *channel_ctx;
+    thread_t *thread_ctx;
+} client_t;
 
 // missing teams, channels, thread, reply, dms
 typedef struct server_s {
     user_t **users;
     client_t **clients;
+    team_t **teams;
     int port;
     int fd;
     fd_set read_fd;
@@ -66,9 +88,27 @@ void server_free(void *ptr);
 void create_client(server_t *server, int client_fd);
 void client_free(void *ptr);
 
-user_t *create_user(server_t *server, char *name);
+void create_user(server_t *server, char *name);
 void user_free(void *ptr);
+
+void create_team(server_t *, user_t *creator, char *name, char *description);
+void team_free(void *ptr);
+
+void create_channel(server_t *server, char *name, char *description);
+void channel_free(void *ptr);
+
+void create_thread(server_t *server, char *title, char *message);
+void thread_free(void *ptr);
+
+void create_reply(server_t *server, char *body);
+void reply_free(void *ptr);
 
 // Utils
 user_t *find_user(server_t *server, char *username);
-user_t *save_user(server_t *server, char *username);
+
+// Save
+// void save_user(server_t *server, char *username);
+// todo: all save
+
+// Temporary (will be replaced with the real generation)
+char *generate_uuid(server_t *server);

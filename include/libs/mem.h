@@ -27,7 +27,7 @@ void set_destructor(void *ptr, destructor_t destructor);
 
 // Constructor
 void *ptr_alloc(size_t size);
-void *arr_alloc(size_t elem_size, size_t len);
+void *arr_alloc(size_t len);
 
 // Common Destructor
 void ptr_free(void *ptr);

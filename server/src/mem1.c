@@ -26,6 +26,7 @@ void server_free(void *ptr)
     }
     destroy(server->clients);
     destroy(server->users);
+    destroy(server->teams);
     ptr_free(ptr);
 }
 
@@ -37,8 +38,9 @@ server_t *create_server(void)
     if (server == NULL) {
         return NULL;
     }
-    server->users = arr_alloc(sizeof(user_t *), 1);
-    server->clients = arr_alloc(sizeof(client_t *), 1);
+    server->users = arr_alloc(1);
+    server->clients = arr_alloc(1);
+    server->teams = arr_alloc(1);
     server->port = 0;
     server->fd = -1;
     FD_ZERO(&(server->read_fd));
@@ -76,6 +78,8 @@ void create_client(server_t *server, int client_fd)
     }
     client->fd = client_fd;
     client->user = NULL;
-    client->context = NONE;
+    client->team_ctx = NULL;
+    client->channel_ctx = NULL;
+    client->thread_ctx = NULL;
     arr_pushback(&(server->clients), client);
 }

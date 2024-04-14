@@ -20,11 +20,3 @@ user_t *find_user(server_t *server, char *username)
     }
     return NULL;
 }
-
-// todo: add to db
-user_t *save_user(server_t *server, char *name)
-{
-    user_t *user = create_user(server, name);
-
-    return user;
-}

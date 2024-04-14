@@ -46,7 +46,8 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         return;
     }
     if (try_load_user(server, client, username) == FAILURE) {
-        client->user = save_user(server, username);
+        create_user(server, username);
+        client->user = find_user(server, username);
         server_event_user_created(client->user->uuid, client->user->name);
         dprintf(client->fd, _001_, client->user->name, client->user->uuid);
     }

@@ -14,9 +14,9 @@ void *ptr_alloc(size_t size)
     return alloc(size, ptr_free);
 }
 
-void *arr_alloc(size_t elem_size, size_t len)
+void *arr_alloc(size_t len)
 {
-    void **arr = alloc(elem_size * len, arr_free);
+    void **arr = alloc(sizeof(void *) * len, arr_free);
 
     if (arr == NULL) {
         return NULL;

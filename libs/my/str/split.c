@@ -18,7 +18,7 @@
 char **split(const char *str, char del)
 {
     size_t count = strcount(str, del);
-    char **arr = arr_alloc(sizeof(char *), count + 2);
+    char **arr = arr_alloc(count + 2);
     size_t index = 0;
     size_t len = 0;
     char *next = NULL;
@@ -37,7 +37,7 @@ char **split(const char *str, char del)
 
 char **split_keep_quote(const char *str, char del)
 {
-    char **arr = arr_alloc(sizeof(char *), 1);
+    char **arr = arr_alloc(1);
     SMART char *token = strcreate("");
     bool in_quote = false;
 
