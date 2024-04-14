@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "../../include/libs/def.h"
+
 static int is_dir(const char *filepath)
 {
     struct stat file;
@@ -59,8 +61,10 @@ static int create_directory(char *dirname)
     char *path = update_path(getcwd(NULL, 0), dirname);
 
     if (is_dir(path) == 0) {
-        if (mkdir(path, 0755) != 0)
+        if (mkdir(path, 0755) != 0) {
+            PERR_NORET("Mkdir failed");
             return 84;
+        }
     }
     return 0;
 }
@@ -110,8 +114,10 @@ static int create_file(char *file)
 
     if (is_file(path) == 0) {
         fd = open(path, O_RDWR | O_CREAT, 0644);
-        if (fd == -1)
+        if (fd == -1) {
+            PERR_NORET("Open failed");
             return 84;
+        }
         header = create_header_file(path);
         for (int i = 0; header[i] != NULL; i++) {
             write(fd, header[i], strlen(header[i]));
