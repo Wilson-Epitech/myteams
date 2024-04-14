@@ -64,14 +64,14 @@ void team_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_team(
+team_t *create_team(
     server_t *server, user_t *creator, char *name, char *description)
 {
     team_t *team = alloc(sizeof(team_t), team_free);
 
     if (team == NULL) {
         PERR_NORET("Couldn't Alloc Team");
-        return;
+        return NULL;
     }
     team->name = strcreate(name);
     team->description = strcreate(description);
@@ -79,4 +79,5 @@ void create_team(
     team->creator = creator;
     team->subscribers = arr_alloc(1);
     team->uuid = generate_uuid(server);
+    return team;
 }

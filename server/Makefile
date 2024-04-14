@@ -19,6 +19,8 @@ OBJ			=	$(SRC:.c=.o)
 SRC			=	$(SRC_DIR)server.c				\
 				$(SRC_DIR)mem1.c				\
 				$(SRC_DIR)mem2.c				\
+				$(SRC_DIR)mem3.c				\
+				$(SRC_DIR)mem4.c				\
 				$(SRC_DIR)init_server.c			\
 				$(SRC_DIR)run_server.c			\
 				$(SRC_DIR)cmd_handler.c			\
@@ -31,7 +33,7 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)help.c				\
 				$(CMD_DIR)users.c				\
 				$(CMD_DIR)user.c				\
-				# $(CMD_DIR)create.c				\
+				$(CMD_DIR)create.c				\
 
 # -------------------------------------------------------------------------- #
 

@@ -8,48 +8,74 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../libs/myteams/logging_server.h"
 #include "cmd.h"
-#include "libs/mem.h"
-#include "libs/str.h"
 #include "reply.h"
 #include "server.h"
 
-static void create_team(
+static void cr_team(
     server_t *server, client_t *client, char **argv, size_t argc)
 {
+    team_t *team;
+
+    if (argc == 2) {
+        team = create_team(server, client->user, *argv, *(argv + 1));
+        if (team) {
+            dprintf(
+                client->fd, _009_, team->uuid, team->name, team->description);
+            server_event_team_created(
+                team->uuid, team->name, team->creator->uuid);
+        } else {
+            dprintf(client->fd, _106_);
+        }
+    } else {
+        dprintf(client->fd, _101_);
+    }
 }
 
-static void create_channel(
+static void cr_channel(
     server_t *server, client_t *client, char **argv, size_t argc)
 {
+    if (argc == 2) {
+        create_channel(server, *argv, *(argv + 1));
+    } else {
+        dprintf(client->fd, _101_);
+    }
 }
 
-static void create_thread(
+static void cr_thread(
     server_t *server, client_t *client, char **argv, size_t argc)
 {
+    if (argc == 2) {
+        create_thread(server, *argv, *(argv + 1));
+    } else {
+        dprintf(client->fd, _101_);
+    }
 }
 
-static void create_reply(
+static void cr_reply(
     server_t *server, client_t *client, char **argv, size_t argc)
 {
+    if (argc == 1) {
+        create_reply(server, *argv);
+    } else {
+        dprintf(client->fd, _101_);
+    }
 }
 
 void create(server_t *server, client_t *client, char **argv, size_t argc)
 {
-    if (client->context == NONE) {
-        create_team(server, client, argv, argc);
+    if (client->team_ctx == NULL) {
+        cr_team(server, client, argv, argc);
         return;
     }
-    if (client->context == TEAM) {
-        create_channel(server, client, argv, argc);
+    if (client->channel_ctx == NULL) {
+        cr_channel(server, client, argv, argc);
         return;
     }
-    if (client->context == CHANNEL) {
-        create_thread(server, client, argv, argc);
+    if (client->thread_ctx == NULL) {
+        cr_thread(server, client, argv, argc);
         return;
     }
-    if (client->context == THREAD) {
-        create_reply(server, client, argv, argc);
-        return;
-    }
+    cr_reply(server, client, argv, argc);
 }

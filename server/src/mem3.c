@@ -27,18 +27,19 @@ void channel_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_channel(server_t *server, char *name, char *description)
+channel_t *create_channel(server_t *server, char *name, char *description)
 {
     channel_t *channel = alloc(sizeof(channel_t), channel_free);
 
     if (channel == NULL) {
         PERR_NORET("Couldn't Alloc Channel");
-        return;
+        return NULL;
     }
     channel->name = strcreate(name);
     channel->description = strcreate(description);
     channel->threads = arr_alloc(1);
     channel->uuid = generate_uuid(server);
+    return channel;
 }
 
 void thread_free(void *ptr)
@@ -55,17 +56,17 @@ void thread_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_thread(server_t *server, char *title, char *message)
+thread_t *create_thread(server_t *server, char *title, char *message)
 {
     thread_t *thread = alloc(sizeof(thread_t), thread_free);
 
     if (thread == NULL) {
         PERR_NORET("Couldn't Alloc Thread");
-        return;
+        return NULL;
     }
     thread->uuid = generate_uuid(server);
     thread->title = strcreate(title);
     thread->message = strcreate(message);
     thread->reply = arr_alloc(1);
-    return;
+    return thread;
 }

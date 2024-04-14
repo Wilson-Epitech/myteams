@@ -20,13 +20,6 @@ typedef struct user_s {
     bool loged;
 } user_t;
 
-enum context {
-    NONE,
-    TEAM,
-    CHANNEL,
-    THREAD,
-};
-
 typedef struct reply_s {
     char *uuid;
     char *body;
@@ -91,16 +84,17 @@ void client_free(void *ptr);
 void create_user(server_t *server, char *name);
 void user_free(void *ptr);
 
-void create_team(server_t *, user_t *creator, char *name, char *description);
+team_t *create_team(
+    server_t *, user_t *creator, char *name, char *description);
 void team_free(void *ptr);
 
-void create_channel(server_t *server, char *name, char *description);
+channel_t *create_channel(server_t *server, char *name, char *description);
 void channel_free(void *ptr);
 
-void create_thread(server_t *server, char *title, char *message);
+thread_t *create_thread(server_t *server, char *title, char *message);
 void thread_free(void *ptr);
 
-void create_reply(server_t *server, char *body);
+reply_t *create_reply(server_t *server, char *body);
 void reply_free(void *ptr);
 
 // Utils
