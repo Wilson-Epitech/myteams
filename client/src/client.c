@@ -8,25 +8,36 @@
 #include "client.h"
 #include <stdlib.h>
 
+int send_and_recv_mess(char *buf, client_t *client)
+{
+    int bytes_received = 0;
+
+    if (send(client->fd, buf, strlen(buf), 0) == -1) {
+        perror("send");
+        return 84;
+    }
+    bytes_received = recv(client->fd, buf, 1024, 0);
+    if (bytes_received == -1) {
+        perror("recv");
+        return 84;
+    }
+    buf[bytes_received] = '\0';
+    printf("Server response: %s\n", buf);
+    return 0;
+}
+
 int launch_client(client_t *client)
 {
-    char buf[1024];
-    int bytes_received;
+    char *buf;
+    size_t buf_size = 0;
 
     while (1) {
         printf("Enter command: ");
-        fgets(buf, 1024, stdin);
-        if (send(client->status, buf, strlen(buf), 0) == -1) {
-            perror("send");
+        if (getline(&buf, &buf_size, stdin) == -1) {
+            perror("getline");
             break;
         }
-        bytes_received = recv(client->status, buf, 1024, 0);
-        if (bytes_received == -1) {
-            perror("recv");
-            break;
-        }
-        buf[bytes_received] = '\0';
-        printf("Server response: %s\n", buf);
+        send_and_recv_mess(buf, client);
     }
     return 0;
 }
@@ -54,7 +65,7 @@ client_t *get_client(int port)
     client_t *clien = default_client();
     struct sockaddr_in serv_addr = default_sockaddr(port);
 
-    if (clien->fd < 0) {
+    if (clien == NULL || clien->fd < 0) {
         printf("\n Socket creation error \n");
         return NULL;
     }
