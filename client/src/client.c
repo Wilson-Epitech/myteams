@@ -7,37 +7,50 @@
 
 #include "client.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-int send_and_recv_mess(char *buf, client_t *client)
+int recv_serveur(char *buf, client_t *client)
 {
     int bytes_received = 0;
 
-    if (send(client->fd, buf, strlen(buf), 0) == -1) {
-        perror("send");
-        return 84;
-    }
     bytes_received = recv(client->fd, buf, 1024, 0);
     if (bytes_received == -1) {
         perror("recv");
         return 84;
     }
     buf[bytes_received] = '\0';
-    printf("Server response: %s\n", buf);
+    printf("Server response: %s", buf);
+    return 0;
+}
+
+int send_serv(char *buf, client_t *client)
+{
+    if (send(client->fd, buf, strlen(buf), 0) == -1) {
+        perror("send");
+        return 84;
+    }
     return 0;
 }
 
 int launch_client(client_t *client)
 {
-    char *buf;
+    char *buf = malloc(sizeof(char) * 4096);
     size_t buf_size = 0;
+    int begin = 0;
 
     while (1) {
+        if (begin == 0) {
+            begin++;
+            read(client->fd, buf, 4096);
+            printf("Server response: %s", buf);
+        }
         printf("Enter command: ");
         if (getline(&buf, &buf_size, stdin) == -1) {
             perror("getline");
             break;
         }
-        send_and_recv_mess(buf, client);
+        send_serv(buf, client);
+        recv_serveur(buf, client);
     }
     return 0;
 }
