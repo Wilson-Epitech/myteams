@@ -40,17 +40,20 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
     char *username = *argv;
 
-    if (argc != 1 || client->user != NULL) {
-        dprintf(client->fd, argc != 1 ? _101_ : _104_);
+    if (client->user) {
+        dprintf(client->fd, _104_);
+        return;
+    }
+    if (argc != 1) {
+        dprintf(client->fd, _101_);
         return;
     }
     if (strlen(username) > MAX_NAME_LENGTH) {
         dprintf(client->fd, _102_);
         return;
     }
-    if (try_load_user(server, client, username) == FAILURE) {
+    if (try_load_user(server, client, username) == FAILURE)
         return;
-    }
     server_event_user_loaded(client->user->uuid, client->user->name);
     server_event_user_logged_in(client->user->uuid);
     dprintf(client->fd, _002_, client->user->name, client->user->uuid);

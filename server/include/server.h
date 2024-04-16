@@ -109,6 +109,11 @@ void reply_free(void *ptr);
 
 // Utils
 user_t *find_user(server_t *server, char *username);
+team_t *find_team(team_t **teams, char *team_uuid);
+channel_t *find_channel(channel_t **channels, char *channel_uuid);
+thread_t *find_thread(thread_t **threads, char *thread_uuid);
+
+void remove_quote(char **arr);
 
 // Save
 // void save_user(server_t *server, char *username);
@@ -116,4 +121,3 @@ user_t *find_user(server_t *server, char *username);
 
 // Temporary (will be replaced with the real generation)
 char *generate_uuid(server_t *server);
-void remove_quote(char **arr);

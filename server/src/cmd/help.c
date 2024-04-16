@@ -33,13 +33,13 @@ void help(server_t *server, client_t *client, char **argv, size_t argc)
 {
     (void)argv;
     (void)server;
+    if (!client->user) {
+        dprintf(client->fd, _104_);
+        return;
+    }
     if (argc != 0) {
         dprintf(client->fd, _101_);
         return;
     }
-    if (client->user && client->user->loged) {
-        display_help(client->fd);
-    } else {
-        dprintf(client->fd, _104_);
-    }
+    display_help(client->fd);
 }

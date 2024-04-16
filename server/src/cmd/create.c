@@ -102,6 +102,10 @@ static void cr_reply(
 
 void create(server_t *server, client_t *client, char **argv, size_t argc)
 {
+    if (!client->user) {
+        dprintf(client->fd, _104_);
+        return;
+    }
     if (client->team_ctx == NULL) {
         cr_team(server, client, argv, argc);
         return;

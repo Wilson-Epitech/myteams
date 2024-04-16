@@ -1,0 +1,4 @@
+018 Context set to [discord] .
+010 Channel [000000000000000000000000000000000005] [tech2] about [oop] created.
+106 Name already exists.
+019 Context set to [discord] [tech2] .
