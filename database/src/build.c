@@ -76,7 +76,7 @@ static char *create_second_line(char *filename, int spaces_count)
 
     if (strlen(filename) % 2 != 0)
         nb = 1;
-    strcat(str, "║");
+    strcat(str, "#");
     for (int i = 0; i < (spaces_count / 2); i++) {
         strcat(str, " ");
     }
@@ -84,7 +84,7 @@ static char *create_second_line(char *filename, int spaces_count)
     for (int i = 0; i < (spaces_count / 2) + nb; i++) {
         strcat(str, " ");
     }
-    strcat(str, "║\n");
+    strcat(str, "#\n");
     return str;
 }
 
@@ -96,10 +96,10 @@ static char **create_header_file(char *filepath)
     char **header = malloc(sizeof(char *) * 4);
 
     header[0] =
-    strdup("\n");
+    strdup("########################################################\n");
     header[1] = create_second_line(filename, spaces_count);
     header[2] =
-    strdup("\n");
+    strdup("########################################################\n");
     header[3] = NULL;
     return header;
 }
