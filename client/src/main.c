@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
 #include "libs/def.h"
+*/
+
 #include "client.h"
 
 int is_digit(const char *str)
@@ -32,6 +35,7 @@ int main(int ac, const char *av[])
     my_client = get_client(port);
     if (my_client == NULL)
         return 84;
-    else
-        return launch_client(my_client);
+    launch_client(my_client);
+    free(my_client);
+    return 84;
 }

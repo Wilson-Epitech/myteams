@@ -7,26 +7,50 @@
 
 #include "client.h"
 #include <stdlib.h>
+#include <unistd.h>
+
+int recv_serveur(char *buf, client_t *client)
+{
+    int bytes_received = 0;
+
+    bytes_received = recv(client->fd, buf, 1024, 0);
+    if (bytes_received == -1) {
+        perror("recv");
+        return 84;
+    }
+    buf[bytes_received] = '\0';
+    printf("Server response: %s", buf);
+    return 0;
+}
+
+int send_serv(char *buf, client_t *client)
+{
+    if (send(client->fd, buf, strlen(buf), 0) == -1) {
+        perror("send");
+        return 84;
+    }
+    return 0;
+}
 
 int launch_client(client_t *client)
 {
-    char buf[1024];
-    int bytes_received;
+    char *buf = malloc(sizeof(char) * 4096);
+    size_t buf_size = 0;
+    int begin = 0;
 
     while (1) {
+        if (begin == 0) {
+            begin++;
+            read(client->fd, buf, 4096);
+            printf("Server response: %s", buf);
+        }
         printf("Enter command: ");
-        fgets(buf, 1024, stdin);
-        if (send(client->status, buf, strlen(buf), 0) == -1) {
-            perror("send");
+        if (getline(&buf, &buf_size, stdin) == -1) {
+            perror("getline");
             break;
         }
-        bytes_received = recv(client->status, buf, 1024, 0);
-        if (bytes_received == -1) {
-            perror("recv");
-            break;
-        }
-        buf[bytes_received] = '\0';
-        printf("Server response: %s\n", buf);
+        send_serv(buf, client);
+        recv_serveur(buf, client);
     }
     return 0;
 }
@@ -54,7 +78,7 @@ client_t *get_client(int port)
     client_t *clien = default_client();
     struct sockaddr_in serv_addr = default_sockaddr(port);
 
-    if (clien->fd < 0) {
+    if (clien == NULL || clien->fd < 0) {
         printf("\n Socket creation error \n");
         return NULL;
     }
