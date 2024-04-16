@@ -51,12 +51,15 @@ static bool is_quoted(char *str)
 
 static int valid_argv(char **argv)
 {
+    char **tmp = argv;
+
     while (*argv) {
         if (!is_quoted(*argv)) {
             return FAILURE;
         }
         argv++;
     }
+    remove_quote(tmp);
     return SUCCESS;
 }
 
@@ -72,7 +75,6 @@ void handle_command(server_t *server, client_t *client)
         dprintf(client->fd, _102_);
         return;
     }
-    remove_quote(argv + 1);
     argc = arrlen(argv + 1);
     for (size_t i = 0; i < NB_COMMANDS; i++) {
         if (strcmp(COMMANDS[i].name, *argv) != 0)
