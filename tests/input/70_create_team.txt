@@ -1,0 +1,5 @@
+import .login
+/create "discord" "tech"
+/create "discord" "tech"
+/create "pokemon" "showdown"
+import .logout

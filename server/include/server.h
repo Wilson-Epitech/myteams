@@ -20,33 +20,40 @@ typedef struct user_s {
     bool loged;
 } user_t;
 
-typedef struct reply_s {
+typedef struct reply_s reply_t;
+typedef struct thread_s thread_t;
+typedef struct channel_s channel_t;
+typedef struct team_s team_t;
+
+struct reply_s {
     char *uuid;
     char *body;
-} reply_t;
+    time_t time;
+};
 
-typedef struct thread_s {
+struct thread_s {
     char *uuid;
+    time_t time;
     char *title;
     char *message;
-    reply_t **reply;
-} thread_t;
+    reply_t **replies;
+};
 
-typedef struct channel_s {
+struct channel_s {
     char *uuid;
     char *name;
     char *description;
     thread_t **threads;
-} channel_t;
+};
 
-typedef struct team_s {
+struct team_s {
     char *uuid;
     char *name;
     char *description;
     user_t *creator;
     user_t **subscribers;
-    channel_t **channel;
-} team_t;
+    channel_t **channels;
+};
 
 typedef struct client_s {
     int fd;
@@ -58,6 +65,7 @@ typedef struct client_s {
 
 // missing teams, channels, thread, reply, dms
 typedef struct server_s {
+    size_t uuid;
     user_t **users;
     client_t **clients;
     team_t **teams;
@@ -88,10 +96,12 @@ team_t *create_team(
     server_t *, user_t *creator, char *name, char *description);
 void team_free(void *ptr);
 
-channel_t *create_channel(server_t *server, char *name, char *description);
+channel_t *create_channel(
+    server_t *server, char *name, char *description, team_t *parent);
 void channel_free(void *ptr);
 
-thread_t *create_thread(server_t *server, char *title, char *message);
+thread_t *create_thread(
+    server_t *server, char *title, char *message, channel_t *parent);
 void thread_free(void *ptr);
 
 reply_t *create_reply(server_t *server, char *body);
@@ -106,3 +116,4 @@ user_t *find_user(server_t *server, char *username);
 
 // Temporary (will be replaced with the real generation)
 char *generate_uuid(server_t *server);
+void remove_quote(char **arr);

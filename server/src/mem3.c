@@ -7,6 +7,8 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
 
 #include "libs/def.h"
 #include "libs/mem.h"
@@ -27,10 +29,17 @@ void channel_free(void *ptr)
     ptr_free(ptr);
 }
 
-channel_t *create_channel(server_t *server, char *name, char *description)
+channel_t *create_channel(
+    server_t *server, char *name, char *description, team_t *parent)
 {
-    channel_t *channel = alloc(sizeof(channel_t), channel_free);
+    channel_t *channel;
 
+    for (size_t i = 0; parent->channels[i]; i++) {
+        if (strcmp(parent->channels[i]->name, name) == 0) {
+            return NULL;
+        }
+    }
+    channel = alloc(sizeof(channel_t), channel_free);
     if (channel == NULL) {
         PERR_NORET("Couldn't Alloc Channel");
         return NULL;
@@ -52,21 +61,29 @@ void thread_free(void *ptr)
     destroy(thread->uuid);
     destroy(thread->title);
     destroy(thread->message);
-    destroy(thread->reply);
+    destroy(thread->replies);
     ptr_free(ptr);
 }
 
-thread_t *create_thread(server_t *server, char *title, char *message)
+thread_t *create_thread(
+    server_t *server, char *title, char *message, channel_t *parent)
 {
-    thread_t *thread = alloc(sizeof(thread_t), thread_free);
+    thread_t *thread;
 
+    for (size_t i = 0; parent->threads[i]; i++) {
+        if (strcmp(parent->threads[i]->title, title) == 0) {
+            return NULL;
+        }
+    }
+    thread = alloc(sizeof(thread_t), thread_free);
     if (thread == NULL) {
         PERR_NORET("Couldn't Alloc Thread");
         return NULL;
     }
+    thread->time = time(NULL);
     thread->uuid = generate_uuid(server);
     thread->title = strcreate(title);
     thread->message = strcreate(message);
-    thread->reply = arr_alloc(1);
+    thread->replies = arr_alloc(1);
     return thread;
 }

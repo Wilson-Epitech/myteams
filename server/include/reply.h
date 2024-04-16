@@ -32,7 +32,7 @@
 #define _006_ "006 [%s]\n"
 
 // Users
-#define _007_ "007 [%s]\n"
+#define _007_ "007 %s\n"
 
 // User
 #define _008_ "008 [%s] [%s] [%d]\n"
@@ -40,8 +40,8 @@
 // Creation Success
 #define _009_ "009 Team [%s] [%s] about [%s] created.\n"
 #define _010_ "010 Channel [%s] [%s] about [%s] created.\n"
-#define _011_ "011 Thread [%s] created by [%s] at [%s] -> [%s] : [%s] .\n"
-#define _012_ "012 Tn Thread [%s] you [%s] created a Reply at [%s] : [%s] .\n"
+#define _011_ "011 Thread [%s] created by [%s] at [%ld] -> [%s] : [%s] .\n"
+#define _012_ "012 Tn Thread [%s] you [%s] created a Reply at [%ld] : [%s] .\n"
 
 // Creation Event
 #define _013_ "013 Team [%s] [%s] about [%s] created.\n"

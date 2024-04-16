@@ -9,15 +9,12 @@
 #include <string.h>
 
 #include "cmd.h"
-#include "libs/mem.h"
-#include "libs/str.h"
 #include "reply.h"
 #include "server.h"
 
-static void display_user(server_t *server, client_t *client, char *arg)
+static void display_user(server_t *server, client_t *client, char *uuid)
 {
     user_t **users = server->users;
-    SMART char *uuid = strncreate(arg + 1, strlen(arg) - 2);
 
     while (*users) {
         if (strcmp((*users)->uuid, uuid) == 0) {
@@ -35,7 +32,6 @@ static void display_user(server_t *server, client_t *client, char *arg)
 
 void user(server_t *server, client_t *client, char **argv, size_t argc)
 {
-    (void)argv;
     if (argc != 1) {
         dprintf(client->fd, _101_);
         return;

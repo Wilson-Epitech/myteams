@@ -1,0 +1,3 @@
+009 Team [000000000000000000000000000000000003] [discord] about [tech] created.
+106 Name already exists.
+009 Team [000000000000000000000000000000000004] [pokemon] about [showdown] created.
