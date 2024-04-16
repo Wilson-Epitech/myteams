@@ -96,12 +96,15 @@ DECLARE(logout);
 DECLARE(help);
 DECLARE(users);
 DECLARE(user);
-// DECLARE(create);
+DECLARE(create);
 
 static const cmd_t COMMANDS[] = {
-    ARGUMENTS(login, 1), ARGUMENTS(logout, 0), ARGUMENTS(help, 0),
-    ARGUMENTS(users, 0), ARGUMENTS(user, 1),
-    // ARGUMENTS(create, 1),
+    ARGUMENTS(login, 1),
+    ARGUMENTS(logout, 0),
+    ARGUMENTS(help, 0),
+    ARGUMENTS(users, 0),
+    ARGUMENTS(user, 1),
+    ARGUMENTS(create, 1),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

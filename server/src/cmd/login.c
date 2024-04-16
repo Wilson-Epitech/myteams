@@ -12,8 +12,6 @@
 #include "../libs/myteams/logging_server.h"
 #include "cmd.h"
 #include "libs/def.h"
-#include "libs/mem.h"
-#include "libs/str.h"
 #include "reply.h"
 #include "server.h"
 
@@ -22,20 +20,25 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     user_t *user = find_user(server, username);
 
     if (user == NULL) {
-        return FAILURE;
+        create_user(server, username);
+        client->user = find_user(server, username);
+        server_event_user_created(client->user->uuid, client->user->name);
+        dprintf(client->fd, _001_, client->user->name, client->user->uuid);
+        return SUCCESS;
     }
     if (user->loged) {
         dprintf(client->fd, _104_);
+        return FAILURE;
     } else {
         client->user = user;
         user->loged = true;
+        return SUCCESS;
     }
-    return SUCCESS;
 }
 
 void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
-    SMART char *username = strncreate((*argv) + 1, strlen(*argv) - 2);
+    char *username = *argv;
 
     if (argc != 1 || client->user != NULL) {
         dprintf(client->fd, argc != 1 ? _101_ : _104_);
@@ -46,10 +49,7 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         return;
     }
     if (try_load_user(server, client, username) == FAILURE) {
-        create_user(server, username);
-        client->user = find_user(server, username);
-        server_event_user_created(client->user->uuid, client->user->name);
-        dprintf(client->fd, _001_, client->user->name, client->user->uuid);
+        return;
     }
     server_event_user_loaded(client->user->uuid, client->user->name);
     server_event_user_logged_in(client->user->uuid);

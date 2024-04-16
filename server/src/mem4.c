@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "libs/def.h"
 #include "libs/mem.h"
@@ -25,14 +26,16 @@ void reply_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_reply(server_t *server, char *body)
+reply_t *create_reply(server_t *server, char *body)
 {
     reply_t *reply = alloc(sizeof(channel_t), reply_free);
 
     if (reply == NULL) {
         PERR_NORET("Couldn't Alloc Reply");
-        return;
+        return NULL;
     }
+    reply->time = time(NULL);
     reply->uuid = generate_uuid(server);
     reply->body = strcreate(body);
+    return reply;
 }

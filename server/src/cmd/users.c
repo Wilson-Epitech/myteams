@@ -19,10 +19,14 @@ static void display_users(server_t *server, client_t *client)
     SMART char *data = strcreate("");
 
     while (*users) {
+        stradd_c(&data, '[');
         stradd_s(&data, (*users)->name);
+        stradd_c(&data, ']');
         stradd_c(&data, ' ');
+        stradd_c(&data, '[');
         stradd_s(&data, (*users)->uuid);
-        stradd_c(&data, '\n');
+        stradd_c(&data, ']');
+        stradd_c(&data, ' ');
         users++;
     }
     dprintf(client->fd, _007_, data);

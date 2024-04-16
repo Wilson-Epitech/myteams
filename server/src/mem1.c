@@ -38,6 +38,7 @@ server_t *create_server(void)
     if (server == NULL) {
         return NULL;
     }
+    server->uuid = 0;
     server->users = arr_alloc(1);
     server->clients = arr_alloc(1);
     server->teams = arr_alloc(1);
