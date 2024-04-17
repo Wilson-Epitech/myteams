@@ -24,9 +24,9 @@ SRC			=	$(SRC_DIR)server.c				\
 				$(SRC_DIR)init_server.c			\
 				$(SRC_DIR)run_server.c			\
 				$(SRC_DIR)cmd_handler.c			\
-				$(SRC_DIR)utils.c				\
-				$(SRC_DIR)user.c				\
-				$(SRC_DIR)/database/save.c		\
+				$(SRC_DIR)utils1.c				\
+				$(SRC_DIR)utils2.c				\
+				$(SRC_DIR)database/save.c		\
 				$(CMD)
 
 CMD_DIR		=	$(SRC_DIR)cmd/
@@ -42,6 +42,7 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)unsubscribe.c			\
 				$(CMD_DIR)list.c				\
 				$(CMD_DIR)info.c				\
+				$(CMD_DIR)send.c				\
 
 # -------------------------------------------------------------------------- #
 
