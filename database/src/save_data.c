@@ -83,12 +83,3 @@ int save_threads(thread_t **thread)
     close(fd);
     return 0;
 }
-
-
-struct thread_s {
-    char *uuid;
-    time_t time;
-    char *title;
-    char *message;
-    reply_t **replies;
-};
