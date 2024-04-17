@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <stdbool.h>
 #include <stddef.h>
 
 /*
@@ -27,12 +28,12 @@ void *arr_pushback(void *arr, void *elem);
 /*
     remove an element at a certain index if found
 */
-void arr_remove_idx(void *_arr, size_t index);
+void arr_remove_idx(void *_arr, size_t index, bool free_elem);
 
 /*
     remove elem if found
 */
-void arr_remove_ptr(void *_arr, void *elem);
+void arr_remove_ptr(void *_arr, void *elem, bool free_elem);
 
 /*
     shift the array to the left. (after a remove/pop)

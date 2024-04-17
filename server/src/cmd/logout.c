@@ -5,6 +5,7 @@
 ** logout
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "../libs/myteams/logging_server.h"
@@ -26,5 +27,5 @@ void logout(server_t *server, client_t *client, char **argv, size_t argc)
         server_event_user_logged_out(client->user->uuid);
     }
     dprintf(client->fd, _005_);
-    arr_remove_ptr(server->clients, client);
+    arr_remove_ptr(server->clients, client, true);
 }

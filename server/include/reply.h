@@ -66,3 +66,6 @@
 
 // Subscribe
 #define _023_ "023 You subscribed to the team [%s] [%s] \n"
+
+// Unsubscribe
+#define _024_ "024 You unsubscribed from the team [%s] [%s] \n"

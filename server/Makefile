@@ -38,6 +38,7 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)use.c					\
 				$(CMD_DIR)subscribed.c			\
 				$(CMD_DIR)subscribe.c			\
+				$(CMD_DIR)unsubscribe.c			\
 
 # -------------------------------------------------------------------------- #
 
