@@ -21,12 +21,9 @@ static void display_users(server_t *server, client_t *client)
     while (*users) {
         stradd_c(&data, '[');
         stradd_s(&data, (*users)->name);
-        stradd_c(&data, ']');
-        stradd_c(&data, ' ');
-        stradd_c(&data, '[');
+        stradd_s(&data, "] [");
         stradd_s(&data, (*users)->uuid);
-        stradd_c(&data, ']');
-        stradd_c(&data, ' ');
+        stradd_s(&data, "] ");
         users++;
     }
     dprintf(client->fd, _007_, data);

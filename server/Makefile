@@ -36,6 +36,7 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)user.c				\
 				$(CMD_DIR)create.c				\
 				$(CMD_DIR)use.c					\
+				$(CMD_DIR)subscribed.c			\
 
 # -------------------------------------------------------------------------- #
 

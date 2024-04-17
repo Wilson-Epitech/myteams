@@ -109,6 +109,7 @@ DECLARE(users);
 DECLARE(user);
 DECLARE(create);
 DECLARE(use);
+DECLARE(subscribed);
 
 static const cmd_t COMMANDS[] = {
     ARGUMENTS(login, 1),
@@ -118,6 +119,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(user, 1),
     ARGUMENTS(create, 1),
     ARGUMENTS(use, 0),
+    ARGUMENTS(subscribed, 0),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

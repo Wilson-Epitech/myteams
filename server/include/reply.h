@@ -57,3 +57,9 @@
 #define _018_ "018 Context set to [%s] .\n"
 #define _019_ "019 Context set to [%s] [%s] .\n"
 #define _020_ "020 Context set to [%s] [%s] [%s] .\n"
+
+// My Subscriptions
+#define _021_ "021 %s\n"
+
+// Subscribers of a Team
+#define _022_ "022 %s\n"

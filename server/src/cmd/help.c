@@ -17,14 +17,19 @@ static void display_help(int fd)
 {
     FILE *file = fopen("protocol.yaml", "r");
     SMART char *str = strcreate("");
-    char c;
+    SMART char *tmp = NULL;
+    size_t size;
 
     if (file == NULL) {
         return;
     }
-    for (c = fgetc(file); c != EOF; c = fgetc(file)) {
-        stradd_c(&str, c);
-    }
+    fseek(file, 0, SEEK_END);
+    size = ftell(file);
+    rewind(file);
+    tmp = alloc(size + 1, ptr_free);
+    fread(tmp, sizeof(char), size, file);
+    tmp[size] = '\0';
+    stradd_s(&str, tmp);
     fclose(file);
     dprintf(fd, _006_, str);
 }
