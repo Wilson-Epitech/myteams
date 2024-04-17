@@ -11,4 +11,6 @@
 typedef struct db_s {
 } db_t;
 
+int save_user(user_t **users);
+
 #endif /* !DATABASE_H_ */

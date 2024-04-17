@@ -54,8 +54,6 @@ static char *get_filename_from_path(char *path)
     return NULL;
 }
 
-// Impossible de creer le directory, voir pour les messages avec Marius si
-// il faut l'ecrire sur la sortis d'erreur ou non.
 static int create_directory(char *dirname)
 {
     char *path = update_path(getcwd(NULL, 0), dirname);
@@ -104,8 +102,6 @@ static char **create_header_file(char *filepath)
     return header;
 }
 
-// Impossible de creer le fichier, voir pour les messages avec Marius si il
-// faut l'ecrire sur la sortis d'erreur ou non.
 static int create_file(char *file)
 {
     char *path = update_path(getcwd(NULL, 0), file);
@@ -137,3 +133,4 @@ int main(void)
     create_file("data/channels.txt");
     create_file("data/threads.txt");
 }
+t
