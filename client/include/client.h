@@ -16,7 +16,8 @@
 typedef struct client_s {
     int fd;
     int status;
+    fd_set read_fd;
 } client_t;
 
-client_t *get_client(int);
+client_t *get_client(int, const char *);
 int launch_client(client_t *client);

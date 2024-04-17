@@ -28,11 +28,11 @@ int main(int ac, const char *av[])
     int port = 0;
     client_t *my_client;
 
-    if (ac > 1 && is_digit(av[1]))
-        port = atoi(av[1]);
+    if (ac > 2 && is_digit(av[2]))
+        port = atoi(av[2]);
     else
         return 84;
-    my_client = get_client(port);
+    my_client = get_client(port, av[1]);
     if (my_client == NULL)
         return 84;
     launch_client(my_client);

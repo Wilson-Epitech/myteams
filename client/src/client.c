@@ -8,49 +8,46 @@
 #include "client.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <stddef.h>
 
-int recv_serveur(char *buf, client_t *client)
+int recv_serveur(client_t *client)
 {
+    char *buf = malloc(sizeof(char) * 4096);
     int bytes_received = 0;
 
-    bytes_received = recv(client->fd, buf, 1024, 0);
-    if (bytes_received == -1) {
-        perror("recv");
-        return 84;
+    if (FD_ISSET(client->fd, &(client->read_fd))) {
+        bytes_received = read(client->fd, buf, 4096);
+        if (bytes_received <= 0)
+            return 84;
+        buf[bytes_received] = '\0';
+        printf("Server response: %s\n", buf);
     }
-    buf[bytes_received] = '\0';
-    printf("Server response: %s", buf);
     return 0;
 }
 
-int send_serv(char *buf, client_t *client)
+int send_serv(client_t *client)
 {
-    if (send(client->fd, buf, strlen(buf), 0) == -1) {
-        perror("send");
-        return 84;
+    char *buf = malloc(sizeof(char) * 4096);
+
+    if (FD_ISSET(STDIN_FILENO, &(client->read_fd))) {
+        if (fgets(buf, 4096, stdin) == NULL)
+            return 84;
+        if (write(client->fd, buf, strlen(buf)) == -1)
+            return 84;
     }
     return 0;
 }
 
 int launch_client(client_t *client)
 {
-    char *buf = malloc(sizeof(char) * 4096);
-    size_t buf_size = 0;
-    int begin = 0;
-
+    FD_ZERO(&(client->read_fd));
     while (1) {
-        if (begin == 0) {
-            begin++;
-            read(client->fd, buf, 4096);
-            printf("Server response: %s", buf);
-        }
-        printf("Enter command: ");
-        if (getline(&buf, &buf_size, stdin) == -1) {
-            perror("getline");
+        FD_SET(STDIN_FILENO, &(client->read_fd));
+        FD_SET(client->fd, &(client->read_fd));
+        if (select(client->fd + 1, &(client->read_fd), NULL, NULL, NULL) == -1)
             break;
-        }
-        send_serv(buf, client);
-        recv_serveur(buf, client);
+        send_serv(client);
+        recv_serveur(client);
     }
     return 0;
 }
@@ -60,7 +57,6 @@ static struct client_s *default_client(void)
     client_t *ret = malloc(sizeof(client_t));
 
     ret->fd = socket(AF_INET, SOCK_STREAM, 0);
-    ret->status = 0;
     return ret;
 }
 
@@ -73,22 +69,23 @@ static struct sockaddr_in default_sockaddr(int port)
     return serv_addr;
 }
 
-client_t *get_client(int port)
+client_t *get_client(int port, const char *ip)
 {
     client_t *clien = default_client();
     struct sockaddr_in serv_addr = default_sockaddr(port);
+    int status = 0;
 
     if (clien == NULL || clien->fd < 0) {
         printf("\n Socket creation error \n");
         return NULL;
     }
-    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
         printf("\nInvalid address/ Address not supported \n");
         return NULL;
     }
-    clien->status = connect(clien->fd, (struct sockaddr*)&serv_addr,
+    status = connect(clien->fd, (struct sockaddr*)&serv_addr,
     sizeof(serv_addr));
-    if (clien->status < 0) {
+    if (status < 0) {
         printf("\nConnection Failed \n");
         return NULL;
     }
