@@ -20,10 +20,18 @@ typedef struct user_s {
     bool loged;
 } user_t;
 
+typedef struct dm_s dm_t;
 typedef struct reply_s reply_t;
 typedef struct thread_s thread_t;
 typedef struct channel_s channel_t;
 typedef struct team_s team_t;
+
+struct dm_s {
+    user_t *sender;
+    user_t *receiver;
+    time_t time;
+    char *message;
+};
 
 struct reply_s {
     char *uuid;
@@ -69,6 +77,7 @@ typedef struct server_s {
     user_t **users;
     client_t **clients;
     team_t **teams;
+    dm_t **dms;
     int port;
     int fd;
     fd_set read_fd;
@@ -107,17 +116,23 @@ void thread_free(void *ptr);
 reply_t *create_reply(server_t *server, char *body);
 void reply_free(void *ptr);
 
+void create_dm(
+    server_t *server, user_t *sender, user_t *receiver, char *message);
+void dm_free(void *ptr);
+
 // Utils
 user_t *find_user(server_t *server, char *username);
+user_t *find_user_by_uuid(server_t *server, char *uuid);
 team_t *find_team(team_t **teams, char *team_uuid);
 channel_t *find_channel(channel_t **channels, char *channel_uuid);
 thread_t *find_thread(thread_t **threads, char *thread_uuid);
+// dm_t **find_dms(dm_t **dms, user_t *user_1, user_t *user_2);
 
 void remove_quote(char **arr);
 
 // Save
-// void save_user(server_t *server, char *username);
-// todo: all save
+#define SAVE_DIRECTORY "./database/"
+int save_users(user_t **users);
 
 // Temporary (will be replaced with the real generation)
 char *generate_uuid(server_t *server);
