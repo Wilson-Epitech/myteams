@@ -51,7 +51,7 @@ void team_free(void *ptr)
     destroy(team->name);
     destroy(team->description);
     destroy(team->channels);
-    destroy(team->subscribers);
+    ptr_free(team->subscribers);
     destroy(team->uuid);
     ptr_free(ptr);
 }

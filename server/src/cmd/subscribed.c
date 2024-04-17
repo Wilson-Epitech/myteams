@@ -59,7 +59,7 @@ static void all_subscribers(
         stradd_s(&data, (*users)->name);
         stradd_s(&data, "] ");
     }
-    dprintf(client->fd, _022_, data);
+    dprintf(client->fd, _022_, team->name, data);
 }
 
 void subscribed(server_t *server, client_t *client, char **argv, size_t argc)

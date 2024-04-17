@@ -59,7 +59,10 @@
 #define _020_ "020 Context set to [%s] [%s] [%s] .\n"
 
 // My Subscriptions
-#define _021_ "021 %s\n"
+#define _021_ "021 You are subscribed to the teams %s\n"
 
 // Subscribers of a Team
-#define _022_ "022 %s\n"
+#define _022_ "022 The subscribers of the team [%s] are %s\n"
+
+// Subscribe
+#define _023_ "023 You subscribed to the team [%s] [%s] \n"

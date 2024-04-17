@@ -1,0 +1,5 @@
+002 User [marius] [000000000000000000000000000000000002] loaded.\n003 User [marius] [000000000000000000000000000000000002] logged in, proceed.
+023 You subscribed to the team [discord] [000000000000000000000000000000000003] 
+021 You are subscribed to the teams [discord] 
+022 The subscribers of the team [discord] are [test] [marius] 
+004 User disconnected.\n005 Service closed.
