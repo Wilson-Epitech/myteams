@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "../libs/myteams/logging_server.h"
 #include "cmd.h"
 #include "reply.h"
 #include "server.h"
@@ -31,4 +32,6 @@ void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
     }
     create_dm(server, client->user, receiver, *(argv + 1));
     dprintf(client->fd, _033_, receiver->name, *(argv + 1));
+    server_event_private_message_sended(
+        client->user->uuid, receiver->uuid, *(argv + 1));
 }

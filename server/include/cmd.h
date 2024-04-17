@@ -68,10 +68,10 @@
 // 0000000000001860 T server_event_reply_created
 // 0000000000001890 T server_event_user_subscribed
 // 00000000000018c0 T server_event_user_unsubscribed
+// 00000000000019b0 T server_event_private_message_sended
 /* __done__ */
 
 /* __in_progress__ */
-// 00000000000019b0 T server_event_private_message_sended
 /* __in_progress__ */
 
 /* __done__ */
