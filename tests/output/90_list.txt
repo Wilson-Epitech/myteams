@@ -1,0 +1,5 @@
+028 List of teams [discord] about [tech] , [pokemon] about [showdown] , 
+018 Context set to [discord] .
+027 List of channels [tech2] about [oop] , 
+019 Context set to [discord] [tech2] .
+026 List of threads 

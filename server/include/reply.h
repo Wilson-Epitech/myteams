@@ -44,7 +44,7 @@
 #define _009_ "009 Team [%s] [%s] about [%s] created.\n"
 #define _010_ "010 Channel [%s] [%s] about [%s] created.\n"
 #define _011_ "011 Thread [%s] created by [%s] at [%ld] -> [%s] : [%s] .\n"
-#define _012_ "012 Tn Thread [%s] you [%s] created a Reply at [%ld] : [%s] .\n"
+#define _012_ "012 In Thread [%s] you [%s] created a Reply at [%ld] : [%s] .\n"
 
 // Creation Event
 #define _013_ "013 Team [%s] [%s] about [%s] created.\n"
@@ -69,3 +69,9 @@
 
 // Unsubscribe
 #define _024_ "024 You unsubscribed from the team [%s] [%s] \n"
+
+// List
+#define _025_ "025 List of replies %s\n"
+#define _026_ "026 List of threads %s\n"
+#define _027_ "027 List of channels %s\n"
+#define _028_ "028 List of teams %s\n"
