@@ -43,6 +43,7 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)list.c				\
 				$(CMD_DIR)info.c				\
 				$(CMD_DIR)send.c				\
+				$(CMD_DIR)messages.c			\
 
 # -------------------------------------------------------------------------- #
 

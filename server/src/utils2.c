@@ -5,8 +5,11 @@
 ** user
 */
 
+#include <stdio.h>
 #include <string.h>
 
+#include "libs/arr.h"
+#include "libs/mem.h"
 #include "server.h"
 
 user_t *find_user(server_t *server, char *username)
@@ -44,14 +47,17 @@ team_t *find_team_by_name(team_t **teams, char *name)
     return NULL;
 }
 
-// dm_t **find_dms(dm_t **dms, user_t *user_1, user_t *user_2)
-// {
-//     dm_t **dms = server->dms;
+dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver)
+{
+    dm_t **found = arr_alloc(1);
 
-//     for (size_t i = 0; dms[i]; i++) {
-//         if (strcmp(dms[i]->uuid_1, uuid_1) == 0 ||) {
-//             return users[i];
-//         }
-//     }
-//     return NULL;
-// }
+    for (size_t i = 0; dms[i]; i++) {
+        if ((strcmp(dms[i]->sender->uuid, sender->uuid) == 0 &&
+                strcmp(dms[i]->receiver->uuid, receiver->uuid) == 0) ||
+            (strcmp(dms[i]->sender->uuid, receiver->uuid) == 0 &&
+                strcmp(dms[i]->receiver->uuid, sender->uuid) == 0)) {
+            arr_pushback(&found, dms[i]);
+        }
+    }
+    return found;
+}

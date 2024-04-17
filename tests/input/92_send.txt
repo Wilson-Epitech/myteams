@@ -1,4 +1,9 @@
-import .login
+/login "test"
 /send "000000000000000000000000000000000002" "hello marius, je suis test"
 /login "marius"
-import .logout
+/send "000000000000000000000000000000000000" "hello test, heureux de te rencontrer, jespere que je pourrait devenir astek !"
+/login "test"
+/send "000000000000000000000000000000000002" "bonne change bg ! esperons que thomas change davis."
+/login "marius"
+/messages "000000000000000000000000000000000000"
+/logout

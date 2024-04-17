@@ -82,13 +82,13 @@
 //   - user
 //   - info
 //   - create
-/* __done__ */
 //   - send
-//   - messages
 //   - subscribe
 //   - unsubscribe
 //   - use
 //   - list
+//   - messages
+/* __done__ */
 
 typedef struct cmd_s {
     const char *name;
@@ -114,6 +114,7 @@ DECLARE(unsubscribe);
 DECLARE(list);
 DECLARE(info);
 DECLARE(send_cmd);
+DECLARE(messages);
 
 static const cmd_t COMMANDS[] = {
     ARGUMENTS(login, 1),
@@ -129,6 +130,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(list, 0),
     ARGUMENTS(info, 0),
     ARGUMENTS(send_cmd, 2),
+    ARGUMENTS(messages, 1),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

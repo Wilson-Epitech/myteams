@@ -15,6 +15,15 @@
 #include "reply.h"
 #include "server.h"
 
+static void show_logout(client_t *client)
+{
+    if (client->user) {
+        client->user->loged = false;
+        dprintf(client->fd, _004_);
+        server_event_user_logged_out(client->user->uuid);
+    }
+}
+
 static int try_load_user(server_t *server, client_t *client, char *username)
 {
     user_t *user = find_user(server, username);
@@ -29,8 +38,7 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     if (user->loged) {
         dprintf(client->fd, _104_);
     } else {
-        if (client->user)
-            client->user->loged = false;
+        show_logout(client);
         client->user = user;
         client->user->loged = true;
         server_event_user_loaded(client->user->uuid, client->user->name);

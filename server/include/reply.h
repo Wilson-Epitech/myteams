@@ -84,3 +84,6 @@
 
 // Send
 #define _033_ "033 To [%s] : [%s] \n"
+
+// Messages
+#define _034_ "034 Messages : %s\n"

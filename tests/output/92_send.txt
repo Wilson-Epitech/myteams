@@ -1,2 +1,9 @@
+002 User [test] [000000000000000000000000000000000000] loaded.\n003 User [test] [000000000000000000000000000000000000] logged in, proceed.
 033 To [marius] : [hello marius, je suis test] 
-002 User [marius] [000000000000000000000000000000000002] loaded.\n003 User [marius] [000000000000000000000000000000000002] logged in, proceed.
+004 User disconnected.\n002 User [marius] [000000000000000000000000000000000002] loaded.\n003 User [marius] [000000000000000000000000000000000002] logged in, proceed.
+033 To [test] : [hello test, heureux de te rencontrer, jespere que je pourrait devenir astek !] 
+004 User disconnected.\n002 User [test] [000000000000000000000000000000000000] loaded.\n003 User [test] [000000000000000000000000000000000000] logged in, proceed.
+033 To [marius] : [bonne change bg ! esperons que thomas change davis.] 
+004 User disconnected.\n002 User [marius] [000000000000000000000000000000000002] loaded.\n003 User [marius] [000000000000000000000000000000000002] logged in, proceed.
+034 Messages : [test] [hello marius, je suis test] [marius] [hello test, heureux de te rencontrer, jespere que je pourrait devenir astek !] [test] [bonne change bg ! esperons que thomas change davis.] 
+004 User disconnected.

@@ -127,7 +127,7 @@ team_t *find_team_by_name(team_t **teams, char *name);
 team_t *find_team(team_t **teams, char *team_uuid);
 channel_t *find_channel(channel_t **channels, char *channel_uuid);
 thread_t *find_thread(thread_t **threads, char *thread_uuid);
-// dm_t **find_dms(dm_t **dms, user_t *user_1, user_t *user_2);
+dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver);
 
 void remove_quote(char **arr);
 
