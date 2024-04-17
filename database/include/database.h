@@ -11,8 +11,14 @@
 typedef struct db_s {
 } db_t;
 
+//--------save commands -------//
 int save_users(user_t **users);
+int save_reply(reply_t **reply);
+
+//--------create commands -------//
 int create_file(char *file);
+
+
 int build_database(void);
 
 #endif /* !DATABASE_H_ */

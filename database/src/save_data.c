@@ -33,14 +33,32 @@ int save_users(user_t **users)
 
     if (is_file(path) == 0)
         create_file(path);
-    printf("path : %s\n", path);
     fd = open(path, O_RDWR | O_APPEND, 0644);
     if (fd == -1) {
         PERR_NORET("Open failed");
         return 84;
     }
     for (size_t i = 0; users[i] != NULL; i++) {
-        dprintf(fd, "%s\n%s\t\n", users[i]->uuid, users[i]->name);
+        dprintf(fd, "%s\n%s\n", users[i]->uuid, users[i]->name);
+    }
+    close(fd);
+    return 0;
+}
+
+int save_reply(reply_t **reply)
+{
+    int fd = 0;
+    char *path = "./database/data/reply.txt";
+
+    if (is_file(path) == 0)
+        create_file(path);
+    fd = open(path, O_RDWR | O_APPEND, 0644);
+    if (fd == -1) {
+        PERR_NORET("Open failed");
+        return 84;
+    }
+    for (size_t i = 0; reply[i] != NULL; i++) {
+        dprintf(fd, "%s\n%s\r\n", reply[i]->uuid, reply[i]->body);
     }
     close(fd);
     return 0;

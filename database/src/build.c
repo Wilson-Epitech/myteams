@@ -125,5 +125,7 @@ int build_database(void)
         return 84;
     if (create_file("./database/data/threads.txt") == 84)
         return 84;
+    if (create_file("./database/data/reply.txt") == 84)
+        return 84;
     return 0;
 }

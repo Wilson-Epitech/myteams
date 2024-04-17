@@ -26,6 +26,7 @@ void server_free(void *ptr)
         close(server->fd);
     }
     save_users(server->users);
+    // save_reply(server->reply);
     destroy(server->clients);
     destroy(server->users);
     destroy(server->teams);
