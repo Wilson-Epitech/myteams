@@ -1,0 +1,4 @@
+import .login
+/send "000000000000000000000000000000000002" "hello marius, je suis test"
+/login "marius"
+import .logout

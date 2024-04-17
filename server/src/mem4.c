@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "libs/arr.h"
 #include "libs/def.h"
 #include "libs/mem.h"
 #include "libs/str.h"
@@ -38,4 +39,31 @@ reply_t *create_reply(server_t *server, char *body)
     reply->uuid = generate_uuid(server);
     reply->body = strcreate(body);
     return reply;
+}
+
+void dm_free(void *ptr)
+{
+    dm_t *dm = ptr;
+
+    if (dm == NULL) {
+        return;
+    }
+    destroy(dm->message);
+    ptr_free(ptr);
+}
+
+void create_dm(
+    server_t *server, user_t *sender, user_t *receiver, char *message)
+{
+    dm_t *dm = alloc(sizeof(dm_t), dm_free);
+
+    if (dm == NULL) {
+        PERR_NORET("Couldn't Alloc Dm");
+        return;
+    }
+    dm->time = time(NULL);
+    dm->sender = sender;
+    dm->receiver = receiver;
+    dm->message = strcreate(message);
+    arr_pushback(&(server->dms), dm);
 }

@@ -1,3 +1,4 @@
 024 You unsubscribed from the team [discord] [000000000000000000000000000000000003] 
-021 You are subscribed to the teams 
-022 The subscribers of the team [discord] are [marius] 
+021 You are subscribed to the teams [pokemon] 
+022 The subscribers of the team [discord] are 
+023 You subscribed to the team [discord] [000000000000000000000000000000000003] 

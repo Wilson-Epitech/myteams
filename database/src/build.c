@@ -94,10 +94,10 @@ static char **create_header_file(char *filepath)
     char **header = malloc(sizeof(char *) * 4);
 
     header[0] =
-    strdup("########################################################\n");
+        strdup("########################################################\n");
     header[1] = create_second_line(filename, spaces_count);
     header[2] =
-    strdup("########################################################\n");
+        strdup("########################################################\n");
     header[3] = NULL;
     return header;
 }
@@ -133,4 +133,3 @@ int main(void)
     create_file("data/channels.txt");
     create_file("data/threads.txt");
 }
-t

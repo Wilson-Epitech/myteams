@@ -1,2 +1,2 @@
-021 You are subscribed to the teams 
-022 The subscribers of the team [discord] are 
+021 You are subscribed to the teams [discord] [pokemon] 
+022 The subscribers of the team [discord] are [test] 

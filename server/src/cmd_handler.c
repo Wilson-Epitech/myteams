@@ -63,6 +63,21 @@ static int valid_argv(char **argv)
     return SUCCESS;
 }
 
+static void handle_send_cmd(server_t *server, client_t *client, char **argv)
+{
+    size_t argc = arrlen(argv + 1);
+
+    if (strcmp(*argv, "/send") == 0) {
+        if (2 > argc) {
+            dprintf(client->fd, _101_);
+        } else {
+            send_cmd(server, client, argv + 1, argc);
+        }
+    } else {
+        dprintf(client->fd, _100_);
+    }
+}
+
 // todo: should an empty command be responded with an error or ignored ?
 void handle_command(server_t *server, client_t *client)
 {
@@ -85,5 +100,5 @@ void handle_command(server_t *server, client_t *client)
             COMMANDS[i].function(server, client, argv + 1, argc);
         return;
     }
-    dprintf(client->fd, _100_);
+    handle_send_cmd(server, client, argv);
 }

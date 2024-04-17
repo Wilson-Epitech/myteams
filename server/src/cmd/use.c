@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "libs/arr.h"
 #include "reply.h"
 #include "server.h"
 
@@ -69,25 +70,36 @@ static void set_root_context(client_t *client)
     dprintf(client->fd, _017_);
 }
 
-void use(server_t *server, client_t *client, char **argv, size_t argc)
+static int if_subbed(
+    server_t *server, client_t *client, char **argv, size_t argc)
 {
-    if (!client->user) {
-        dprintf(client->fd, _104_);
-        return;
-    } else if (argc > 3) {
-        dprintf(client->fd, _101_);
-        return;
+    team_t *team = find_team(server->teams, *argv);
+
+    if (!team) {
+        return dprintf(client->fd, _107_);
+    }
+    if (!arr_has(team->subscribers, client->user)) {
+        return dprintf(client->fd, _104_);
     }
     if (argc == 0) {
         set_root_context(client);
-        return;
-    } else if (argc == 1) {
+    }
+    if (argc == 1) {
         set_team_context(server, client, argv);
-        return;
     }
     if (argc == 2) {
         set_channel_context(server, client, argv);
     } else if (argc == 3) {
         set_thread_context(server, client, argv);
     }
+    return 0;
+}
+
+void use(server_t *server, client_t *client, char **argv, size_t argc)
+{
+    if (!client->user || argc > 3) {
+        dprintf(client->fd, (!client->user) ? _104_ : _101_);
+        return;
+    }
+    if_subbed(server, client, argv, argc);
 }

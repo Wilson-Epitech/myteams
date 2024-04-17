@@ -36,7 +36,7 @@ void users(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _101_);
         return;
     }
-    if (client->user && client->user->loged) {
+    if (client->user) {
         display_users(server, client);
     } else {
         dprintf(client->fd, _104_);

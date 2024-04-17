@@ -66,14 +66,13 @@
 // 00000000000017f0 T server_event_channel_created
 // 0000000000001820 T server_event_thread_created
 // 0000000000001860 T server_event_reply_created
+// 0000000000001890 T server_event_user_subscribed
+// 00000000000018c0 T server_event_user_unsubscribed
 /* __done__ */
 
 /* __in_progress__ */
-// 0000000000001890 T server_event_user_subscribed
-// 00000000000018c0 T server_event_user_unsubscribed
-/* __in_progress__ */
-
 // 00000000000019b0 T server_event_private_message_sended
+/* __in_progress__ */
 
 /* __done__ */
 //   - help
@@ -114,6 +113,7 @@ DECLARE(subscribe);
 DECLARE(unsubscribe);
 DECLARE(list);
 DECLARE(info);
+DECLARE(send_cmd);
 
 static const cmd_t COMMANDS[] = {
     ARGUMENTS(login, 1),
@@ -128,6 +128,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(unsubscribe, 1),
     ARGUMENTS(list, 0),
     ARGUMENTS(info, 0),
+    ARGUMENTS(send_cmd, 2),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

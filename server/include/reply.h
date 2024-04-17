@@ -81,3 +81,6 @@
 #define _030_ "030 Info Channel [%s] [%s] \n"
 #define _031_ "031 Info Team [%s] [%s] \n"
 #define _032_ "032 Info User [%s] [%s] \n"
+
+// Send
+#define _033_ "033 To [%s] : [%s] \n"

@@ -2,4 +2,6 @@ import .login
 /create "discord" "tech"
 /create "discord" "tech"
 /create "pokemon" "showdown"
+/subscribe "000000000000000000000000000000000003"
+/subscribe "000000000000000000000000000000000004"
 import .logout

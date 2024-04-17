@@ -17,10 +17,7 @@
 void logout(server_t *server, client_t *client, char **argv, size_t argc)
 {
     (void)argv;
-    if (argc != 0) {
-        dprintf(client->fd, _101_);
-        return;
-    }
+    (void)argc;
     if (client->user) {
         client->user->loged = false;
         dprintf(client->fd, _004_);

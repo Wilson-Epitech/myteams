@@ -28,22 +28,21 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     }
     if (user->loged) {
         dprintf(client->fd, _104_);
-        return FAILURE;
     } else {
+        if (client->user)
+            client->user->loged = false;
         client->user = user;
-        user->loged = true;
-        return SUCCESS;
+        client->user->loged = true;
+        server_event_user_loaded(client->user->uuid, client->user->name);
+        dprintf(client->fd, _002_, client->user->name, client->user->uuid);
     }
+    return (user == client->user) ? SUCCESS : FAILURE;
 }
 
 void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
     char *username = *argv;
 
-    if (client->user) {
-        dprintf(client->fd, _104_);
-        return;
-    }
     if (argc != 1) {
         dprintf(client->fd, _101_);
         return;
@@ -52,10 +51,9 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _102_);
         return;
     }
-    if (try_load_user(server, client, username) == FAILURE)
+    if (try_load_user(server, client, username) == FAILURE) {
         return;
-    server_event_user_loaded(client->user->uuid, client->user->name);
+    }
     server_event_user_logged_in(client->user->uuid);
-    dprintf(client->fd, _002_, client->user->name, client->user->uuid);
     dprintf(client->fd, _003_, client->user->name, client->user->uuid);
 }

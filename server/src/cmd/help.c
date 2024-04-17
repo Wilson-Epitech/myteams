@@ -37,14 +37,7 @@ static void display_help(int fd)
 void help(server_t *server, client_t *client, char **argv, size_t argc)
 {
     (void)argv;
+    (void)argc;
     (void)server;
-    if (!client->user) {
-        dprintf(client->fd, _104_);
-        return;
-    }
-    if (argc != 0) {
-        dprintf(client->fd, _101_);
-        return;
-    }
     display_help(client->fd);
 }

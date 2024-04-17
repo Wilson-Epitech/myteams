@@ -39,3 +39,8 @@ void arr_remove_ptr(void *_arr, void *elem, bool free_elem);
     shift the array to the left. (after a remove/pop)
 */
 void arr_shift_left(char **arr);
+
+/*
+    checks if an array contains an element
+*/
+bool arr_has(void *_arr, void *elem);

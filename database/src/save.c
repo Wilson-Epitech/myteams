@@ -14,7 +14,7 @@ static int is_file(const char *filepath)
     return 0;
 }
 
-int save_user(user_t **users)
+int save_users(user_t **users)
 {
     int fd = 0;
     char *path = getcwd(NULL, 0);

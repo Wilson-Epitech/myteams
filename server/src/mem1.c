@@ -24,9 +24,11 @@ void server_free(void *ptr)
     if (server->fd != -1) {
         close(server->fd);
     }
+    save_users(server->users);
     destroy(server->clients);
     destroy(server->users);
     destroy(server->teams);
+    destroy(server->dms);
     ptr_free(ptr);
 }
 
@@ -42,6 +44,7 @@ server_t *create_server(void)
     server->users = arr_alloc(1);
     server->clients = arr_alloc(1);
     server->teams = arr_alloc(1);
+    server->dms = arr_alloc(1);
     server->port = 0;
     server->fd = -1;
     FD_ZERO(&(server->read_fd));
