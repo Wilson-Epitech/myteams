@@ -8,7 +8,7 @@
 # -------------------------------------------------------------------------- #
 
 CC			=	gcc
-CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/
+CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/ -iquote ./../database/include/
 CFLAGS		=	-Wall -Wextra -Werror -g3
 
 # -------------------------------------------------------------------------- #
@@ -26,7 +26,6 @@ SRC			=	$(SRC_DIR)server.c				\
 				$(SRC_DIR)cmd_handler.c			\
 				$(SRC_DIR)utils1.c				\
 				$(SRC_DIR)utils2.c				\
-				$(SRC_DIR)database/save.c		\
 				$(CMD)
 
 CMD_DIR		=	$(SRC_DIR)cmd/
@@ -44,6 +43,11 @@ CMD			=	$(CMD_DIR)login.c				\
 				$(CMD_DIR)info.c				\
 				$(CMD_DIR)send.c				\
 				$(CMD_DIR)messages.c			\
+				$(DB)
+
+DB_DIR		=	../database/src/
+DB			=	$(DB_DIR)build.c				\
+				$(DB_DIR)save_data.c
 
 # -------------------------------------------------------------------------- #
 

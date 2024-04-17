@@ -131,9 +131,5 @@ dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver);
 
 void remove_quote(char **arr);
 
-// Save
-#define SAVE_DIRECTORY "./database/"
-int save_users(user_t **users);
-
 // Temporary (will be replaced with the real generation)
 char *generate_uuid(server_t *server);

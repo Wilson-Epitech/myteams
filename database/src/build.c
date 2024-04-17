@@ -13,7 +13,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "../../include/libs/def.h"
+#include "libs/def.h"
 
 static int is_dir(const char *filepath)
 {
@@ -33,31 +33,18 @@ static int is_file(const char *filepath)
     return 0;
 }
 
-static char *update_path(char *current_path, char *dirname)
-{
-    char *new_path = NULL;
-
-    new_path = strdup(current_path);
-    strcat(new_path, "/");
-    strcat(new_path, dirname);
-    return new_path;
-}
-
 static char *get_filename_from_path(char *path)
 {
     char *filename = strrchr(path, '/');
 
     if (filename != NULL) {
-        filename[1] = toupper(filename[1]);
         return filename + 1;
     }
     return NULL;
 }
 
-static int create_directory(char *dirname)
+static int create_directory(char *path)
 {
-    char *path = update_path(getcwd(NULL, 0), dirname);
-
     if (is_dir(path) == 0) {
         if (mkdir(path, 0755) != 0) {
             PERR_NORET("Mkdir failed");
@@ -72,6 +59,7 @@ static char *create_second_line(char *filename, int spaces_count)
     char *str = malloc(sizeof(char) * 60);
     int nb = 0;
 
+    *str = '\0';
     if (strlen(filename) % 2 != 0)
         nb = 1;
     strcat(str, "#");
@@ -94,17 +82,16 @@ static char **create_header_file(char *filepath)
     char **header = malloc(sizeof(char *) * 4);
 
     header[0] =
-        strdup("########################################################\n");
+    strdup("########################################################\n");
     header[1] = create_second_line(filename, spaces_count);
     header[2] =
-        strdup("########################################################\n");
+    strdup("########################################################\n\n");
     header[3] = NULL;
     return header;
 }
 
-static int create_file(char *file)
+int create_file(char *path)
 {
-    char *path = update_path(getcwd(NULL, 0), file);
     char **header = NULL;
     int fd = 0;
 
@@ -124,12 +111,19 @@ static int create_file(char *file)
 }
 
 // database loop pour verifier que tous les fichier sont créer
-int main(void)
+int build_database(void)
 {
-    create_directory("data");
-    create_directory("data/messages");
-    create_file("data/users.txt");
-    create_file("data/teams.txt");
-    create_file("data/channels.txt");
-    create_file("data/threads.txt");
+    if (create_directory("./database/data") == 84)
+        return 84;
+    if (create_directory("./database/data/messages") == 84)
+        return 84;
+    if (create_file("./database/data/users.txt") == 84)
+        return 84;
+    if (create_file("./database/data/teams.txt") == 84)
+        return 84;
+    if (create_file("./database/data/channels.txt") == 84)
+        return 84;
+    if (create_file("./database/data/threads.txt") == 84)
+        return 84;
+    return 0;
 }

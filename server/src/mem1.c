@@ -13,6 +13,7 @@
 #include "libs/def.h"
 #include "libs/mem.h"
 #include "server.h"
+#include "database.h"
 
 void server_free(void *ptr)
 {
