@@ -75,3 +75,9 @@
 #define _026_ "026 List of threads %s\n"
 #define _027_ "027 List of channels %s\n"
 #define _028_ "028 List of teams %s\n"
+
+// Info
+#define _029_ "029 Info Thread [%s] [%s] \n"
+#define _030_ "030 Info Channel [%s] [%s] \n"
+#define _031_ "031 Info Team [%s] [%s] \n"
+#define _032_ "032 Info User [%s] [%s] \n"

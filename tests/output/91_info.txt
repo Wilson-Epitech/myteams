@@ -1,0 +1,5 @@
+032 Info User [test] [000000000000000000000000000000000000] 
+018 Context set to [discord] .
+031 Info Team [discord] [tech] 
+019 Context set to [discord] [tech2] .
+030 Info Channel [tech2] [oop] 

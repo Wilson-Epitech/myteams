@@ -113,6 +113,7 @@ DECLARE(subscribed);
 DECLARE(subscribe);
 DECLARE(unsubscribe);
 DECLARE(list);
+DECLARE(info);
 
 static const cmd_t COMMANDS[] = {
     ARGUMENTS(login, 1),
@@ -126,6 +127,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(subscribe, 1),
     ARGUMENTS(unsubscribe, 1),
     ARGUMENTS(list, 0),
+    ARGUMENTS(info, 0),
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
