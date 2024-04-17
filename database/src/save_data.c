@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "../../include/libs/def.h"
+#include "libs/def.h"
 #include "server.h"
 #include "database.h"
 
@@ -76,7 +76,7 @@ int save_threads(thread_t **thread)
         PERR_NORET("Open failed");
         return 84;
     }
-    for (size_t i = 0; reply[i] != NULL; i++) {
+    for (size_t i = 0; thread[i] != NULL; i++) {
         dprintf(fd, "%s\n%ld\r\n%s\n%s\n", thread[i]->uuid,
             thread[i]->time, thread[i]->title, thread[i]->message);
     }
