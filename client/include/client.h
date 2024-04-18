@@ -21,3 +21,4 @@ typedef struct client_s {
 
 client_t *get_client(int, const char *);
 int launch_client(client_t *client);
+void dolibteams(char *str);

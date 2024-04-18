@@ -6,13 +6,11 @@
 */
 
 #include "client.h"
-
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <signal.h>
-
 #include "libs/def.h"
 
 int recv_serveur(client_t *client)
@@ -26,7 +24,10 @@ int recv_serveur(client_t *client)
             PERR_NORET("no byte read\n");
             return 84;
         }
+        if (bytes_received == 0)
+            return 0;
         buf[bytes_received] = '\0';
+        dolibteams(buf);
         printf("Server response: %s\n", buf);
     }
     return 0;
