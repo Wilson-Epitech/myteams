@@ -5,13 +5,13 @@
 ** main
 */
 
+#include "server.h"
+
 #include <stdio.h>
 #include <string.h>
 
 #include "libs/def.h"
 #include "libs/mem.h"
-#include "server.h"
-#include "database.h"
 
 void display_help(void)
 {
@@ -35,10 +35,6 @@ int main(int argc, const char *argv[])
         return SUCCESS;
     }
     if (init_server(server, argv[1]) == FAILURE) {
-        return FAILURE;
-    }
-    if (build_database() == 84) {
-        PERR_NORET("Build database failed");
         return FAILURE;
     }
     return run_server(server);

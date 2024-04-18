@@ -9,11 +9,11 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "database.h"
 #include "libs/arr.h"
 #include "libs/def.h"
 #include "libs/mem.h"
 #include "server.h"
-#include "database.h"
 
 void server_free(void *ptr)
 {
@@ -26,8 +26,6 @@ void server_free(void *ptr)
         close(server->fd);
     }
     save_users(server->users);
-    // save_reply(server->reply);
-    // save_threads(server->thread);
     destroy(server->clients);
     destroy(server->users);
     destroy(server->teams);

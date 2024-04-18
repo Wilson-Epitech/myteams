@@ -8,11 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-#include "libs/def.h"
-*/
-
 #include "client.h"
+#include "libs/def.h"
 
 int is_digit(const char *str)
 {
@@ -30,12 +27,16 @@ int main(int ac, const char *av[])
 
     if (ac > 2 && is_digit(av[2]))
         port = atoi(av[2]);
-    else
+    else {
+        PERR_NORET("Invalid Port");
         return 84;
+    }
     my_client = get_client(port, av[1]);
-    if (my_client == NULL)
+    if (my_client == NULL) {
+        PERR_NORET("Client Alloc failed");
         return 84;
+    }
     launch_client(my_client);
     free(my_client);
-    return 84;
+    return 0;
 }

@@ -6,9 +6,12 @@
 */
 
 #include "client.h"
+
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stddef.h>
+
+#include "libs/def.h"
 
 int recv_serveur(client_t *client)
 {
@@ -17,8 +20,10 @@ int recv_serveur(client_t *client)
 
     if (FD_ISSET(client->fd, &(client->read_fd))) {
         bytes_received = read(client->fd, buf, 4096);
-        if (bytes_received <= 0)
+        if (bytes_received < 0) {
+            PERR_NORET("no byte read\n");
             return 84;
+        }
         buf[bytes_received] = '\0';
         printf("Server response: %s\n", buf);
     }
@@ -30,10 +35,14 @@ int send_serv(client_t *client)
     char *buf = malloc(sizeof(char) * 4096);
 
     if (FD_ISSET(STDIN_FILENO, &(client->read_fd))) {
-        if (fgets(buf, 4096, stdin) == NULL)
+        if (fgets(buf, 4096, stdin) == NULL) {
+            PERR_NORET("fgets failed");
             return 84;
-        if (write(client->fd, buf, strlen(buf)) == -1)
+        }
+        if (write(client->fd, buf, strlen(buf)) == -1) {
+            PERR_NORET("fgets failed");
             return 84;
+        }
     }
     return 0;
 }
@@ -83,8 +92,8 @@ client_t *get_client(int port, const char *ip)
         printf("\nInvalid address/ Address not supported \n");
         return NULL;
     }
-    status = connect(clien->fd, (struct sockaddr*)&serv_addr,
-    sizeof(serv_addr));
+    status =
+        connect(clien->fd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
     if (status < 0) {
         printf("\nConnection Failed \n");
         return NULL;
