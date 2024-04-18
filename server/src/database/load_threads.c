@@ -5,39 +5,58 @@
 ** load_reply
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "database.h"
+#include "libs/arr.h"
 #include "libs/file.h"
 #include "libs/mem.h"
 #include "libs/str.h"
 #include "server.h"
 
-static int add_replies(
-    reply_t **replies, thread_t *curr, char **token, size_t i)
+static bool is_reply(char *token)
 {
-    for (; *replies; replies++) {
+    if (token == NULL) {
+        return false;
     }
+    if (token[0] != '\t') {
+        return false;
+    }
+    return true;
 }
 
-thread_t **load_threads()
+static void add_reply(thread_t *thread, reply_t **replies, char *token)
 {
-    SMART char *text = get_content(DATABASE_DIR "teams.txt");
-    SMART char **token = split(text, '\n');
-    reply_t **replies = load_replies();
+    for (; strcmp(token, (*replies)->uuid) != 0; replies++) {
+    }
+    arr_pushback(&(thread->replies), *replies);
+}
+
+thread_t **load_threads(void)
+{
+    SMART char *text = get_content(DATABASE_DIR "threads.txt");
+    SMART char **tokens = split(text, '\n');
+    SMART reply_t **replies = load_replies();
     thread_t *curr = NULL;
+    thread_t **threads = arr_alloc(1);
 
-    for (size_t i = 0; token[i]; i++) {
+    for (size_t i = 0; tokens[i];) {
         curr = alloc(sizeof(thread_t), thread_free);
-        curr->uuid = token[i];
-        curr->time = atol(token[i + 1]);
-        curr->title = token[i + 2];
-        curr->message = token[i + 3];
+        curr->uuid = strcreate(tokens[i]);
+        curr->time = atol(tokens[i + 1]);
+        curr->title = strcreate(tokens[i + 2]);
+        curr->message = strcreate(tokens[i + 3]);
         curr->replies = arr_alloc(1);
-        i = add_replies(replies, curr, token, i + 5);
-        // printf("index=[%ld] str=[%s]\n", i, token[i]);
+        for (i += 5; is_reply(tokens[i]); i++) {
+            add_reply(curr, replies, tokens[i] + 1);
+        }
+        arr_pushback(&threads, curr);
     }
-
-    return NULL;
+    return threads;
 }
+// printf("uuid=[%s] time=[%ld] title=[%s] msg=[%s] replies[%ld]\n",
+//     curr->uuid, curr->time, curr->title, curr->message,
+//     arrlen(curr->replies));

@@ -13,7 +13,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include "database.h"
 #include "libs/def.h"
 #include "reply.h"
 #include "server.h"
@@ -79,9 +78,9 @@ static void handle_client(server_t *server)
     }
 }
 
+// destroy(load_threads());
 int run_server(server_t *server)
 {
-    // load_replies();
     signal(SIGINT, sig_handler);
     while (is_running(true)) {
         reset_socket(server);
