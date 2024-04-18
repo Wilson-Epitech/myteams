@@ -18,6 +18,7 @@ NAME		=	../myteams_cli
 OBJ			=	$(SRC:.c=.o)
 SRC			=	$(SRC_DIR)main.c				\
 				$(SRC_DIR)client.c				\
+				$(SRC_DIR)dolib.c				\
 
 # -------------------------------------------------------------------------- #
 
