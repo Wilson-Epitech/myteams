@@ -1,2 +1,1 @@
-. rm -f database/* 2> /dev/null
 100 Invalid command.

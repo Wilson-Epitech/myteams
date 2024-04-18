@@ -21,3 +21,12 @@ compile_commands.json
 unit_tests
 myteams_server
 myteams_cli
+
+# Database
+database/users.txt
+database/dms.txt
+database/teams.txt
+database/channels.txt
+database/threads.txt
+database/replies.txt
+save/

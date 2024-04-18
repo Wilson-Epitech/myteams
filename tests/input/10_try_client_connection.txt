@@ -1,2 +1,1 @@
-. rm -f database/* 2> /dev/null
 this_command_doesn't_exist_it's_used_to_test_if_the_client_successfully_connected_to_the_server
