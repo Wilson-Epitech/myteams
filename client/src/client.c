@@ -10,12 +10,14 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
+#include <signal.h>
 
 #include "libs/def.h"
 
 int recv_serveur(client_t *client)
 {
-    char *buf = malloc(sizeof(char) * 4096);
+    char buf[4097] = {0};
     int bytes_received = 0;
 
     if (FD_ISSET(client->fd, &(client->read_fd))) {
@@ -32,7 +34,7 @@ int recv_serveur(client_t *client)
 
 int send_serv(client_t *client)
 {
-    char *buf = malloc(sizeof(char) * 4096);
+    char buf[4097] = {0};
 
     if (FD_ISSET(STDIN_FILENO, &(client->read_fd))) {
         if (fgets(buf, 4096, stdin) == NULL) {
@@ -47,16 +49,37 @@ int send_serv(client_t *client)
     return 0;
 }
 
+static bool is_running(bool running)
+{
+    static int current = true;
+    static int next = true;
+
+    current = next;
+    next = running;
+    return current;
+}
+
+static void sig_handler(int signal)
+{
+    (void)signal;
+    is_running(false);
+}
+
 int launch_client(client_t *client)
 {
+    signal(SIGINT, sig_handler);
     FD_ZERO(&(client->read_fd));
-    while (1) {
+    while (is_running(true)) {
         FD_SET(STDIN_FILENO, &(client->read_fd));
         FD_SET(client->fd, &(client->read_fd));
         if (select(client->fd + 1, &(client->read_fd), NULL, NULL, NULL) == -1)
             break;
         send_serv(client);
         recv_serveur(client);
+    }
+    if (write(client->fd, "/logout\n", strlen("/logout\n")) == -1) {
+        PERR_NORET("fgets failed");
+        return 84;
     }
     return 0;
 }
