@@ -61,7 +61,7 @@ def isCommand(bs: bytes):
 
 
 def executeCommand(cmd: bytes):
-    sb.run(str(cmd), shell=True)
+    sb.run(str(cmd)[4:-1], shell=True)
 
 
 def test(testName: str, input: list[bytes], output: list[bytes]):
