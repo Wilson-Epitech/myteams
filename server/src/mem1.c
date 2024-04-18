@@ -25,7 +25,7 @@ void server_free(void *ptr)
     if (server->fd != -1) {
         close(server->fd);
     }
-    save_users(server->users);
+    save_database(server);
     destroy(server->clients);
     destroy(server->users);
     destroy(server->teams);

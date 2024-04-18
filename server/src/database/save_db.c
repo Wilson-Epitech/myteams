@@ -11,56 +11,88 @@
 #include "libs/def.h"
 #include "server.h"
 
-int save_users(user_t **users)
+// user uuid
+// user name
+//
+static void save_users(user_t **users)
 {
     FILE *file = fopen(DATABASE_DIR "users.txt", "w");
 
     if (!file) {
         PERR_NORET("Open failed");
-        return FAILURE;
+        return;
     }
     for (; *users; users++) {
         fprintf(file, "%s\n%s\n", (*users)->uuid, (*users)->name);
     }
     fclose(file);
-    return 0;
+    return;
 }
 
-// int save_reply(reply_t **reply)
-// {
-//     int fd = 0;
-//     char *path = "./database/data/reply.txt";
+// team uuid
+// team name
+// team description
+// creator uuid
+// subscriber
+//     subscriber uuid
+//     subscriber uuid
+// channels
+//     channel uuid
+//     channel uuid
+//
+static void save_teams(team_t **teams)
+{
+    FILE *file = fopen(DATABASE_DIR "teams.txt", "w");
 
-//     if (is_file(path) == 0)
-//         create_file(path);
-//     fd = open(path, O_RDWR | O_APPEND, 0644);
-//     if (fd == -1) {
+    if (!file) {
+        PERR_NORET("Open failed");
+        return;
+    }
+    for (; *teams; teams++) {
+        fprintf(file, "%s\n%s\n%s\n%s\n", (*teams)->uuid, (*teams)->name,
+            (*teams)->description, (*teams)->creator->uuid);
+        fprintf(file, "subscribers\n");
+        for (user_t **users = (*teams)->subscribers; *users; users++) {
+            fprintf(file, "\t%s\n", (*users)->uuid);
+        }
+        fprintf(file, "channels\n");
+        for (channel_t **ch = (*teams)->channels; *ch; ch++) {
+            fprintf(file, "\t%s\n", (*ch)->uuid);
+        }
+        fprintf(file, "\n");
+    }
+    fclose(file);
+    return;
+}
+
+// channel uuid
+// channel name
+// channel description
+// threads
+//         thread uuid
+//         thread uuid
+//
+// static void save_channel(channel_t *channel)
+// {
+//     FILE *file = fopen(DATABASE_DIR "channels.txt", "w");
+
+//     if (!file) {
 //         PERR_NORET("Open failed");
-//         return 84;
+//         return;
 //     }
-//     for (size_t i = 0; reply[i] != NULL; i++) {
-//         dprintf(fd, "%s\n%s\r\n", reply[i]->uuid, reply[i]->body);
+//     fprintf(file, "%s\n%s\n%s\n", channel->uuid, channel->name,
+//         channel->description);
+//     fprintf(file, "threads\n");
+//     for (thread_t **threads = channel->threads; *threads; threads++) {
+//         fprintf(file, "\t%s\n", (*threads)->uuid);
 //     }
-//     close(fd);
-//     return 0;
+//     fprintf(file, "\n");
+//     fclose(file);
+//     return;
 // }
 
-// int save_threads(thread_t **thread)
-// {
-//     int fd = 0;
-//     char *path = "./database/data/threads.txt";
-
-//     if (is_file(path) == 0)
-//         create_file(path);
-//     fd = open(path, O_RDWR | O_APPEND, 0644);
-//     if (fd == -1) {
-//         PERR_NORET("Open failed");
-//         return 84;
-//     }
-//     for (size_t i = 0; thread[i] != NULL; i++) {
-//         dprintf(fd, "%s\n%ld\r\n%s\n%s\n", thread[i]->uuid, thread[i]->time,
-//             thread[i]->title, thread[i]->message);
-//     }
-//     close(fd);
-//     return 0;
-// }
+void save_database(server_t *server)
+{
+    save_users(server->users);
+    save_teams(server->teams);
+}
