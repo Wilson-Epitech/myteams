@@ -63,7 +63,6 @@ static void save_reply(reply_t *rep)
 // replies
 //     reply uuid
 //     reply uuid
-
 static void save_thread(thread_t *th)
 {
     FILE *file = fopen(DATABASE_DIR "threads.txt", "a");
@@ -110,21 +109,19 @@ static void save_channel(channel_t *ch)
 //     channel uuid
 //     channel uuid
 //
-static void save_all(team_t **teams)
+static int save_all(team_t **teams)
 {
     FILE *file = fopen(DATABASE_DIR "teams.txt", "w");
 
     if (!file) {
-        PERR_NORET("Open failed");
-        return;
+        return PERR("Open failed");
     }
     for (; *teams; teams++) {
         fprintf(file, "%s\n%s\n%s\n%s\n", (*teams)->uuid, (*teams)->name,
             (*teams)->description, (*teams)->creator->uuid);
         fprintf(file, "subscribers\n");
-        for (user_t **users = (*teams)->subscribers; *users; users++) {
+        for (user_t **users = (*teams)->subscribers; *users; users++)
             fprintf(file, "\t%s\n", (*users)->uuid);
-        }
         fprintf(file, "channels\n");
         for (channel_t **ch = (*teams)->channels; *ch; ch++) {
             save_channel((*ch));
@@ -133,7 +130,7 @@ static void save_all(team_t **teams)
         fprintf(file, "\n");
     }
     fclose(file);
-    return;
+    return SUCCESS;
 }
 
 void save_database(server_t *server)
