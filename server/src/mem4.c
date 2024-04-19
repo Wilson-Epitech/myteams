@@ -52,18 +52,19 @@ void dm_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_dm(
+dm_t *create_dm(
     server_t *server, user_t *sender, user_t *receiver, char *message)
 {
     dm_t *dm = alloc(sizeof(dm_t), dm_free);
 
     if (dm == NULL) {
         PERR_NORET("Couldn't Alloc Dm");
-        return;
+        return NULL;
     }
     dm->time = time(NULL);
     dm->sender = sender;
     dm->receiver = receiver;
     dm->message = strcreate(message);
     arr_pushback(&(server->dms), dm);
+    return dm;
 }

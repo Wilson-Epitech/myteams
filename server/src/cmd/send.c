@@ -13,9 +13,21 @@
 #include "reply.h"
 #include "server.h"
 
+static void send_notif(server_t *server, client_t *client, dm_t *dm)
+{
+    if (dm->receiver->loged) {
+        dprintf(find_client(server->clients, dm->receiver)->fd, _035_,
+            dm->sender->uuid, dm->message);
+    }
+    dprintf(client->fd, _033_, dm->receiver->name, dm->message);
+    server_event_private_message_sended(
+        client->user->uuid, dm->receiver->uuid, dm->message);
+}
+
 void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
 {
     user_t *receiver = NULL;
+    dm_t *dm = NULL;
 
     if (!client->user) {
         dprintf(client->fd, _104_);
@@ -30,8 +42,6 @@ void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _105_, *argv);
         return;
     }
-    create_dm(server, client->user, receiver, *(argv + 1));
-    dprintf(client->fd, _033_, receiver->name, *(argv + 1));
-    server_event_private_message_sended(
-        client->user->uuid, receiver->uuid, *(argv + 1));
+    dm = create_dm(server, client->user, receiver, *(argv + 1));
+    send_notif(server, client, dm);
 }

@@ -26,6 +26,7 @@ SRC			=	$(SRC_DIR)server.c				\
 				$(SRC_DIR)cmd_handler.c			\
 				$(SRC_DIR)utils1.c				\
 				$(SRC_DIR)utils2.c				\
+				$(SRC_DIR)utils3.c				\
 				$(CMD)							\
 				$(DB)							\
 

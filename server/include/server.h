@@ -113,7 +113,7 @@ void thread_free(void *ptr);
 reply_t *create_reply(char *body);
 void reply_free(void *ptr);
 
-void create_dm(
+dm_t *create_dm(
     server_t *server, user_t *sender, user_t *receiver, char *message);
 void dm_free(void *ptr);
 
@@ -125,6 +125,7 @@ team_t *find_team(team_t **teams, char *team_uuid);
 channel_t *find_channel(channel_t **channels, char *channel_uuid);
 thread_t *find_thread(thread_t **threads, char *thread_uuid);
 dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver);
+client_t *find_client(client_t **clients, user_t *user);
 
 void remove_quote(char **arr);
 char *generate_uuid(void);

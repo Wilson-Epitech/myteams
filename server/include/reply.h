@@ -87,3 +87,6 @@
 
 // Messages
 #define _034_ "034 Messages : %s\n"
+
+// Event
+#define _035_ "035 From [%s] : [%s] \n"
