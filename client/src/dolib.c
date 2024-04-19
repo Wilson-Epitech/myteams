@@ -95,15 +95,15 @@ bool dolibteams(client_t *client, char *buf)
         str[2 + i] = buf[i];
     }
     for (size_t i = 0; i < NB_COMMANDS; i++) {
+        if (strcmp(str, "do004") == 0) {
+            return true;
+        }
         if (strcmp(COMMANDS[i].name, str) != 0)
             continue;
         COMMANDS[i].function(buf);
         if (strcmp(COMMANDS[i].name, "do003") == 0) {
             client->name = search_at_info(buf, 0);
             client->uuid = search_at_info(buf, 1);
-        }
-        if (strcmp(COMMANDS[i].name, "do004") == 0) {
-            return true;
         }
     }
     return false;

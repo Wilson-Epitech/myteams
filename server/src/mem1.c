@@ -5,10 +5,12 @@
 ** mem
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
+#include "cmd.h"
 #include "database.h"
 #include "libs/arr.h"
 #include "libs/def.h"
@@ -26,6 +28,9 @@ void server_free(void *ptr)
         close(server->fd);
     }
     save_database(server);
+    while (*(server->clients)) {
+        logout(server, *(server->clients), NULL, 0);
+    }
     destroy(server->clients);
     destroy(server->users);
     destroy(server->teams);
