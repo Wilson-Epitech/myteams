@@ -51,9 +51,12 @@ static void save_users(user_t **users)
 static void save_reply(reply_t *rep)
 {
     FILE *file = fopen(DATABASE_DIR "replies.txt", "a");
+    static bool passed = false;
 
-    fprintf(file, "%s\n%ld\n%s\n\n", rep->uuid, rep->time, rep->body);
+    fprintf(file, (passed) ? "\n%s\n%ld\n%s" : "%s\n%ld\n%s", rep->uuid,
+        rep->time, rep->body);
     fclose(file);
+    passed = true;
 }
 
 // thread uuid
@@ -66,15 +69,17 @@ static void save_reply(reply_t *rep)
 static void save_thread(thread_t *th)
 {
     FILE *file = fopen(DATABASE_DIR "threads.txt", "a");
+    static bool passed = false;
 
-    fprintf(file, "%s\n%ld\n%s\n%s\nreplies\n", th->uuid, th->time, th->title,
-        th->message);
+    fprintf(file,
+        (passed) ? "\n%s\n%ld\n%s\n%s\nreplies" : "%s\n%ld\n%s\n%s\nreplies",
+        th->uuid, th->time, th->title, th->message);
     for (reply_t **reps = th->replies; *reps; reps++) {
-        fprintf(file, "\t%s\n", (*reps)->uuid);
+        fprintf(file, "\n\t%s", (*reps)->uuid);
         save_reply((*reps));
     }
-    fprintf(file, "\n");
     fclose(file);
+    passed = true;
 }
 
 // channel uuid
@@ -87,15 +92,27 @@ static void save_thread(thread_t *th)
 static void save_channel(channel_t *ch)
 {
     FILE *file = fopen(DATABASE_DIR "channels.txt", "a");
+    static bool passed = false;
 
-    fprintf(
-        file, "%s\n%s\n%s\nthreads\n", ch->uuid, ch->name, ch->description);
+    fprintf(file, (passed) ? "\n%s\n%s\n%s\nthreads" : "%s\n%s\n%s\nthreads",
+        ch->uuid, ch->name, ch->description);
     for (thread_t **threads = ch->threads; *threads; threads++) {
-        fprintf(file, "\t%s\n", (*threads)->uuid);
+        fprintf(file, "\n\t%s", (*threads)->uuid);
         save_thread((*threads));
     }
-    fprintf(file, "\n");
     fclose(file);
+    passed = true;
+}
+
+static void print_team_basic(FILE *file, team_t *team, bool passed)
+{
+    if (passed) {
+        fprintf(file, "\n%s\n%s\n%s\n%s\nsubscribers", team->uuid, team->name,
+            team->description, team->creator->uuid);
+    } else {
+        fprintf(file, "%s\n%s\n%s\n%s\nsubscribers", team->uuid, team->name,
+            team->description, team->creator->uuid);
+    }
 }
 
 // team uuid
@@ -112,22 +129,21 @@ static void save_channel(channel_t *ch)
 static int save_all(team_t **teams)
 {
     FILE *file = fopen(DATABASE_DIR "teams.txt", "w");
+    static bool passed = false;
 
     if (!file) {
         return PERR("Open failed");
     }
     for (; *teams; teams++) {
-        fprintf(file, "%s\n%s\n%s\n%s\n", (*teams)->uuid, (*teams)->name,
-            (*teams)->description, (*teams)->creator->uuid);
-        fprintf(file, "subscribers\n");
+        print_team_basic(file, *teams, passed);
         for (user_t **users = (*teams)->subscribers; *users; users++)
-            fprintf(file, "\t%s\n", (*users)->uuid);
-        fprintf(file, "channels\n");
+            fprintf(file, "\n\t%s", (*users)->uuid);
+        fprintf(file, "\nchannels");
         for (channel_t **ch = (*teams)->channels; *ch; ch++) {
             save_channel((*ch));
-            fprintf(file, "\t%s\n", (*ch)->uuid);
+            fprintf(file, "\n\t%s", (*ch)->uuid);
         }
-        fprintf(file, "\n");
+        passed = true;
     }
     fclose(file);
     return SUCCESS;
@@ -137,7 +153,6 @@ void save_database(server_t *server)
 {
     FILE *file = NULL;
 
-    save_users(server->users);
     file = fopen(DATABASE_DIR "teams.txt", "w");
     fclose(file);
     file = fopen(DATABASE_DIR "channels.txt", "w");
@@ -146,6 +161,7 @@ void save_database(server_t *server)
     fclose(file);
     file = fopen(DATABASE_DIR "replies.txt", "w");
     fclose(file);
-    save_all(server->teams);
+    save_users(server->users);
     save_dms(server->dms);
+    save_all(server->teams);
 }

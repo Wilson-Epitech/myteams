@@ -42,7 +42,7 @@ void messages(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _101_);
         return;
     }
-    other = find_user_by_uuid(server, *argv);
+    other = find_user_by_uuid(server->users, *argv);
     if (!other) {
         dprintf(client->fd, _105_);
         return;

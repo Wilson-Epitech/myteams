@@ -24,10 +24,8 @@ user_t *find_user(server_t *server, char *username)
     return NULL;
 }
 
-user_t *find_user_by_uuid(server_t *server, char *uuid)
+user_t *find_user_by_uuid(user_t **users, char *uuid)
 {
-    user_t **users = server->users;
-
     for (size_t i = 0; users[i]; i++) {
         if (strcmp(users[i]->uuid, uuid) == 0) {
             return users[i];

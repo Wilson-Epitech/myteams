@@ -25,7 +25,7 @@ void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _101_);
         return;
     }
-    receiver = find_user_by_uuid(server, *argv);
+    receiver = find_user_by_uuid(server->users, *argv);
     if (!receiver) {
         dprintf(client->fd, _105_);
         return;

@@ -43,6 +43,7 @@ thread_t **load_threads(void)
     thread_t *curr = NULL;
     thread_t **threads = arr_alloc(1);
 
+    set_destructor(threads, ptr_free);
     for (size_t i = 0; tokens[i];) {
         curr = alloc(sizeof(thread_t), thread_free);
         curr->uuid = strcreate(tokens[i]);

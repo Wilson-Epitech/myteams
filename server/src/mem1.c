@@ -33,7 +33,9 @@ void server_free(void *ptr)
     ptr_free(ptr);
 }
 
-// should load the db
+// load users
+// load dms
+// load teams
 server_t *create_server(void)
 {
     server_t *server = alloc(sizeof(server_t), server_free);
