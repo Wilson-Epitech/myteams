@@ -5,12 +5,13 @@
 ** dolib.c
 */
 
-#include "cmd.h"
-#include <string.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "../libs/myteams/logging_client.h"
+#include "cmd.h"
 
 static int len_for_malloc(char *buf, int in)
 {
@@ -79,6 +80,7 @@ void do004(char *buf)
 
 void do104(char *buf)
 {
+    (void)buf;
     client_error_unauthorized();
 }
 
