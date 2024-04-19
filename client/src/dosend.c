@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+
 #include "../libs/myteams/logging_client.h"
 #include "cmd.h"
 
@@ -39,7 +40,8 @@ static int help28(char *buf, int i)
 
 void do028(char *buf)
 {
-    for (int i = 0; help28(buf, i) != 1; i++);
+    for (int i = 0; help28(buf, i) != 1; i++)
+        ;
     return;
 }
 
@@ -62,6 +64,7 @@ static int help27(char *buf, int i)
 
 void do027(char *buf)
 {
-    for (int i = 0; help27(buf, i) != 1; i++);
+    for (int i = 0; help27(buf, i) != 1; i++) {
+    }
     return;
 }

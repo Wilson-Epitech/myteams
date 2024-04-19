@@ -8,8 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../libs/myteams/logging_client.h"
 #include "client.h"
 #include "libs/def.h"
+#include "libs/mem.h"
 
 int is_digit(const char *str)
 {
@@ -23,7 +25,7 @@ int is_digit(const char *str)
 int main(int ac, const char *av[])
 {
     int port = 0;
-    client_t *my_client;
+    client_t *client;
 
     if (ac > 2 && is_digit(av[2]))
         port = atoi(av[2]);
@@ -31,12 +33,15 @@ int main(int ac, const char *av[])
         PERR_NORET("Invalid Port");
         return 84;
     }
-    my_client = get_client(port, av[1]);
-    if (my_client == NULL) {
+    client = get_client(port, av[1]);
+    if (client == NULL) {
         PERR_NORET("Client Alloc failed");
         return 84;
     }
-    launch_client(my_client);
-    free(my_client);
+    if (launch_client(client) == 0 && client->uuid != NULL)
+        client_event_logged_out(client->uuid, client->name);
+    try_free(client->name);
+    try_free(client->uuid);
+    free(client);
     return 0;
 }

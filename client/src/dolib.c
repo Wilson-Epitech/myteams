@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "../libs/myteams/logging_client.h"
+#include "client.h"
 #include "cmd.h"
 
 static int len_for_malloc(char *buf, int in)
@@ -84,7 +85,7 @@ void do104(char *buf)
     client_error_unauthorized();
 }
 
-void dolibteams(char *buf)
+bool dolibteams(client_t *client, char *buf)
 {
     char str[6] = {0};
 
@@ -97,5 +98,13 @@ void dolibteams(char *buf)
         if (strcmp(COMMANDS[i].name, str) != 0)
             continue;
         COMMANDS[i].function(buf);
+        if (strcmp(COMMANDS[i].name, "do003") == 0) {
+            client->name = search_at_info(buf, 0);
+            client->uuid = search_at_info(buf, 1);
+        }
+        if (strcmp(COMMANDS[i].name, "do004") == 0) {
+            return true;
+        }
     }
+    return false;
 }
