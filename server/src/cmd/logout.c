@@ -30,6 +30,8 @@ void logout(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _004_, client->user->name, client->user->uuid);
         client->user->loged = false;
         server_event_user_logged_out(client->user->uuid);
+    } else {
+        dprintf(client->fd, _004_, "", "");
     }
     arr_remove_ptr(server->clients, client, true);
 }
