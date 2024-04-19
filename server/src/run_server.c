@@ -17,20 +17,9 @@
 #include "reply.h"
 #include "server.h"
 
-static bool is_running(bool running)
-{
-    static int curr = true;
-    static int next = true;
-
-    curr = next;
-    next = running;
-    return curr;
-}
-
 static void sig_handler(int signal)
 {
     (void)signal;
-    is_running(false);
 }
 
 static void reset_socket(server_t *server)
@@ -82,13 +71,14 @@ static void handle_client(server_t *server)
 int run_server(server_t *server)
 {
     signal(SIGINT, sig_handler);
-    while (is_running(true)) {
+    while (true) {
         reset_socket(server);
         if (select(MAX_CLIENT, &(server->read_fd), NULL, NULL, NULL) == -1) {
-            return PERR("Select Failed");
+            break;
         }
         handle_server(server);
         handle_client(server);
     }
     return SUCCESS;
 }
+// logout client

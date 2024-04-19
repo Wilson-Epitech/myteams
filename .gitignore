@@ -25,3 +25,6 @@ myteams_cli
 # Database
 database/*.txt
 save/
+
+# Temp
+*todo*
