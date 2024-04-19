@@ -15,6 +15,8 @@
 void save_database(server_t *server);
 
 // Load
+user_t **load_users(void);
+
 // user_t **load_users();
 // team_t **load_teams();
 // channel_t **load_channel();

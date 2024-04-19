@@ -47,6 +47,7 @@ CMD			=	$(CMD_DIR)login.c				\
 
 DB_DIR		=	./src/database/
 DB			=	$(DB_DIR)save_db.c				\
+				$(DB_DIR)load_user.c			\
 
 # -------------------------------------------------------------------------- #
 
