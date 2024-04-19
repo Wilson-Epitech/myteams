@@ -14,6 +14,7 @@ SRC		=	arr_debug.c		\
 			arr_rm.c		\
 			arr_shift.c		\
 			arr_has.c		\
+			arr_foreach.c	\
 
 OBJ		=	$(SRC:.c=.o)
 

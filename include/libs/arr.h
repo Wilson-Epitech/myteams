@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -44,3 +45,14 @@ void arr_shift_left(char **arr);
     checks if an array contains an element
 */
 bool arr_has(void *_arr, void *elem);
+
+/**
+ * applies a function to every element of an array.
+ */
+void arr_foreach(void *_arr, void (*function)(void *));
+
+/**
+ * applies a function to every element of an array.
+ * give the va_list to the function.
+ */
+void arr_foreach_arg(void *_arr, void (*function)(void *, va_list), ...);

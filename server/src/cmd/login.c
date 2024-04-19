@@ -5,15 +5,25 @@
 ** login
 */
 
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "../libs/myteams/logging_server.h"
 #include "cmd.h"
+#include "libs/arr.h"
 #include "libs/def.h"
 #include "reply.h"
 #include "server.h"
+
+static void event_login(void *_client, va_list ap)
+{
+    client_t *client = _client;
+    client_t *event = va_arg(ap, client_t *);
+
+    dprintf(client->fd, _003_, event->user->name, event->user->uuid);
+}
 
 static void show_logout(client_t *client)
 {
@@ -63,5 +73,5 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         return;
     }
     server_event_user_logged_in(client->user->uuid);
-    dprintf(client->fd, _003_, client->user->name, client->user->uuid);
+    arr_foreach_arg(server->clients, event_login, client);
 }
