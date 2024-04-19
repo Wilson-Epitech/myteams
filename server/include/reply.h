@@ -11,7 +11,6 @@
 #define _100_ "100 Invalid command.\n"
 #define _101_ "101 Invalid number of arguments.\n"
 #define _102_ "102 Invalid arguments.\n"
-#define _103_ "103 Invalid context.\n"
 #define _104_ "104 Unauthorized.\n"
 #define _105_ "105 Invalid user [%s] .\n"
 #define _106_ "106 Name already exists.\n"

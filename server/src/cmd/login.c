@@ -65,9 +65,12 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _102_);
         return;
     }
-    if (try_load_user(server, client, username) == FAILURE) {
+    if (client->user) {
+        dprintf(client->fd, _104_);
         return;
     }
+    if (try_load_user(server, client, username) == FAILURE)
+        return;
     server_event_user_logged_in(client->user->uuid);
     dprintf(client->fd, _003_, client->user->name, client->user->uuid);
 }
