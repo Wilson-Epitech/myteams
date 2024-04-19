@@ -28,7 +28,6 @@ int recv_serveur(client_t *client)
             return 0;
         buf[bytes_received] = '\0';
         dolibteams(buf);
-        printf("Server response: %s\n", buf);
     }
     return 0;
 }

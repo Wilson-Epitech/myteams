@@ -47,6 +47,9 @@ static void list_channels(client_t *client)
 
     for (channel_t **ch = client->team_ctx->channels; *ch; ch++) {
         stradd_c(&data, '[');
+        stradd_s(&data, (*ch)->uuid);
+        stradd_s(&data, "] about ");
+        stradd_c(&data, '[');
         stradd_s(&data, (*ch)->name);
         stradd_s(&data, "] about ");
         stradd_c(&data, '[');
@@ -61,6 +64,9 @@ static void list_teams(server_t *server, client_t *client)
     SMART char *data = strcreate("");
 
     for (team_t **teams = server->teams; *teams; teams++) {
+        stradd_c(&data, '[');
+        stradd_s(&data, (*teams)->uuid);
+        stradd_s(&data, "] about ");
         stradd_c(&data, '[');
         stradd_s(&data, (*teams)->name);
         stradd_s(&data, "] about ");
