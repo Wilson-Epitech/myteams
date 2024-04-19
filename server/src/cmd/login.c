@@ -19,7 +19,7 @@ static void show_logout(client_t *client)
 {
     if (client->user) {
         client->user->loged = false;
-        dprintf(client->fd, _004_);
+        dprintf(client->fd, _004_, client->user->name, client->user->uuid);
         server_event_user_logged_out(client->user->uuid);
     }
 }

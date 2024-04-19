@@ -26,7 +26,7 @@ static void display_user(server_t *server, client_t *client, char *uuid)
         dprintf(client->fd, _008_, (*users)->name, (*users)->uuid,
             (*users)->loged);
     } else {
-        dprintf(client->fd, _105_);
+        dprintf(client->fd, _105_, uuid);
     }
 }
 

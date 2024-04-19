@@ -22,7 +22,7 @@ static void set_team_context(server_t *server, client_t *client, char **argv)
         client->thread_ctx = NULL;
         dprintf(client->fd, _018_, team->name);
     } else {
-        dprintf(client->fd, _107_);
+        dprintf(client->fd, _107_, *argv);
     }
 }
 
@@ -40,7 +40,7 @@ static void set_channel_context(
         dprintf(client->fd, _019_, client->team_ctx->name,
             client->channel_ctx->name);
     } else {
-        dprintf(client->fd, _108_);
+        dprintf(client->fd, _108_, *(argv + 1));
     }
 }
 
@@ -58,7 +58,7 @@ static void set_thread_context(server_t *server, client_t *client, char **argv)
         client->thread_ctx = thread;
         dprintf(client->fd, _020_, team->name, channel->name, thread->title);
     } else {
-        dprintf(client->fd, _109_);
+        dprintf(client->fd, _109_, *(argv + 2));
     }
 }
 
@@ -76,7 +76,7 @@ static int if_subbed(
     team_t *team = find_team(server->teams, *argv);
 
     if (!team) {
-        return dprintf(client->fd, _107_);
+        return dprintf(client->fd, _107_, *argv);
     }
     if (!arr_has(team->subscribers, client->user)) {
         return dprintf(client->fd, _104_);

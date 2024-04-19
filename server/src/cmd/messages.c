@@ -44,7 +44,7 @@ void messages(server_t *server, client_t *client, char **argv, size_t argc)
     }
     other = find_user_by_uuid(server->users, *argv);
     if (!other) {
-        dprintf(client->fd, _105_);
+        dprintf(client->fd, _105_, *argv);
         return;
     }
     show_messages(server, client, other);

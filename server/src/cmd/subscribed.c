@@ -51,7 +51,7 @@ static void all_subscribers(
         }
     }
     if (!team) {
-        dprintf(client->fd, _107_);
+        dprintf(client->fd, _107_, team_uuid);
         return;
     }
     for (user_t **users = team->subscribers; *users; users++) {

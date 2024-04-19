@@ -13,11 +13,11 @@
 #define _102_ "102 Invalid arguments.\n"
 #define _103_ "103 Invalid context.\n"
 #define _104_ "104 Unauthorized.\n"
-#define _105_ "105 Invalid user uuid.\n"
+#define _105_ "105 Invalid user [%s] .\n"
 #define _106_ "106 Name already exists.\n"
-#define _107_ "107 Invalid team uuid.\n"
-#define _108_ "108 Invalid channel uuid.\n"
-#define _109_ "109 Invalid thread uuid.\n"
+#define _107_ "107 Invalid team [%s] .\n"
+#define _108_ "108 Invalid channel [%s] .\n"
+#define _109_ "109 Invalid thread [%s] .\n"
 
 // Connection
 #define _000_ "000 Service ready.\n"
@@ -28,7 +28,7 @@
 #define _003_ "003 User [%s] [%s] logged in, proceed.\n"
 
 // Logout
-#define _004_ "004 User disconnected.\n"
+#define _004_ "004 User [%s] [%s] disconnected.\n"
 #define _005_ "005 Service closed.\n"
 
 // Help

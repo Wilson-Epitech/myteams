@@ -28,7 +28,7 @@ void subscribe(server_t *server, client_t *client, char **argv, size_t argc)
     }
     team = find_team(server->teams, *argv);
     if (!team) {
-        dprintf(client->fd, _107_);
+        dprintf(client->fd, _107_, *argv);
         return;
     }
     if (!arr_has(team->subscribers, client->user)) {
