@@ -23,5 +23,5 @@ myteams_server
 myteams_cli
 
 # Database
-database/
+database/*.txt
 save/
