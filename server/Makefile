@@ -48,7 +48,11 @@ CMD			=	$(CMD_DIR)login.c				\
 DB_DIR		=	./src/database/
 DB			=	$(DB_DIR)save_db.c				\
 				$(DB_DIR)load_replies.c			\
+				$(DB_DIR)load_teams.c			\
+				$(DB_DIR)load_channels.c		\
 				$(DB_DIR)load_threads.c			\
+				$(DB_DIR)load_replies.c			\
+				$(DB_DIR)load_users.c			\
 
 # -------------------------------------------------------------------------- #
 
