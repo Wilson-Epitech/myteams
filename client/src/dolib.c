@@ -10,8 +10,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "../libs/myteams/logging_client.h"
 
-int len_for_malloc(char *buf, int in)
+static int len_for_malloc(char *buf, int in)
 {
     bool open_close = false;
     int len = 0;
@@ -54,14 +55,31 @@ char *search_at_info(char *buf, int in)
     return user;
 }
 
-void do001(char *buf)
+void do003(char *buf)
 {
     char *user = search_at_info(buf, 0);
     char *uuid = search_at_info(buf, 1);
 
+    client_event_logged_in(uuid, user);
     free(user);
     free(uuid);
     return;
+}
+
+void do004(char *buf)
+{
+    char *user = search_at_info(buf, 0);
+    char *uuid = search_at_info(buf, 1);
+
+    client_event_logged_out(uuid, user);
+    free(user);
+    free(uuid);
+    return;
+}
+
+void do104(char *buf)
+{
+    client_error_unauthorized();
 }
 
 void dolibteams(char *buf)

@@ -19,25 +19,15 @@ typedef struct cmd_s {
 #define BRACKET_RIGHT }
 #define ARGUMENTS(name) BRACKET_LEFT #name, name BRACKET_RIGHT
 
-DECLARE(do001);
-// DECLARE(logout);
-// DECLARE(help);
+DECLARE(do003);
+DECLARE(do004);
+DECLARE(do104);
 
 static const cmd_t COMMANDS[] = {
-    ARGUMENTS(do001),
-    //    ARGUMENTS(logout, 0),
-    //    ARGUMENTS(help, 0),
-    //    ARGUMENTS(users, 0),
-    //    ARGUMENTS(user, 1),
-    //    ARGUMENTS(create, 1),
-    //    ARGUMENTS(use, 0),
-    //    ARGUMENTS(subscribed, 0),
-    //    ARGUMENTS(subscribe, 1),
-    //    ARGUMENTS(unsubscribe, 1),
-    //    ARGUMENTS(list, 0),
-    //    ARGUMENTS(info, 0),
-    //    ARGUMENTS(send_cmd, 2),
-    //    ARGUMENTS(messages, 1),
+    ARGUMENTS(do003),
+    ARGUMENTS(do004),
+    ARGUMENTS(do104),
+
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
