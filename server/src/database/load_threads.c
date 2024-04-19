@@ -38,7 +38,7 @@ static void add_reply(thread_t *thread, reply_t **replies, char *token)
 thread_t **load_threads(void)
 {
     SMART char *text = get_content(DATABASE_DIR "threads.txt");
-    SMART char **tokens = split(text, '\n');
+    SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
     SMART reply_t **replies = load_replies();
     thread_t *curr = NULL;
     thread_t **threads = arr_alloc(1);

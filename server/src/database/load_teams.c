@@ -78,7 +78,7 @@ static void add_channels(
 team_t **load_teams(user_t **users)
 {
     SMART char *text = get_content(DATABASE_DIR "teams.txt");
-    SMART char **tokens = split(text, '\n');
+    SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
     SMART channel_t **channels = load_channels();
     team_t *curr = NULL;
     team_t **teams = arr_alloc(1);

@@ -18,7 +18,7 @@
 reply_t **load_replies(void)
 {
     SMART char *text = get_content(DATABASE_DIR "replies.txt");
-    SMART char **tokens = split(text, '\n');
+    SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
     reply_t **replies = arr_alloc(1);
     reply_t *curr;
 

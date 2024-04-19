@@ -5,16 +5,16 @@
 ** load_db
 */
 
-#include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "database.h"
+#include "libs/arr.h"
 #include "libs/def.h"
 #include "libs/mem.h"
 #include "libs/str.h"
-#include "libs/arr.h"
 
 static size_t get_file_size(char *file)
 {
@@ -75,7 +75,7 @@ static void fill_users(user_t **users, user_t *user, char **array)
     }
 }
 
-user_t **load_users(void)
+user_t **load_user(void)
 {
     user_t **users = arr_alloc(1);
     user_t *user = NULL;

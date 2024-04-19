@@ -44,9 +44,9 @@ server_t *create_server(void)
         return NULL;
     }
     server->uuid = 0;
-    server->users = arr_alloc(1);
+    server->users = load_users();
     server->clients = arr_alloc(1);
-    server->teams = arr_alloc(1);
+    server->teams = load_teams(server->users);
     server->dms = arr_alloc(1);
     server->port = 0;
     server->fd = -1;

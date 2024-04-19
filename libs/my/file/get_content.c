@@ -22,6 +22,10 @@ char *get_content(const char *filename)
     }
     fseek(file, 0, SEEK_END);
     size = ftell(file);
+    if (size == 0) {
+        fclose(file);
+        return NULL;
+    }
     rewind(file);
     content = alloc(size + 1, ptr_free);
     fread(content, sizeof(char), size, file);

@@ -5,6 +5,7 @@
 ** save
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "database.h"
@@ -33,13 +34,19 @@ static void save_dms(dm_t **dms)
 static void save_users(user_t **users)
 {
     FILE *file = fopen(DATABASE_DIR "users.txt", "w");
+    bool passed = false;
 
     if (!file) {
         PERR_NORET("Open failed");
         return;
     }
     for (; *users; users++) {
-        fprintf(file, "%s\n%s\n\n", (*users)->uuid, (*users)->name);
+        if (passed) {
+            fprintf(file, "\n%s\n%s", (*users)->uuid, (*users)->name);
+        } else {
+            fprintf(file, "%s\n%s", (*users)->uuid, (*users)->name);
+        }
+        passed = true;
     }
     fclose(file);
     return;

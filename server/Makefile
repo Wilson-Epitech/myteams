@@ -53,6 +53,7 @@ DB			=	$(DB_DIR)save_db.c				\
 				$(DB_DIR)load_threads.c			\
 				$(DB_DIR)load_replies.c			\
 				$(DB_DIR)load_users.c			\
+				$(DB_DIR)load_user.c			\
 
 # -------------------------------------------------------------------------- #
 
