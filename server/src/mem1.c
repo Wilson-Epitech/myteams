@@ -33,6 +33,13 @@ void server_free(void *ptr)
     ptr_free(ptr);
 }
 
+// static int find_highest_uuid(server_t*server)
+// {
+//     int high = 0;
+
+//     // for (user_t **user)
+// }
+
 // load users
 // load dms
 // load teams
@@ -43,11 +50,10 @@ server_t *create_server(void)
     if (server == NULL) {
         return NULL;
     }
-    server->uuid = 0;
     server->users = load_users();
     server->clients = arr_alloc(1);
     server->teams = load_teams(server->users);
-    server->dms = arr_alloc(1);
+    server->dms = load_dms(server->users);
     server->port = 0;
     server->fd = -1;
     FD_ZERO(&(server->read_fd));

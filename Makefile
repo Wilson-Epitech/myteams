@@ -75,9 +75,4 @@ re: fclean
 tests_run:
 
 
-.PHONY: test
-test:
-	@ clear
-	@ ./tests/tester.py 2> /dev/null
-
 # -------------------------------------------------------------------------- #

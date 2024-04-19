@@ -21,4 +21,4 @@ channel_t **load_channels(void);
 team_t **load_teams(user_t **users);
 user_t **load_user(void);
 user_t **load_users(void);
-// dm_t **load_dms();
+dm_t **load_dms(user_t **users);

@@ -58,6 +58,3 @@ thread_t **load_threads(void)
     }
     return threads;
 }
-// printf("uuid=[%s] time=[%ld] title=[%s] msg=[%s] replies[%ld]\n",
-//     curr->uuid, curr->time, curr->title, curr->message,
-//     arrlen(curr->replies));

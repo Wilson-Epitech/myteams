@@ -15,14 +15,21 @@
 static void save_dms(dm_t **dms)
 {
     FILE *file = fopen(DATABASE_DIR "dms.txt", "w");
+    bool passed = false;
 
     if (!file) {
         PERR_NORET("Open failed");
         return;
     }
     for (; *dms; dms++) {
-        fprintf(file, "%s\n%s\n%ld\n%s\n\n", (*dms)->sender->uuid,
-            (*dms)->receiver->uuid, (*dms)->time, (*dms)->message);
+        if (passed) {
+            fprintf(file, "\n%s\n%s\n%ld\n%s", (*dms)->sender->uuid,
+                (*dms)->receiver->uuid, (*dms)->time, (*dms)->message);
+        } else {
+            fprintf(file, "%s\n%s\n%ld\n%s", (*dms)->sender->uuid,
+                (*dms)->receiver->uuid, (*dms)->time, (*dms)->message);
+        }
+        passed = true;
     }
     fclose(file);
     return;

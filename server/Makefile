@@ -9,7 +9,7 @@
 
 CC			=	gcc
 CPPFLAGS	=	-iquote $(INCLUDE) -iquote ./include/
-CFLAGS		=	-Wall -Wextra -Werror -g3
+CFLAGS		=	-Wall -Wextra -Werror -g3 -luuid
 
 # -------------------------------------------------------------------------- #
 
@@ -53,7 +53,7 @@ DB			=	$(DB_DIR)save_db.c				\
 				$(DB_DIR)load_threads.c			\
 				$(DB_DIR)load_replies.c			\
 				$(DB_DIR)load_users.c			\
-				$(DB_DIR)load_user.c			\
+				$(DB_DIR)load_dms.c				\
 
 # -------------------------------------------------------------------------- #
 

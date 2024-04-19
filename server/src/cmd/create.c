@@ -35,13 +35,12 @@ static void cr_team(
     }
 }
 
-static void cr_channel(
-    server_t *server, client_t *client, char **argv, size_t argc)
+static void cr_channel(client_t *client, char **argv, size_t argc)
 {
     channel_t *channel;
 
     if (argc == 2) {
-        channel = create_channel(server, *argv, *(argv + 1), client->team_ctx);
+        channel = create_channel(*argv, *(argv + 1), client->team_ctx);
         if (channel) {
             arr_pushback(&(client->team_ctx->channels), channel);
             dprintf(client->fd, _010_, channel->uuid, channel->name,
@@ -56,14 +55,12 @@ static void cr_channel(
     }
 }
 
-static void cr_thread(
-    server_t *server, client_t *client, char **argv, size_t argc)
+static void cr_thread(client_t *client, char **argv, size_t argc)
 {
     thread_t *thread;
 
     if (argc == 2) {
-        thread =
-            create_thread(server, *argv, *(argv + 1), client->channel_ctx);
+        thread = create_thread(*argv, *(argv + 1), client->channel_ctx);
         if (thread) {
             arr_pushback(&(client->channel_ctx->threads), thread);
             dprintf(client->fd, _011_, thread->uuid, client->user->uuid,
@@ -79,13 +76,12 @@ static void cr_thread(
     }
 }
 
-static void cr_reply(
-    server_t *server, client_t *client, char **argv, size_t argc)
+static void cr_reply(client_t *client, char **argv, size_t argc)
 {
     reply_t *reply;
 
     if (argc == 1) {
-        reply = create_reply(server, *argv);
+        reply = create_reply(*argv);
         if (reply) {
             arr_pushback(&(client->thread_ctx->replies), reply);
             dprintf(client->fd, _012_, client->thread_ctx->uuid,
@@ -111,12 +107,12 @@ void create(server_t *server, client_t *client, char **argv, size_t argc)
         return;
     }
     if (client->channel_ctx == NULL) {
-        cr_channel(server, client, argv, argc);
+        cr_channel(client, argv, argc);
         return;
     }
     if (client->thread_ctx == NULL) {
-        cr_thread(server, client, argv, argc);
+        cr_thread(client, argv, argc);
         return;
     }
-    cr_reply(server, client, argv, argc);
+    cr_reply(client, argv, argc);
 }

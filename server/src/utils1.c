@@ -7,17 +7,19 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <uuid/uuid.h>
 
 #include "libs/mem.h"
 #include "libs/str.h"
 #include "server.h"
 
-char *generate_uuid(server_t *server)
+char *generate_uuid(void)
 {
+    uuid_t binuuid;
     char *uuid = ptr_alloc(sizeof(char) * (36 + 1));
 
-    sprintf(uuid, "%036ld", server->uuid);
-    server->uuid += 1;
+    uuid_generate_random(binuuid);
+    uuid_unparse(binuuid, uuid);
     return uuid;
 }
 

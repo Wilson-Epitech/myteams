@@ -36,7 +36,7 @@ void create_user(server_t *server, char *name)
         return;
     }
     user->name = strcreate(name);
-    user->uuid = generate_uuid(server);
+    user->uuid = generate_uuid();
     user->loged = true;
     arr_pushback(&(server->users), user);
 }
@@ -76,6 +76,6 @@ team_t *create_team(
     team->channels = arr_alloc(1);
     team->creator = creator;
     team->subscribers = arr_alloc(1);
-    team->uuid = generate_uuid(server);
+    team->uuid = generate_uuid();
     return team;
 }

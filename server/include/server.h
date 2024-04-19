@@ -73,7 +73,6 @@ typedef struct client_s {
 
 // missing teams, channels, thread, reply, dms
 typedef struct server_s {
-    size_t uuid;
     user_t **users;
     client_t **clients;
     team_t **teams;
@@ -105,15 +104,13 @@ team_t *create_team(
     server_t *, user_t *creator, char *name, char *description);
 void team_free(void *ptr);
 
-channel_t *create_channel(
-    server_t *server, char *name, char *description, team_t *parent);
+channel_t *create_channel(char *name, char *description, team_t *parent);
 void channel_free(void *ptr);
 
-thread_t *create_thread(
-    server_t *server, char *title, char *message, channel_t *parent);
+thread_t *create_thread(char *title, char *message, channel_t *parent);
 void thread_free(void *ptr);
 
-reply_t *create_reply(server_t *server, char *body);
+reply_t *create_reply(char *body);
 void reply_free(void *ptr);
 
 void create_dm(
@@ -130,6 +127,4 @@ thread_t *find_thread(thread_t **threads, char *thread_uuid);
 dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver);
 
 void remove_quote(char **arr);
-
-// Temporary (will be replaced with the real generation)
-char *generate_uuid(server_t *server);
+char *generate_uuid(void);

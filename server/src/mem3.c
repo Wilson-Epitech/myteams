@@ -29,8 +29,7 @@ void channel_free(void *ptr)
     ptr_free(ptr);
 }
 
-channel_t *create_channel(
-    server_t *server, char *name, char *description, team_t *parent)
+channel_t *create_channel(char *name, char *description, team_t *parent)
 {
     channel_t *channel;
 
@@ -47,7 +46,7 @@ channel_t *create_channel(
     channel->name = strcreate(name);
     channel->description = strcreate(description);
     channel->threads = arr_alloc(1);
-    channel->uuid = generate_uuid(server);
+    channel->uuid = generate_uuid();
     return channel;
 }
 
@@ -65,8 +64,7 @@ void thread_free(void *ptr)
     ptr_free(ptr);
 }
 
-thread_t *create_thread(
-    server_t *server, char *title, char *message, channel_t *parent)
+thread_t *create_thread(char *title, char *message, channel_t *parent)
 {
     thread_t *thread;
 
@@ -81,7 +79,7 @@ thread_t *create_thread(
         return NULL;
     }
     thread->time = time(NULL);
-    thread->uuid = generate_uuid(server);
+    thread->uuid = generate_uuid();
     thread->title = strcreate(title);
     thread->message = strcreate(message);
     thread->replies = arr_alloc(1);
