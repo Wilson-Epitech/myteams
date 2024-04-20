@@ -81,9 +81,6 @@ static int if_subbed(
     if (!arr_has(team->subscribers, client->user)) {
         return dprintf(client->fd, _104_);
     }
-    if (argc == 0) {
-        set_root_context(client);
-    }
     if (argc == 1) {
         set_team_context(server, client, argv);
     }
@@ -101,5 +98,9 @@ void use(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, (!client->user) ? _104_ : _101_);
         return;
     }
-    if_subbed(server, client, argv, argc);
+    if (argc == 0) {
+        set_root_context(client);
+    } else {
+        if_subbed(server, client, argv, argc);
+    }
 }

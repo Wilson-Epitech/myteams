@@ -34,6 +34,6 @@ void unsubscribe(server_t *server, client_t *client, char **argv, size_t argc)
     if (arr_has(team->subscribers, client->user)) {
         arr_remove_ptr(team->subscribers, client->user, false);
         server_event_user_unsubscribed(team->uuid, client->user->uuid);
-        dprintf(client->fd, _024_, team->name, team->uuid);
+        dprintf(client->fd, _024_, client->user->uuid, team->uuid);
     }
 }

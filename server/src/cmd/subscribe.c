@@ -34,6 +34,6 @@ void subscribe(server_t *server, client_t *client, char **argv, size_t argc)
     if (!arr_has(team->subscribers, client->user)) {
         arr_pushback(&(team->subscribers), client->user);
         server_event_user_subscribed(team->uuid, client->user->uuid);
-        dprintf(client->fd, _023_, team->name, team->uuid);
+        dprintf(client->fd, _023_, client->user->uuid, team->uuid);
     }
 }

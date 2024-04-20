@@ -25,6 +25,10 @@ typedef struct cmd_s {
 DECLARE(do003);
 DECLARE(do004);
 DECLARE(do007);
+DECLARE(do023);
+DECLARE(do024);
+DECLARE(do027);
+DECLARE(do028);
 DECLARE(do036);
 
 // Error
@@ -39,6 +43,10 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do003), /* login */
     ARGUMENTS(do004), /* logout */
     ARGUMENTS(do007), /* users */
+    ARGUMENTS(do023), /* subscribe to a team */
+    ARGUMENTS(do024), /* unsubscribe from a team */
+    ARGUMENTS(do028), /* list teams (when are the root) */
+    ARGUMENTS(do027), /* list channels (when in a team) */
     ARGUMENTS(do036), /* change user (login when already logged) */
     // Error
     ARGUMENTS(do104), /* unauthorized */
