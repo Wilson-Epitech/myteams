@@ -21,9 +21,13 @@ typedef struct cmd_s {
 #define BRACKET_RIGHT }
 #define ARGUMENTS(name) BRACKET_LEFT #name, name BRACKET_RIGHT
 
+// Success
 DECLARE(do003);
 DECLARE(do004);
 DECLARE(do007);
+DECLARE(do036);
+
+// Error
 DECLARE(do104);
 DECLARE(do105);
 DECLARE(do107);
@@ -32,11 +36,12 @@ DECLARE(do109);
 
 static const cmd_t COMMANDS[] = {
     // Success
-    ARGUMENTS(do003),
-    ARGUMENTS(do004),
-    ARGUMENTS(do007),
+    ARGUMENTS(do003), /* login */
+    ARGUMENTS(do004), /* logout */
+    ARGUMENTS(do007), /* users */
+    ARGUMENTS(do036), /* change user (login when already logged) */
     // Error
-    ARGUMENTS(do104),
+    ARGUMENTS(do104), /* unauthorized */
     ARGUMENTS(do105),
     ARGUMENTS(do107),
     ARGUMENTS(do108),
@@ -44,6 +49,14 @@ static const cmd_t COMMANDS[] = {
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
+
+/* -- Commands --
+/login
+/logout
+/users
+
+
+ * -- Commands -- */
 
 // Done
 // do003 client_event_logged_in

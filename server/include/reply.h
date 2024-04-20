@@ -89,3 +89,6 @@
 
 // Event
 #define _035_ "035 From [%s] : [%s] \n"
+
+// Change user
+#define _036_ "036 User changed from [%s]  [%s] to [%s]  [%s] \n"

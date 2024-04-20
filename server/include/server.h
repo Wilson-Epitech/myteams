@@ -97,7 +97,7 @@ void server_free(void *ptr);
 void create_client(server_t *server, int client_fd);
 void client_free(void *ptr);
 
-void create_user(server_t *server, char *name);
+user_t *create_user(server_t *server, char *name);
 void user_free(void *ptr);
 
 team_t *create_team(

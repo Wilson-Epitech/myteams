@@ -43,7 +43,7 @@ static int try_load_user(server_t *server, client_t *client, char *username)
         return SUCCESS;
     }
     if (user->loged) {
-        dprintf(client->fd, _104_);
+        return FAILURE;
     } else {
         show_logout(client);
         client->user = user;
@@ -51,6 +51,42 @@ static int try_load_user(server_t *server, client_t *client, char *username)
         server_event_user_loaded(client->user->uuid, client->user->name);
     }
     return (user == client->user) ? SUCCESS : FAILURE;
+}
+
+static int create_new_user(server_t *server, client_t *client, char *name)
+{
+    user_t *user = create_user(server, name);
+
+    server_event_user_logged_out(client->user->uuid);
+    server_event_user_created(user->uuid, user->name);
+    server_event_user_logged_in(user->uuid);
+    dprintf(client->fd, _036_, client->user->uuid, client->user->name,
+        user->uuid, user->name);
+    client->user->loged = false;
+    user->loged = true;
+    client->user = user;
+    return SUCCESS;
+}
+
+static int update_user(server_t *server, client_t *client, char *name)
+{
+    user_t *user = find_user(server, name);
+
+    if (user == NULL) {
+        return create_new_user(server, client, name);
+    }
+    if (user->loged) {
+        return FAILURE;
+    }
+    server_event_user_logged_out(client->user->uuid);
+    server_event_user_loaded(user->uuid, user->name);
+    server_event_user_logged_in(user->uuid);
+    dprintf(client->fd, _036_, client->user->uuid, client->user->name,
+        user->uuid, user->name);
+    client->user->loged = false;
+    user->loged = true;
+    client->user = user;
+    return SUCCESS;
 }
 
 void login(server_t *server, client_t *client, char **argv, size_t argc)
@@ -65,8 +101,8 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _102_);
         return;
     }
-    if (client->user) {
-        dprintf(client->fd, _104_);
+    if (client->user && strcmp(client->user->name, username) != 0) {
+        update_user(server, client, username);
         return;
     }
     if (try_load_user(server, client, username) == FAILURE)

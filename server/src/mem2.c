@@ -27,18 +27,19 @@ void user_free(void *ptr)
     ptr_free(ptr);
 }
 
-void create_user(server_t *server, char *name)
+user_t *create_user(server_t *server, char *name)
 {
     user_t *user = alloc(sizeof(user_t), user_free);
 
     if (user == NULL) {
         PERR_NORET("Couldn't Alloc User");
-        return;
+        return NULL;
     }
     user->name = strcreate(name);
     user->uuid = generate_uuid();
     user->loged = true;
     arr_pushback(&(server->users), user);
+    return user;
 }
 
 void team_free(void *ptr)
