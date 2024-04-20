@@ -12,8 +12,8 @@
 
 void do033(char *buf)
 {
-    char *uuid = search_at_info(buf, 0);
-    char *mess = search_at_info(buf, 1);
+    char *uuid = get_info(buf, 0);
+    char *mess = get_info(buf, 1);
 
     client_event_private_message_received(uuid, mess);
     free(mess);

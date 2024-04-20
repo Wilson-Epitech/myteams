@@ -17,7 +17,7 @@
 #include "libs/mem.h"
 #include "libs/str.h"
 
-char *search_at_info(char *buf, int index)
+char *get_info(char *buf, int index)
 {
     char *info = strcreate("");
     int curr_index = -1;
@@ -43,8 +43,8 @@ char *search_at_info(char *buf, int index)
 
 void do003(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
-    SMART char *uuid = search_at_info(buf, 1);
+    SMART char *user = get_info(buf, 0);
+    SMART char *uuid = get_info(buf, 1);
 
     client_event_logged_in(uuid, user);
     return;
@@ -52,8 +52,8 @@ void do003(char *buf)
 
 void do004(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
-    SMART char *uuid = search_at_info(buf, 1);
+    SMART char *user = get_info(buf, 0);
+    SMART char *uuid = get_info(buf, 1);
 
     client_event_logged_out(uuid, user);
     return;
@@ -82,9 +82,10 @@ bool dolibteams(client_t *client, char *buf)
             continue;
         COMMANDS[i].function(buf);
         if (strcmp(COMMANDS[i].name, "do003") == 0) {
-            client->name = search_at_info(buf, 0);
-            client->uuid = search_at_info(buf, 1);
+            client->name = get_info(buf, 0);
+            client->uuid = get_info(buf, 1);
         }
     }
     return false;
 }
+// printf("server response=[%s]\n", buf);

@@ -9,7 +9,7 @@
 
 #include <stddef.h>
 
-char *search_at_info(char *buf, int index);
+char *get_info(char *buf, int index);
 
 typedef struct cmd_s {
     const char *name;
@@ -25,6 +25,8 @@ typedef struct cmd_s {
 DECLARE(do003);
 DECLARE(do004);
 DECLARE(do007);
+DECLARE(do009);
+DECLARE(do010);
 DECLARE(do023);
 DECLARE(do024);
 DECLARE(do027);
@@ -43,10 +45,12 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do003), /* login */
     ARGUMENTS(do004), /* logout */
     ARGUMENTS(do007), /* users */
+    ARGUMENTS(do009), /* create team */
+    ARGUMENTS(do010), /* create channel */
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
-    ARGUMENTS(do028), /* list teams (when are the root) */
     ARGUMENTS(do027), /* list channels (when in a team) */
+    ARGUMENTS(do028), /* list teams (when at the root) */
     ARGUMENTS(do036), /* change user (login when already logged) */
     // Error
     ARGUMENTS(do104), /* unauthorized */

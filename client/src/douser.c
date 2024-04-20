@@ -23,9 +23,9 @@ void do007(char *buf)
         destroy(name);
         destroy(uuid);
         destroy(status);
-        name = search_at_info(buf, index);
-        uuid = search_at_info(buf, index + 1);
-        status = search_at_info(buf, index + 2);
+        name = get_info(buf, index);
+        uuid = get_info(buf, index + 1);
+        status = get_info(buf, index + 2);
         if (name && uuid && status) {
             client_print_users(uuid, name, atoi(status));
         }
@@ -36,7 +36,7 @@ void do007(char *buf)
 
 void do105(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
+    SMART char *user = get_info(buf, 0);
 
     client_error_unknown_user(user);
     return;
@@ -44,7 +44,7 @@ void do105(char *buf)
 
 void do107(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
+    SMART char *user = get_info(buf, 0);
 
     client_error_unknown_team(user);
     return;
@@ -52,7 +52,7 @@ void do107(char *buf)
 
 void do108(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
+    SMART char *user = get_info(buf, 0);
 
     client_error_unknown_channel(user);
     return;
@@ -60,7 +60,7 @@ void do108(char *buf)
 
 void do109(char *buf)
 {
-    SMART char *user = search_at_info(buf, 0);
+    SMART char *user = get_info(buf, 0);
 
     client_error_unknown_thread(user);
     return;
