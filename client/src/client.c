@@ -110,16 +110,16 @@ client_t *get_client(int port, const char *ip)
     struct sockaddr_in serv_addr = default_sockaddr(port);
 
     if (client == NULL || client->fd < 0) {
-        printf("\n Socket creation error \n");
+        PERR_NORET("Socket creation failed");
         return NULL;
     }
     if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
-        printf("\nInvalid address/ Address not supported \n");
+        PERR_NORET("Invalid address/ Address not supported");
         return NULL;
     }
     if (connect(client->fd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) <
         0) {
-        printf("\nConnection Failed \n");
+        PERR_NORET("Connection Failed");
         return NULL;
     }
     client->uuid = NULL;

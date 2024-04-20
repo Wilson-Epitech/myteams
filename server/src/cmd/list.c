@@ -19,9 +19,9 @@ static void list_replies(client_t *client)
     SMART char *data = strcreate("");
 
     for (reply_t **rep = client->thread_ctx->replies; *rep; rep++) {
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*rep)->body);
-        stradd_s(&data, "] , ");
+        stradd_s(&data, "] ,");
     }
     dprintf(client->fd, _025_, data);
 }
@@ -31,12 +31,12 @@ static void list_threads(client_t *client)
     SMART char *data = strcreate("");
 
     for (thread_t **th = client->channel_ctx->threads; *th; th++) {
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*th)->title);
         stradd_s(&data, "] about ");
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*th)->message);
-        stradd_s(&data, "] , ");
+        stradd_s(&data, "] ,");
     }
     dprintf(client->fd, _026_, data);
 }
@@ -46,15 +46,15 @@ static void list_channels(client_t *client)
     SMART char *data = strcreate("");
 
     for (channel_t **ch = client->team_ctx->channels; *ch; ch++) {
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*ch)->uuid);
         stradd_s(&data, "] about ");
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*ch)->name);
         stradd_s(&data, "] about ");
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*ch)->description);
-        stradd_s(&data, "] , ");
+        stradd_s(&data, "] ,");
     }
     dprintf(client->fd, _027_, data);
 }
@@ -64,15 +64,15 @@ static void list_teams(server_t *server, client_t *client)
     SMART char *data = strcreate("");
 
     for (team_t **teams = server->teams; *teams; teams++) {
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*teams)->uuid);
         stradd_s(&data, "] about ");
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*teams)->name);
         stradd_s(&data, "] about ");
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*teams)->description);
-        stradd_s(&data, "] , ");
+        stradd_s(&data, "] ,");
     }
     dprintf(client->fd, _028_, data);
 }

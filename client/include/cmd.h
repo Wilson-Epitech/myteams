@@ -9,7 +9,7 @@
 
 #include <stddef.h>
 
-char *search_at_info(char *buf, int in);
+char *search_at_info(char *buf, int index);
 
 typedef struct cmd_s {
     const char *name;

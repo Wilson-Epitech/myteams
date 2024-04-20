@@ -20,9 +20,9 @@ static void show_messages(server_t *server, client_t *client, user_t *other)
     SMART char *data = strcreate("");
 
     for (size_t i = 0; dms[i]; i++) {
-        stradd_s(&data, "[");
+        stradd_s(&data, " [");
         stradd_s(&data, dms[i]->sender->name);
-        stradd_s(&data, "] [");
+        stradd_s(&data, "]  [");
         stradd_s(&data, dms[i]->message);
         stradd_s(&data, "] ");
     }

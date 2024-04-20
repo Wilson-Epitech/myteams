@@ -5,54 +5,63 @@
 ** douser.c
 */
 
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include "../libs/myteams/logging_client.h"
 #include "cmd.h"
+#include "libs/mem.h"
 
 void do007(char *buf)
 {
-    char *user = search_at_info(buf, 0);
-    char *uuid = search_at_info(buf, 1);
+    size_t index = 0;
+    char *name = NULL;
+    char *uuid = NULL;
+    char *status = NULL;
 
-    client_event_logged_out(uuid, user);
-    free(user);
-    free(uuid);
+    do {
+        destroy(name);
+        destroy(uuid);
+        destroy(status);
+        name = search_at_info(buf, index);
+        uuid = search_at_info(buf, index + 1);
+        status = search_at_info(buf, index + 2);
+        if (name && uuid && status) {
+            client_print_users(uuid, name, atoi(status));
+        }
+        index += 3;
+    } while (name && uuid && status);
     return;
 }
 
 void do105(char *buf)
 {
-    char *user = search_at_info(buf, 0);
+    SMART char *user = search_at_info(buf, 0);
 
     client_error_unknown_user(user);
-    free(user);
     return;
 }
 
 void do107(char *buf)
 {
-    char *user = search_at_info(buf, 0);
+    SMART char *user = search_at_info(buf, 0);
 
     client_error_unknown_team(user);
-    free(user);
     return;
 }
 
 void do108(char *buf)
 {
-    char *user = search_at_info(buf, 0);
+    SMART char *user = search_at_info(buf, 0);
 
     client_error_unknown_channel(user);
-    free(user);
     return;
 }
 
 void do109(char *buf)
 {
-    char *user = search_at_info(buf, 0);
+    SMART char *user = search_at_info(buf, 0);
 
     client_error_unknown_thread(user);
-    free(user);
     return;
 }

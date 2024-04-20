@@ -31,7 +31,7 @@ static void my_subscribtions(server_t *server, client_t *client)
 
     for (team_t **teams = server->teams; *teams; teams++) {
         if (is_sub((*teams)->subscribers, client->user->uuid)) {
-            stradd_c(&data, '[');
+            stradd_s(&data, " [");
             stradd_s(&data, (*teams)->name);
             stradd_s(&data, "] ");
         }
@@ -55,7 +55,7 @@ static void all_subscribers(
         return;
     }
     for (user_t **users = team->subscribers; *users; users++) {
-        stradd_c(&data, '[');
+        stradd_s(&data, " [");
         stradd_s(&data, (*users)->name);
         stradd_s(&data, "] ");
     }

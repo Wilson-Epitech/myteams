@@ -7,75 +7,55 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../libs/myteams/logging_client.h"
 #include "client.h"
 #include "cmd.h"
+#include "libs/mem.h"
+#include "libs/str.h"
 
-static int len_for_malloc(char *buf, int in)
+char *search_at_info(char *buf, int index)
 {
-    bool open_close = false;
-    int len = 0;
-    int index = 0;
+    char *info = strcreate("");
+    int curr_index = -1;
 
-    for (int i = 0; buf[i] != 0; i++) {
-        if (buf[i] == ']') {
-            index += 1;
-            open_close = false;
+    for (; *buf; buf++) {
+        if (curr_index > index)
+            break;
+        if (curr_index == index && (strncmp(buf, "] ", 2) == 0)) {
+            return info;
         }
-        if (open_close && index == in)
-            len += 1;
-        if (buf[i] == '[')
-            open_close = true;
+        if (curr_index == index) {
+            stradd_c(&info, *buf);
+            continue;
+        }
+        if (strncmp(buf, " [", 2) == 0) {
+            curr_index += 1;
+            buf++;
+        }
     }
-    return len;
-}
-
-char *search_at_info(char *buf, int in)
-{
-    bool open_close = false;
-    int len = len_for_malloc(buf, in);
-    char *user = malloc(sizeof(char) * (len + 1));
-    int cnt = 0;
-
-    for (int i = 0; buf[i] != 0; i++) {
-        if (buf[i] == ']') {
-            in -= 1;
-            cnt = 0;
-            open_close = false;
-        }
-        if (open_close && in == 0) {
-            user[cnt] = buf[i];
-            cnt += 1;
-        }
-        if (buf[i] == '[')
-            open_close = true;
-    }
-    user[len] = 0;
-    return user;
+    destroy(info);
+    return NULL;
 }
 
 void do003(char *buf)
 {
-    char *user = search_at_info(buf, 0);
-    char *uuid = search_at_info(buf, 1);
+    SMART char *user = search_at_info(buf, 0);
+    SMART char *uuid = search_at_info(buf, 1);
 
     client_event_logged_in(uuid, user);
-    free(user);
-    free(uuid);
     return;
 }
 
 void do004(char *buf)
 {
-    char *user = search_at_info(buf, 0);
-    char *uuid = search_at_info(buf, 1);
+    SMART char *user = search_at_info(buf, 0);
+    SMART char *uuid = search_at_info(buf, 1);
 
     client_event_logged_out(uuid, user);
-    free(user);
-    free(uuid);
     return;
 }
 

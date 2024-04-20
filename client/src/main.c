@@ -40,8 +40,8 @@ int main(int ac, const char *av[])
     }
     if (launch_client(client) == 0 && client->uuid != NULL)
         client_event_logged_out(client->uuid, client->name);
-    try_free(client->name);
-    try_free(client->uuid);
+    destroy(client->name);
+    destroy(client->uuid);
     free(client);
     return 0;
 }
