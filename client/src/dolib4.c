@@ -52,3 +52,12 @@ void do034(char *buf)
         index += 3;
     } while (sender_uuid && time && message);
 }
+
+void do008(char *buf)
+{
+    SMART char *uuid = get_info(buf, 0);
+    SMART char *name = get_info(buf, 1);
+    SMART char *status = get_info(buf, 2);
+
+    client_print_user(uuid, name, atol(status));
+}

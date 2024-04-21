@@ -25,6 +25,7 @@ typedef struct cmd_s {
 DECLARE(do003);
 DECLARE(do004);
 DECLARE(do007);
+DECLARE(do008);
 DECLARE(do009);
 DECLARE(do010);
 DECLARE(do011);
@@ -52,9 +53,10 @@ DECLARE(do109);
 
 static const cmd_t COMMANDS[] = {
     // Success
-    ARGUMENTS(do003), /* login */
-    ARGUMENTS(do004), /* logout */
-    ARGUMENTS(do007), /* users */
+    ARGUMENTS(do003), /* /login */
+    ARGUMENTS(do004), /* /logout */
+    ARGUMENTS(do007), /* /users */
+    ARGUMENTS(do008), /* /user */
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
     ARGUMENTS(do025), /* list replies (when in a thread) */
