@@ -46,9 +46,8 @@ static void cr_team(
         } else {
             dprintf(client->fd, _106_);
         }
-    } else {
+    } else
         dprintf(client->fd, _101_);
-    }
 }
 
 static void event_channel_created(void *_user, va_list ap)
@@ -84,12 +83,10 @@ static void cr_channel(
                 client->user->uuid, channel->uuid, channel->name);
             dprintf(client->fd, _040_, channel->uuid, channel->name,
                 channel->description);
-        } else {
+        } else
             dprintf(client->fd, _106_);
-        }
-    } else {
+    } else
         dprintf(client->fd, _101_);
-    }
 }
 
 static void event_thread_created(void *_user, va_list ap)
@@ -106,33 +103,28 @@ static void event_thread_created(void *_user, va_list ap)
     }
 }
 
-static void cr_thread(
-    server_t *server, client_t *client, char **argv, size_t argc)
+static void cr_thread(server_t *srv, client_t *cl, char **av, size_t ac)
 {
     thread_t *thread;
 
-    if (argc == 2) {
-        if (find_thread_by_name(client->channel_ctx->threads, *argv)) {
-            dprintf(client->fd, _143_);
+    if (ac == 2) {
+        if (find_thread_by_name(cl->channel_ctx->threads, *av)) {
+            dprintf(cl->fd, _143_);
             return;
         }
-        thread = create_thread(
-            *argv, *(argv + 1), client->channel_ctx, client->user);
+        thread = create_thread(*av, *(av + 1), cl->channel_ctx, cl->user);
         if (thread) {
-            arr_pushback(&(client->channel_ctx->threads), thread);
-            arr_foreach_arg(client->team_ctx->subscribers,
-                event_thread_created, server, thread, client);
-            server_event_thread_created(client->channel_ctx->uuid,
-                thread->uuid, client->user->uuid, thread->title,
-                thread->message);
-            dprintf(client->fd, _041_, thread->uuid, thread->creator->uuid,
+            arr_pushback(&(cl->channel_ctx->threads), thread);
+            arr_foreach_arg(cl->team_ctx->subscribers, event_thread_created,
+                srv, thread, cl);
+            server_event_thread_created(cl->channel_ctx->uuid, thread->uuid,
+                cl->user->uuid, thread->title, thread->message);
+            dprintf(cl->fd, _041_, thread->uuid, thread->creator->uuid,
                 thread->time, thread->title, thread->message);
-        } else {
-            dprintf(client->fd, _106_);
-        }
-    } else {
-        dprintf(client->fd, _101_);
-    }
+        } else
+            dprintf(cl->fd, _106_);
+    } else
+        dprintf(cl->fd, _101_);
 }
 
 static void event_reply_created(void *_user, va_list ap)
