@@ -40,8 +40,8 @@ static void show_logout(server_t *server, client_t *client)
         server_event_user_logged_out(client->user->uuid);
     }
 }
-// arr_foreach_arg(server->clients, event_logout, client);
 
+// arr_foreach_arg(server->clients, event_logout, client);
 static int try_load_user(server_t *server, client_t *client, char *username)
 {
     user_t *user = find_user(server, username);
@@ -77,8 +77,8 @@ static int create_new_user(server_t *server, client_t *client, char *name)
     client->user = user;
     return SUCCESS;
 }
-// arr_foreach_arg(server->clients, event_login, client);
 
+// arr_foreach_arg(server->clients, event_login, client);
 static int update_user(server_t *server, client_t *client, char *name)
 {
     user_t *user = find_user(server, name);
@@ -98,9 +98,9 @@ static int update_user(server_t *server, client_t *client, char *name)
     client->user = user;
     return SUCCESS;
 }
+
 // arr_foreach_arg(server->clients, event_logout, client);
 // arr_foreach_arg(server->clients, event_login, client);
-
 void login(server_t *server, client_t *client, char **argv, size_t argc)
 {
     char *username = *argv;

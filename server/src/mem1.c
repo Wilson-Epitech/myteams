@@ -31,10 +31,10 @@ void server_free(void *ptr)
     while (*(server->clients)) {
         logout(server, *(server->clients), NULL, 0);
     }
-    destroy(server->clients);
-    destroy(server->users);
     destroy(server->teams);
     destroy(server->dms);
+    destroy(server->users);
+    destroy(server->clients);
     ptr_free(ptr);
 }
 

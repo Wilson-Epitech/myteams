@@ -49,11 +49,11 @@ void team_free(void *ptr)
     if (team == NULL) {
         return;
     }
+    destroy(team->uuid);
     destroy(team->name);
     destroy(team->description);
     destroy(team->channels);
     ptr_free(team->subscribers);
-    destroy(team->uuid);
     ptr_free(ptr);
 }
 

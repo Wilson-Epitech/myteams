@@ -29,17 +29,17 @@ void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
     user_t *receiver = NULL;
     dm_t *dm = NULL;
 
-    if (!client->user) {
-        dprintf(client->fd, _104_);
-        return;
-    }
-    if (argc != 2) {
-        dprintf(client->fd, _101_);
+    if (!client->user || argc != 2) {
+        dprintf(client->fd, (!client->user) ? _104_ : _101_);
         return;
     }
     receiver = find_user_by_uuid(server->users, *argv);
     if (!receiver) {
         dprintf(client->fd, _105_, *argv);
+        return;
+    }
+    if (receiver == client->user) {
+        dprintf(client->fd, _104_);
         return;
     }
     dm = create_dm(server, client->user, receiver, *(argv + 1));

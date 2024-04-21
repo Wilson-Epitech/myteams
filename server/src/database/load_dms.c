@@ -28,8 +28,9 @@ dm_t **load_dms(user_t **users)
     dm_t *curr = NULL;
     dm_t **dms = arr_alloc(1);
 
+    arrdebug(tokens);
     for (size_t i = 0; tokens[i]; i += 4) {
-        curr = alloc(sizeof(dm_t), user_free);
+        curr = alloc(sizeof(dm_t), dm_free);
         curr->sender = find_user_by_uuid(users, tokens[i]);
         curr->receiver = find_user_by_uuid(users, tokens[i + 1]);
         curr->time = atol(tokens[i + 2]);

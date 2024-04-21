@@ -43,7 +43,10 @@ char *get_info(char *buf, int index)
 
 void do003(char *buf)
 {
-    (void)buf;
+    SMART char *uuid = get_info(buf, 0);
+    SMART char *name = get_info(buf, 1);
+
+    client_event_logged_in(uuid, name);
     return;
 }
 
