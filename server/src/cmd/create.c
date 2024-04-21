@@ -14,6 +14,14 @@
 #include "reply.h"
 #include "server.h"
 
+static void event_team_created(void *_client, va_list ap)
+{
+    client_t *client = _client;
+    team_t *team = va_arg(ap, team_t *);
+
+    dprintf(client->fd, _009_, team->uuid, team->name, team->description);
+}
+
 static void cr_team(
     server_t *server, client_t *client, char **argv, size_t argc)
 {
@@ -22,9 +30,8 @@ static void cr_team(
     if (argc == 2) {
         team = create_team(server, client->user, *argv, *(argv + 1));
         if (team) {
+            arr_foreach_arg(server->clients, event_team_created, team);
             arr_pushback(&(server->teams), team);
-            dprintf(
-                client->fd, _009_, team->uuid, team->name, team->description);
             server_event_team_created(
                 team->uuid, team->name, team->creator->uuid);
         } else {
@@ -35,7 +42,19 @@ static void cr_team(
     }
 }
 
-static void cr_channel(client_t *client, char **argv, size_t argc)
+static void event_channel_created(void *_user, va_list ap)
+{
+    user_t *user = _user;
+    server_t *server = va_arg(ap, server_t *);
+    channel_t *channel = va_arg(ap, channel_t *);
+    client_t *client = find_client(server->clients, user);
+
+    dprintf(
+        client->fd, _010_, channel->uuid, channel->name, channel->description);
+}
+
+static void cr_channel(
+    server_t *server, client_t *client, char **argv, size_t argc)
 {
     channel_t *channel;
 
@@ -43,8 +62,8 @@ static void cr_channel(client_t *client, char **argv, size_t argc)
         channel = create_channel(*argv, *(argv + 1), client->team_ctx);
         if (channel) {
             arr_pushback(&(client->team_ctx->channels), channel);
-            dprintf(client->fd, _010_, channel->uuid, channel->name,
-                channel->description);
+            arr_foreach_arg(client->team_ctx->subscribers,
+                event_channel_created, server, channel);
             server_event_channel_created(
                 client->user->uuid, channel->uuid, channel->name);
         } else {
@@ -55,7 +74,19 @@ static void cr_channel(client_t *client, char **argv, size_t argc)
     }
 }
 
-static void cr_thread(client_t *client, char **argv, size_t argc)
+static void event_thread_created(void *_user, va_list ap)
+{
+    user_t *user = _user;
+    server_t *server = va_arg(ap, server_t *);
+    thread_t *thread = va_arg(ap, thread_t *);
+    client_t *client = find_client(server->clients, user);
+
+    dprintf(client->fd, _011_, thread->uuid, thread->creator->uuid,
+        thread->time, thread->title, thread->message);
+}
+
+static void cr_thread(
+    server_t *server, client_t *client, char **argv, size_t argc)
 {
     thread_t *thread;
 
@@ -64,8 +95,8 @@ static void cr_thread(client_t *client, char **argv, size_t argc)
             *argv, *(argv + 1), client->channel_ctx, client->user);
         if (thread) {
             arr_pushback(&(client->channel_ctx->threads), thread);
-            dprintf(client->fd, _011_, thread->uuid, client->user->uuid,
-                thread->time, thread->title, thread->message);
+            arr_foreach_arg(client->team_ctx->subscribers,
+                event_thread_created, server, thread);
             server_event_thread_created(client->channel_ctx->uuid,
                 thread->uuid, client->user->uuid, thread->title,
                 thread->message);
@@ -77,7 +108,21 @@ static void cr_thread(client_t *client, char **argv, size_t argc)
     }
 }
 
-static void cr_reply(client_t *client, char **argv, size_t argc)
+static void event_reply_created(void *_user, va_list ap)
+{
+    user_t *user = _user;
+    server_t *server = va_arg(ap, server_t *);
+    team_t *team = va_arg(ap, team_t *);
+    thread_t *thread = va_arg(ap, thread_t *);
+    reply_t *reply = va_arg(ap, reply_t *);
+    client_t *client = find_client(server->clients, user);
+
+    dprintf(client->fd, _012_, team->uuid, thread->uuid, reply->creator->uuid,
+        reply->body);
+}
+
+static void cr_reply(
+    server_t *server, client_t *client, char **argv, size_t argc)
 {
     reply_t *reply;
 
@@ -85,8 +130,8 @@ static void cr_reply(client_t *client, char **argv, size_t argc)
         reply = create_reply(*argv, client->user);
         if (reply) {
             arr_pushback(&(client->thread_ctx->replies), reply);
-            dprintf(client->fd, _012_, client->team_ctx->uuid,
-                client->thread_ctx->uuid, client->user->uuid, reply->body);
+            arr_foreach_arg(client->team_ctx->subscribers, event_reply_created,
+                server, client->team_ctx, client->thread_ctx, reply);
             server_event_reply_created(
                 client->thread_ctx->uuid, client->user->uuid, reply->body);
         } else {
@@ -108,12 +153,12 @@ void create(server_t *server, client_t *client, char **argv, size_t argc)
         return;
     }
     if (client->channel_ctx == NULL) {
-        cr_channel(client, argv, argc);
+        cr_channel(server, client, argv, argc);
         return;
     }
     if (client->thread_ctx == NULL) {
-        cr_thread(client, argv, argc);
+        cr_thread(server, client, argv, argc);
         return;
     }
-    cr_reply(client, argv, argc);
+    cr_reply(server, client, argv, argc);
 }

@@ -43,7 +43,7 @@
 #define _009_ "009 Team [%s]  [%s] about [%s] created.\n"
 #define _010_ "010 Channel [%s]  [%s] about [%s] created.\n"
 #define _011_ "011 Thread [%s] created by [%s] at [%ld] -> [%s] : [%s] .\n"
-#define _012_ "012 In Team [%s] Thead [%s] you [%s] created Reply [%s] .\n"
+#define _012_ "012 In Team [%s] Thead [%s] , [%s] created Reply [%s] .\n"
 
 // Creation Event
 #define _013_ "013 Team [%s]  [%s] about [%s] created.\n"

@@ -104,11 +104,6 @@ static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 // client_error_unknown_team
 // client_error_unknown_thread
 // client_error_unknown_user
-
-// client_event_channel_created
-// client_event_team_created
-// client_event_thread_created
-// client_event_thread_reply_received
 //
 // client_thread_print_replies
 // client_channel_print_threads
@@ -117,13 +112,21 @@ static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 // client_print_unsubscribed
 
 // Todo
-// client_error_already_exist
-// client_print_channel
+
+// client_event_team_created
+// client_event_channel_created
+// client_event_thread_created
+// client_event_thread_reply_received
+
 // client_print_channel_created
 // client_print_reply_created
-// client_print_team
 // client_print_team_created
-// client_print_thread
 // client_print_thread_created
+
+// client_error_already_exist
+
 // client_print_user
+// client_print_team
+// client_print_channel
+// client_print_thread
 // client_team_print_channels
