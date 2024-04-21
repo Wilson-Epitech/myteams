@@ -15,7 +15,7 @@
 
 static void display_help(int fd)
 {
-    FILE *file = fopen("protocol.yaml", "r");
+    FILE *file = fopen("protocol.md", "r");
     SMART char *str = strcreate("");
     SMART char *tmp = NULL;
     size_t size;
