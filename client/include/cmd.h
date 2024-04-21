@@ -28,6 +28,7 @@ DECLARE(do007);
 DECLARE(do009);
 DECLARE(do010);
 DECLARE(do011);
+DECLARE(do012);
 DECLARE(do023);
 DECLARE(do024);
 DECLARE(do025);
@@ -51,6 +52,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do009), /* create team */
     ARGUMENTS(do010), /* create channel */
     ARGUMENTS(do011), /* create thread */
+    ARGUMENTS(do012), /* create reply */
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
     ARGUMENTS(do025), /* list replies (when in a thread) */
@@ -60,10 +62,10 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do036), /* change user (login when already logged) */
     // Error
     ARGUMENTS(do104), /* unauthorized */
-    ARGUMENTS(do105),
-    ARGUMENTS(do107),
-    ARGUMENTS(do108),
-    ARGUMENTS(do109),
+    ARGUMENTS(do105), /**/
+    ARGUMENTS(do107), /* unknown team */
+    ARGUMENTS(do108), /* unknown channel */
+    ARGUMENTS(do109), /* unknown thread */
 };
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);

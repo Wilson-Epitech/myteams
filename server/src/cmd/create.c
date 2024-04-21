@@ -85,8 +85,8 @@ static void cr_reply(client_t *client, char **argv, size_t argc)
         reply = create_reply(*argv, client->user);
         if (reply) {
             arr_pushback(&(client->thread_ctx->replies), reply);
-            dprintf(client->fd, _012_, client->thread_ctx->uuid,
-                client->user->uuid, reply->time, reply->body);
+            dprintf(client->fd, _012_, client->team_ctx->uuid,
+                client->thread_ctx->uuid, client->user->uuid, reply->body);
             server_event_reply_created(
                 client->thread_ctx->uuid, client->user->uuid, reply->body);
         } else {
