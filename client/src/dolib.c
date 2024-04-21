@@ -52,7 +52,10 @@ void do003(char *buf)
 
 void do004(char *buf)
 {
-    (void)buf;
+    SMART char *user = get_info(buf, 0);
+    SMART char *uuid = get_info(buf, 1);
+
+    client_event_logged_out(uuid, user);
     return;
 }
 

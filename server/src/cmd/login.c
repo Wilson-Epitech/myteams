@@ -31,9 +31,8 @@
 //     dprintf(client->fd, _038_, event->user->name, event->user->uuid);
 // }
 
-static void show_logout(server_t *server, client_t *client)
+static void show_logout(client_t *client)
 {
-    (void)server;
     if (client->user) {
         client->user->loged = false;
         dprintf(client->fd, _004_, client->user->name, client->user->uuid);
@@ -53,51 +52,52 @@ static int try_load_user(server_t *server, client_t *client, char *username)
         return SUCCESS;
     }
     if (user->loged) {
-        return FAILURE;
+        dprintf(client->fd, _104_);
     } else {
-        show_logout(server, client);
+        show_logout(client);
         client->user = user;
         client->user->loged = true;
+        server_event_user_loaded(client->user->uuid, client->user->name);
     }
     return (user == client->user) ? SUCCESS : FAILURE;
 }
 
 // arr_foreach_arg(server->clients, event_logout, client);
-static int create_new_user(server_t *server, client_t *client, char *name)
-{
-    user_t *user = create_user(server, name);
+// static int create_new_user(server_t *server, client_t *client, char *name)
+// {
+//     user_t *user = create_user(server, name);
 
-    server_event_user_logged_out(client->user->uuid);
-    server_event_user_created(user->uuid, user->name);
-    server_event_user_logged_in(user->uuid);
-    dprintf(client->fd, _036_, client->user->uuid, client->user->name,
-        user->uuid, user->name);
-    client->user->loged = false;
-    user->loged = true;
-    client->user = user;
-    return SUCCESS;
-}
+//     server_event_user_logged_out(client->user->uuid);
+//     server_event_user_created(user->uuid, user->name);
+//     server_event_user_logged_in(user->uuid);
+//     dprintf(client->fd, _036_, client->user->uuid, client->user->name,
+//         user->uuid, user->name);
+//     client->user->loged = false;
+//     user->loged = true;
+//     client->user = user;
+//     return SUCCESS;
+// }
 
 // arr_foreach_arg(server->clients, event_login, client);
-static int update_user(server_t *server, client_t *client, char *name)
-{
-    user_t *user = find_user(server, name);
+// static int update_user(server_t *server, client_t *client, char *name)
+// {
+//     user_t *user = find_user(server, name);
 
-    if (user == NULL) {
-        return create_new_user(server, client, name);
-    }
-    if (user->loged) {
-        return FAILURE;
-    }
-    server_event_user_logged_out(client->user->uuid);
-    server_event_user_logged_in(user->uuid);
-    dprintf(client->fd, _036_, client->user->uuid, client->user->name,
-        user->uuid, user->name);
-    client->user->loged = false;
-    user->loged = true;
-    client->user = user;
-    return SUCCESS;
-}
+//     if (user == NULL) {
+//         return create_new_user(server, client, name);
+//     }
+//     if (user->loged) {
+//         return FAILURE;
+//     }
+//     server_event_user_logged_out(client->user->uuid);
+//     server_event_user_logged_in(user->uuid);
+//     dprintf(client->fd, _036_, client->user->uuid, client->user->name,
+//         user->uuid, user->name);
+//     client->user->loged = false;
+//     user->loged = true;
+//     client->user = user;
+//     return SUCCESS;
+// }
 
 // arr_foreach_arg(server->clients, event_logout, client);
 // arr_foreach_arg(server->clients, event_login, client);
@@ -113,8 +113,8 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
         dprintf(client->fd, _102_);
         return;
     }
-    if (client->user && strcmp(client->user->name, username) != 0) {
-        update_user(server, client, username);
+    if (client->user) {
+        dprintf(client->fd, _104_);
         return;
     }
     if (try_load_user(server, client, username) == FAILURE)
