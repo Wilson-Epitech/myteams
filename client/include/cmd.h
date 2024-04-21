@@ -35,7 +35,13 @@ DECLARE(do025);
 DECLARE(do026);
 DECLARE(do027);
 DECLARE(do028);
+DECLARE(do034);
+DECLARE(do035);
 DECLARE(do036);
+
+// Event
+// DECLARE(do037); /* A user connected */
+// DECLARE(do038); /* A user disconnected */
 
 // Error
 DECLARE(do104);
@@ -59,10 +65,15 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do026), /* list threads (when in a channel) */
     ARGUMENTS(do027), /* list channels (when in a team) */
     ARGUMENTS(do028), /* list teams (when at the root) */
+    ARGUMENTS(do034), /* show messages with a user */
+    ARGUMENTS(do035), /* you received a dm */
     ARGUMENTS(do036), /* change user (login when already logged) */
+    // Event
+    // ARGUMENTS(do037), /* A user connected */
+    // ARGUMENTS(do038), /* A user disconnected */
     // Error
     ARGUMENTS(do104), /* unauthorized */
-    ARGUMENTS(do105), /**/
+    ARGUMENTS(do105), /* unknown user */
     ARGUMENTS(do107), /* unknown team */
     ARGUMENTS(do108), /* unknown channel */
     ARGUMENTS(do109), /* unknown thread */

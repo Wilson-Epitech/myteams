@@ -19,21 +19,20 @@
 //     client_t *client = _client;
 //     client_t *event = va_arg(ap, client_t *);
 
-//     dprintf(client->fd, _004_, event->user->name, event->user->uuid);
+//     dprintf(client->fd, _038_, event->user->name, event->user->uuid);
 // }
 
+// arr_foreach_arg(server->clients, event_logout, client);
 void logout(server_t *server, client_t *client, char **argv, size_t argc)
 {
     (void)argv;
     (void)argc;
     if (client->user) {
+        server_event_user_logged_out(client->user->uuid);
         dprintf(client->fd, _004_, client->user->name, client->user->uuid);
         client->user->loged = false;
-        server_event_user_logged_out(client->user->uuid);
     } else {
         dprintf(client->fd, _004_, "", "");
     }
     arr_remove_ptr(server->clients, client, true);
 }
-// arr_foreach_arg(server->clients, event_logout, client);
-// dprintf(client->fd, _005_);

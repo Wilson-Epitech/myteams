@@ -14,17 +14,26 @@
 #include "reply.h"
 #include "server.h"
 
+// int client_private_message_print_messages(
+//      char const *sender_uuid,
+//      time_t message_timestamp,
+//      char const *message_body);
 static void show_messages(server_t *server, client_t *client, user_t *other)
 {
     dm_t **dms = find_dms(server->dms, client->user, other);
     SMART char *data = strcreate("");
+    char *time = NULL;
 
     for (size_t i = 0; dms[i]; i++) {
         stradd_s(&data, " [");
-        stradd_s(&data, dms[i]->sender->name);
+        stradd_s(&data, dms[i]->sender->uuid);
+        stradd_s(&data, "]  [");
+        time = str_long(dms[i]->time);
+        stradd_s(&data, time);
+        destroy(time);
         stradd_s(&data, "]  [");
         stradd_s(&data, dms[i]->message);
-        stradd_s(&data, "] ");
+        stradd_s(&data, "] , ");
     }
     ptr_free(dms);
     dprintf(client->fd, _034_, data);

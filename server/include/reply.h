@@ -87,8 +87,12 @@
 // Messages
 #define _034_ "034 Messages : %s \n"
 
-// Event
-#define _035_ "035 From [%s] : [%s] \n"
+// Event Message Sent
+#define _035_ "035 Event -> From [%s] : [%s] \n"
 
 // Change user
 #define _036_ "036 User changed from [%s]  [%s] to [%s]  [%s] \n"
+
+// Event: Connection
+#define _037_ "037 Event -> User Connected : [%s]  [%s] .\n"
+#define _038_ "038 Event -> User Disconnected : [%s]  [%s] .\n"

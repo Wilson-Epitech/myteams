@@ -43,19 +43,13 @@ char *get_info(char *buf, int index)
 
 void do003(char *buf)
 {
-    SMART char *user = get_info(buf, 0);
-    SMART char *uuid = get_info(buf, 1);
-
-    client_event_logged_in(uuid, user);
+    (void)buf;
     return;
 }
 
 void do004(char *buf)
 {
-    SMART char *user = get_info(buf, 0);
-    SMART char *uuid = get_info(buf, 1);
-
-    client_event_logged_out(uuid, user);
+    (void)buf;
     return;
 }
 
@@ -65,6 +59,7 @@ void do104(char *buf)
     client_error_unauthorized();
 }
 
+// printf("cmd=[%s]\n", buf);
 bool dolibteams(client_t *client, char *buf)
 {
     char str[6] = {0};
@@ -88,4 +83,3 @@ bool dolibteams(client_t *client, char *buf)
     }
     return false;
 }
-// printf("server response=[%s]\n", buf);

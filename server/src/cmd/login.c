@@ -20,17 +20,27 @@
 //     client_t *client = _client;
 //     client_t *event = va_arg(ap, client_t *);
 
-//     dprintf(client->fd, _003_, event->user->name, event->user->uuid);
+//     dprintf(client->fd, _037_, event->user->name, event->user->uuid);
 // }
 
-static void show_logout(client_t *client)
+// static void event_logout(void *_client, va_list ap)
+// {
+//     client_t *client = _client;
+//     client_t *event = va_arg(ap, client_t *);
+
+//     dprintf(client->fd, _038_, event->user->name, event->user->uuid);
+// }
+
+static void show_logout(server_t *server, client_t *client)
 {
+    (void)server;
     if (client->user) {
         client->user->loged = false;
         dprintf(client->fd, _004_, client->user->name, client->user->uuid);
         server_event_user_logged_out(client->user->uuid);
     }
 }
+// arr_foreach_arg(server->clients, event_logout, client);
 
 static int try_load_user(server_t *server, client_t *client, char *username)
 {
@@ -45,13 +55,14 @@ static int try_load_user(server_t *server, client_t *client, char *username)
     if (user->loged) {
         return FAILURE;
     } else {
-        show_logout(client);
+        show_logout(server, client);
         client->user = user;
         client->user->loged = true;
     }
     return (user == client->user) ? SUCCESS : FAILURE;
 }
 
+// arr_foreach_arg(server->clients, event_logout, client);
 static int create_new_user(server_t *server, client_t *client, char *name)
 {
     user_t *user = create_user(server, name);
@@ -66,6 +77,7 @@ static int create_new_user(server_t *server, client_t *client, char *name)
     client->user = user;
     return SUCCESS;
 }
+// arr_foreach_arg(server->clients, event_login, client);
 
 static int update_user(server_t *server, client_t *client, char *name)
 {
@@ -86,6 +98,8 @@ static int update_user(server_t *server, client_t *client, char *name)
     client->user = user;
     return SUCCESS;
 }
+// arr_foreach_arg(server->clients, event_logout, client);
+// arr_foreach_arg(server->clients, event_login, client);
 
 void login(server_t *server, client_t *client, char **argv, size_t argc)
 {

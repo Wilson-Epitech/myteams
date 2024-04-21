@@ -21,7 +21,7 @@ static void send_notif(server_t *server, client_t *client, dm_t *dm)
     }
     dprintf(client->fd, _033_, dm->receiver->name, dm->message);
     server_event_private_message_sended(
-        client->user->uuid, dm->receiver->uuid, dm->message);
+        dm->sender->uuid, dm->receiver->uuid, dm->message);
 }
 
 void send_cmd(server_t *server, client_t *client, char **argv, size_t argc)
