@@ -34,7 +34,7 @@
 #define _006_ "006 [%s] \n"
 
 // Users
-#define _007_ "007 %s\n"
+#define _007_ "007 %s \n"
 
 // User
 #define _008_ "008 [%s]  [%s]  [%d] \n"
@@ -58,10 +58,10 @@
 #define _020_ "020 Context set to [%s]  [%s]  [%s] .\n"
 
 // My Subscriptions
-#define _021_ "021 You are subscribed to the teams %s\n"
+#define _021_ "021 You are subscribed to the teams %s \n"
 
 // Subscribers of a Team
-#define _022_ "022 The subscribers of the team [%s] are %s\n"
+#define _022_ "022 The subscribers of the team [%s] are %s \n"
 
 // Subscribe
 #define _023_ "023 You [%s] subscribed to the team [%s] \n"
@@ -70,10 +70,10 @@
 #define _024_ "024 You [%s] unsubscribed from the team [%s] \n"
 
 // List
-#define _025_ "025 List of replies %s\n"
-#define _026_ "026 List of threads %s\n"
-#define _027_ "027 List of channels %s\n"
-#define _028_ "028 List of teams %s\n"
+#define _025_ "025 List of replies %s \n"
+#define _026_ "026 List of threads %s \n"
+#define _027_ "027 List of channels %s \n"
+#define _028_ "028 List of teams %s \n"
 
 // Info
 #define _029_ "029 Info Thread [%s]  [%s] \n"
@@ -85,7 +85,7 @@
 #define _033_ "033 To [%s] : [%s] \n"
 
 // Messages
-#define _034_ "034 Messages : %s\n"
+#define _034_ "034 Messages : %s \n"
 
 // Event
 #define _035_ "035 From [%s] : [%s] \n"

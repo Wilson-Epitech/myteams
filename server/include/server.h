@@ -37,6 +37,7 @@ struct reply_s {
     char *uuid;
     char *body;
     time_t time;
+    user_t *creator;
 };
 
 struct thread_s {
@@ -44,6 +45,7 @@ struct thread_s {
     time_t time;
     char *title;
     char *message;
+    user_t *creator;
     reply_t **replies;
 };
 
@@ -107,10 +109,11 @@ void team_free(void *ptr);
 channel_t *create_channel(char *name, char *description, team_t *parent);
 void channel_free(void *ptr);
 
-thread_t *create_thread(char *title, char *message, channel_t *parent);
+thread_t *create_thread(
+    char *title, char *message, channel_t *parent, user_t *creator);
 void thread_free(void *ptr);
 
-reply_t *create_reply(char *body);
+reply_t *create_reply(char *body, user_t *creator);
 void reply_free(void *ptr);
 
 dm_t *create_dm(

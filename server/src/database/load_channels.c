@@ -41,11 +41,11 @@ static void add_thread(channel_t *channel, thread_t **threads, char *token)
 // threads
 //         thread uuid
 //         thread uuid
-channel_t **load_channels(void)
+channel_t **load_channels(user_t **users)
 {
     SMART char *text = get_content(DATABASE_DIR "channels.txt");
     SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
-    SMART thread_t **threads = load_threads();
+    SMART thread_t **threads = load_threads(users);
     channel_t *curr = NULL;
     channel_t **channels = arr_alloc(1);
 

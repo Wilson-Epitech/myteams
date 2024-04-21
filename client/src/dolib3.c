@@ -6,6 +6,7 @@
 */
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "../libs/myteams/logging_client.h"
 #include "cmd.h"
@@ -30,26 +31,62 @@ void do010(char *buf)
         channel_uuid, channel_name, channel_description);
 }
 
-// void do026(char *buf)
-// {
-//     size_t index = 0;
-//     char *name = NULL;
-//     char *uuid = NULL;
-//     char *description = NULL;
+void do011(char *buf)
+{
+    SMART char *thread_uuid = get_info(buf, 0);
+    SMART char *user_uuid = get_info(buf, 1);
+    SMART char *thread_timestamp = get_info(buf, 2);
+    SMART char *thread_title = get_info(buf, 3);
+    SMART char *thread_body = get_info(buf, 4);
 
-//     do {
-//         destroy(name);
-//         destroy(uuid);
-//         destroy(description);
-//         name = search_at_info(buf, index);
-//         uuid = search_at_info(buf, index + 1);
-//         description = search_at_info(buf, index + 2);
-//         if (name && uuid && description) {
-//             client_channel_print_threads();
-//             client_channel_print_threads(const char *thread_uuid, const char
-//             *user_uuid, time_t thread_timestamp, const char *thread_title,
-//             const char *thread_body);
-//         }
-//         index += 3;
-//     } while (name && uuid && description);
-// }
+    client_event_thread_created(thread_uuid, user_uuid, atol(thread_timestamp),
+        thread_title, thread_body);
+}
+
+void do026(char *buf)
+{
+    size_t index = 0;
+    char *th_uuid = NULL;
+    char *us_uuid = NULL;
+    char *time = NULL;
+    char *title = NULL;
+    char *body = NULL;
+
+    do {
+        va_destroy(5, th_uuid, us_uuid, time, title, body);
+        th_uuid = get_info(buf, index);
+        us_uuid = get_info(buf, index + 1);
+        time = get_info(buf, index + 2);
+        title = get_info(buf, index + 3);
+        body = get_info(buf, index + 4);
+        if (th_uuid && us_uuid && time && title && body) {
+            client_channel_print_threads(
+                th_uuid, us_uuid, atol(time), title, body);
+        }
+        index += 5;
+    } while (th_uuid && us_uuid && time && title && body);
+}
+
+void do025(char *buf)
+{
+    size_t index = 0;
+    char *th_uuid = NULL;
+    char *us_uuid = NULL;
+    char *time = NULL;
+    char *body = NULL;
+
+    do {
+        destroy(th_uuid);
+        destroy(us_uuid);
+        destroy(time);
+        destroy(body);
+        th_uuid = get_info(buf, index);
+        us_uuid = get_info(buf, index + 1);
+        time = get_info(buf, index + 2);
+        body = get_info(buf, index + 3);
+        if (th_uuid && us_uuid && time && body) {
+            client_thread_print_replies(th_uuid, us_uuid, atol(time), body);
+        }
+        index += 4;
+    } while (th_uuid && us_uuid && time && body);
+}

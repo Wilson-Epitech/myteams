@@ -35,11 +35,11 @@ static void add_reply(thread_t *thread, reply_t **replies, char *token)
     arr_pushback(&(thread->replies), *replies);
 }
 
-thread_t **load_threads(void)
+thread_t **load_threads(user_t **users)
 {
     SMART char *text = get_content(DATABASE_DIR "threads.txt");
     SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
-    SMART reply_t **replies = load_replies();
+    SMART reply_t **replies = load_replies(users);
     thread_t *curr = NULL;
     thread_t **threads = arr_alloc(1);
 
@@ -50,10 +50,10 @@ thread_t **load_threads(void)
         curr->time = atol(tokens[i + 1]);
         curr->title = strcreate(tokens[i + 2]);
         curr->message = strcreate(tokens[i + 3]);
+        curr->creator = find_user_by_uuid(users, tokens[i + 4]);
         curr->replies = arr_alloc(1);
-        for (i += 5; is_reply(tokens[i]); i++) {
+        for (i += 6; is_reply(tokens[i]); i++)
             add_reply(curr, replies, tokens[i] + 1);
-        }
         arr_pushback(&threads, curr);
     }
     return threads;

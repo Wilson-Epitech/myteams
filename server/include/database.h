@@ -15,10 +15,9 @@
 void save_database(server_t *server);
 
 // Load
-reply_t **load_replies(void);
-thread_t **load_threads(void);
-channel_t **load_channels(void);
+reply_t **load_replies(user_t **users);
+thread_t **load_threads(user_t **users);
+channel_t **load_channels(user_t **users);
 team_t **load_teams(user_t **users);
-user_t **load_user(void);
 user_t **load_users(void);
 dm_t **load_dms(user_t **users);

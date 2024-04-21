@@ -27,7 +27,7 @@ void reply_free(void *ptr)
     ptr_free(ptr);
 }
 
-reply_t *create_reply(char *body)
+reply_t *create_reply(char *body, user_t *creator)
 {
     reply_t *reply = alloc(sizeof(channel_t), reply_free);
 
@@ -38,6 +38,7 @@ reply_t *create_reply(char *body)
     reply->time = time(NULL);
     reply->uuid = generate_uuid();
     reply->body = strcreate(body);
+    reply->creator = creator;
     return reply;
 }
 

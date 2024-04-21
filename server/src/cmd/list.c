@@ -17,24 +17,46 @@
 static void list_replies(client_t *client)
 {
     SMART char *data = strcreate("");
+    char *time = NULL;
 
     for (reply_t **rep = client->thread_ctx->replies; *rep; rep++) {
         stradd_s(&data, " [");
+        stradd_s(&data, client->thread_ctx->uuid);
+        stradd_s(&data, "] , [");
+        stradd_s(&data, (*rep)->creator->uuid);
+        stradd_s(&data, "] , [");
+        time = str_long((*rep)->time);
+        stradd_s(&data, time);
+        destroy(time);
+        stradd_s(&data, "] , [");
         stradd_s(&data, (*rep)->body);
-        stradd_s(&data, "] ,");
+        stradd_s(&data, "] , ");
     }
     dprintf(client->fd, _025_, data);
 }
 
+// char *th_uuid = NULL;
+// char *us_uuid = NULL;
+// char *time = NULL;
+// char *title = NULL;
+// char *body = NULL;
 static void list_threads(client_t *client)
 {
     SMART char *data = strcreate("");
+    char *time = NULL;
 
     for (thread_t **th = client->channel_ctx->threads; *th; th++) {
         stradd_s(&data, " [");
+        stradd_s(&data, (*th)->uuid);
+        stradd_s(&data, "] , [");
+        stradd_s(&data, (*th)->creator->uuid);
+        stradd_s(&data, "] , [");
+        time = str_long((*th)->time);
+        stradd_s(&data, time);
+        destroy(time);
+        stradd_s(&data, "] , [");
         stradd_s(&data, (*th)->title);
-        stradd_s(&data, "] about ");
-        stradd_s(&data, " [");
+        stradd_s(&data, "] , [");
         stradd_s(&data, (*th)->message);
         stradd_s(&data, "] ,");
     }

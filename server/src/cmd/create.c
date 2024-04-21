@@ -60,7 +60,8 @@ static void cr_thread(client_t *client, char **argv, size_t argc)
     thread_t *thread;
 
     if (argc == 2) {
-        thread = create_thread(*argv, *(argv + 1), client->channel_ctx);
+        thread = create_thread(
+            *argv, *(argv + 1), client->channel_ctx, client->user);
         if (thread) {
             arr_pushback(&(client->channel_ctx->threads), thread);
             dprintf(client->fd, _011_, thread->uuid, client->user->uuid,
@@ -81,7 +82,7 @@ static void cr_reply(client_t *client, char **argv, size_t argc)
     reply_t *reply;
 
     if (argc == 1) {
-        reply = create_reply(*argv);
+        reply = create_reply(*argv, client->user);
         if (reply) {
             arr_pushback(&(client->thread_ctx->replies), reply);
             dprintf(client->fd, _012_, client->thread_ctx->uuid,

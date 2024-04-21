@@ -54,3 +54,11 @@ char *strncreate(const char *init, size_t n);
     append a string to a string
 */
 char *stradd_s(char **str, char *add);
+
+/*
+    converts an int/unsigned int/long/unsigned long to a string (malloc it)
+*/
+char *str_int(int x);
+char *str_uint(unsigned x);
+char *str_long(long x);
+char *str_ulong(unsigned long x);

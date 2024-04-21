@@ -67,8 +67,8 @@ static void save_reply(reply_t *rep)
     FILE *file = fopen(DATABASE_DIR "replies.txt", "a");
     static bool passed = false;
 
-    fprintf(file, (passed) ? "\n%s\n%ld\n%s" : "%s\n%ld\n%s", rep->uuid,
-        rep->time, rep->body);
+    fprintf(file, (passed) ? "\n%s\n%ld\n%s\n%s" : "%s\n%ld\n%s\n%s",
+        rep->uuid, rep->time, rep->body, rep->creator->uuid);
     fclose(file);
     passed = true;
 }
@@ -86,8 +86,9 @@ static void save_thread(thread_t *th)
     static bool passed = false;
 
     fprintf(file,
-        (passed) ? "\n%s\n%ld\n%s\n%s\nreplies" : "%s\n%ld\n%s\n%s\nreplies",
-        th->uuid, th->time, th->title, th->message);
+        (passed) ? "\n%s\n%ld\n%s\n%s\n%s\nreplies"
+                : "%s\n%ld\n%s\n%s\n%s\nreplies",
+        th->uuid, th->time, th->title, th->message, th->creator->uuid);
     for (reply_t **reps = th->replies; *reps; reps++) {
         fprintf(file, "\n\t%s", (*reps)->uuid);
         save_reply((*reps));

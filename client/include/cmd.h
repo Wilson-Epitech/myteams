@@ -27,8 +27,11 @@ DECLARE(do004);
 DECLARE(do007);
 DECLARE(do009);
 DECLARE(do010);
+DECLARE(do011);
 DECLARE(do023);
 DECLARE(do024);
+DECLARE(do025);
+DECLARE(do026);
 DECLARE(do027);
 DECLARE(do028);
 DECLARE(do036);
@@ -47,8 +50,11 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do007), /* users */
     ARGUMENTS(do009), /* create team */
     ARGUMENTS(do010), /* create channel */
+    ARGUMENTS(do011), /* create thread */
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
+    ARGUMENTS(do025), /* list replies (when in a thread) */
+    ARGUMENTS(do026), /* list threads (when in a channel) */
     ARGUMENTS(do027), /* list channels (when in a team) */
     ARGUMENTS(do028), /* list teams (when at the root) */
     ARGUMENTS(do036), /* change user (login when already logged) */

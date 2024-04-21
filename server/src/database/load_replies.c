@@ -15,7 +15,7 @@
 #include "libs/str.h"
 #include "server.h"
 
-reply_t **load_replies(void)
+reply_t **load_replies(user_t **users)
 {
     SMART char *text = get_content(DATABASE_DIR "replies.txt");
     SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
@@ -23,11 +23,12 @@ reply_t **load_replies(void)
     reply_t *curr;
 
     set_destructor(replies, ptr_free);
-    for (size_t i = 0; tokens[i]; i += 3) {
+    for (size_t i = 0; tokens[i]; i += 4) {
         curr = alloc(sizeof(reply_t), reply_free);
         curr->uuid = strcreate(tokens[i]);
         curr->time = atol(tokens[i + 1]);
         curr->body = strcreate(tokens[i + 2]);
+        curr->creator = find_user_by_uuid(users, tokens[i + 3]);
         arr_pushback(&replies, curr);
     }
     return replies;

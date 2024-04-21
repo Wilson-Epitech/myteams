@@ -38,3 +38,4 @@ size_t ptrlen(void *_ptr, size_t elem_size);
 
 // Utils
 void *alloc_resize(void *old, size_t n_elem_to_add, size_t elem_size);
+void va_destroy(size_t n, ...);

@@ -64,7 +64,8 @@ void thread_free(void *ptr)
     ptr_free(ptr);
 }
 
-thread_t *create_thread(char *title, char *message, channel_t *parent)
+thread_t *create_thread(
+    char *title, char *message, channel_t *parent, user_t *creator)
 {
     thread_t *thread;
 
@@ -83,5 +84,6 @@ thread_t *create_thread(char *title, char *message, channel_t *parent)
     thread->title = strcreate(title);
     thread->message = strcreate(message);
     thread->replies = arr_alloc(1);
+    thread->creator = creator;
     return thread;
 }

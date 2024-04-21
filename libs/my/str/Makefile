@@ -14,6 +14,7 @@ SRC		=	str_all.c		\
 			str_add.c		\
 			str_create.c	\
 			split.c			\
+			str_nb.c		\
 
 OBJ		=	$(SRC:.c=.o)
 

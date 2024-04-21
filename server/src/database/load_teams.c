@@ -79,7 +79,7 @@ team_t **load_teams(user_t **users)
 {
     SMART char *text = get_content(DATABASE_DIR "teams.txt");
     SMART char **tokens = (text) ? split(text, '\n') : arr_alloc(1);
-    SMART channel_t **channels = load_channels();
+    SMART channel_t **channels = load_channels(users);
     team_t *curr = NULL;
     team_t **teams = arr_alloc(1);
 
