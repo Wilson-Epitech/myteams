@@ -19,3 +19,23 @@ client_t *find_client(client_t **clients, user_t *user)
     }
     return NULL;
 }
+
+channel_t *find_channel_by_name(channel_t **channels, char *name)
+{
+    for (size_t i = 0; channels[i]; i++) {
+        if (strcmp(channels[i]->name, name) == 0) {
+            return channels[i];
+        }
+    }
+    return NULL;
+}
+
+thread_t *find_thread_by_name(thread_t **threads, char *name)
+{
+    for (size_t i = 0; threads[i]; i++) {
+        if (strcmp(threads[i]->title, name) == 0) {
+            return threads[i];
+        }
+    }
+    return NULL;
+}

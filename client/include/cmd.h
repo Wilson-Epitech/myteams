@@ -54,6 +54,7 @@ DECLARE(do105);
 DECLARE(do107);
 DECLARE(do108);
 DECLARE(do109);
+DECLARE(do143);
 
 static const cmd_t COMMANDS[] = {
     // Success
@@ -96,7 +97,7 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do107), /* unknown team */
     ARGUMENTS(do108), /* unknown channel */
     ARGUMENTS(do109), /* unknown thread */
-};
+    ARGUMENTS(do143)};
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 

@@ -129,6 +129,8 @@ channel_t *find_channel(channel_t **channels, char *channel_uuid);
 thread_t *find_thread(thread_t **threads, char *thread_uuid);
 dm_t **find_dms(dm_t **dms, user_t *sender, user_t *receiver);
 client_t *find_client(client_t **clients, user_t *user);
+channel_t *find_channel_by_name(channel_t **channels, char *name);
+thread_t *find_thread_by_name(thread_t **threads, char *name);
 
 void remove_quote(char **arr);
 char *generate_uuid(void);

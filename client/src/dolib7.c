@@ -49,3 +49,9 @@ void do032(char *buf)
 
     client_print_user(uuid, name, atol(status));
 }
+
+void do143(char *buf)
+{
+    (void)buf;
+    client_error_already_exist();
+}

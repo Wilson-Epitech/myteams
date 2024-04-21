@@ -99,3 +99,6 @@
 #define _040_ "040 Channel [%s]  [%s]  [%s] \n"
 #define _041_ "041 Thread [%s]  [%s]  [%ld]  [%s]  [%s] \n"
 #define _042_ "042 Reply  [%s]  [%s]  [%ld]  [%s] \n"
+
+// Error: Name already used
+#define _143_ "143 Already exists\n"

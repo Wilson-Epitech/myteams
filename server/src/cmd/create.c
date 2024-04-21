@@ -31,6 +31,10 @@ static void cr_team(
     team_t *team;
 
     if (argc == 2) {
+        if (find_team_by_name(server->teams, *argv)) {
+            dprintf(client->fd, _143_);
+            return;
+        }
         team = create_team(server, client->user, *argv, *(argv + 1));
         if (team) {
             arr_foreach_arg(server->clients, event_team_created, team);
@@ -67,6 +71,10 @@ static void cr_channel(
     channel_t *channel;
 
     if (argc == 2) {
+        if (find_channel_by_name(client->team_ctx->channels, *argv)) {
+            dprintf(client->fd, _143_);
+            return;
+        }
         channel = create_channel(*argv, *(argv + 1), client->team_ctx);
         if (channel) {
             arr_pushback(&(client->team_ctx->channels), channel);
@@ -104,6 +112,10 @@ static void cr_thread(
     thread_t *thread;
 
     if (argc == 2) {
+        if (find_thread_by_name(client->channel_ctx->threads, *argv)) {
+            dprintf(client->fd, _143_);
+            return;
+        }
         thread = create_thread(
             *argv, *(argv + 1), client->channel_ctx, client->user);
         if (thread) {
