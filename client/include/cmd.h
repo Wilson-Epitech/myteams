@@ -38,10 +38,10 @@ DECLARE(do028);
 DECLARE(do034);
 DECLARE(do035);
 DECLARE(do036);
-
-// Event
-// DECLARE(do037); /* A user connected */
-// DECLARE(do038); /* A user disconnected */
+DECLARE(do039);
+DECLARE(do040);
+DECLARE(do041);
+DECLARE(do042);
 
 // Error
 DECLARE(do104);
@@ -55,10 +55,6 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do003), /* login */
     ARGUMENTS(do004), /* logout */
     ARGUMENTS(do007), /* users */
-    ARGUMENTS(do009), /* create team */
-    ARGUMENTS(do010), /* create channel */
-    ARGUMENTS(do011), /* create thread */
-    ARGUMENTS(do012), /* create reply */
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
     ARGUMENTS(do025), /* list replies (when in a thread) */
@@ -68,9 +64,16 @@ static const cmd_t COMMANDS[] = {
     ARGUMENTS(do034), /* show messages with a user */
     ARGUMENTS(do035), /* you received a dm */
     ARGUMENTS(do036), /* change user (login when already logged) */
+    //
+    ARGUMENTS(do039), /* you created a team */
+    ARGUMENTS(do040), /* you created a channel */
+    ARGUMENTS(do041), /* you created a thread */
+    ARGUMENTS(do042), /* you created a reply */
     // Event
-    // ARGUMENTS(do037), /* A user connected */
-    // ARGUMENTS(do038), /* A user disconnected */
+    ARGUMENTS(do009), /* team created by a random */
+    ARGUMENTS(do010), /* channel created by a random  */
+    ARGUMENTS(do011), /* thread created by a random  */
+    ARGUMENTS(do012), /* reply created by a random  */
     // Error
     ARGUMENTS(do104), /* unauthorized */
     ARGUMENTS(do105), /* unknown user */
@@ -111,12 +114,12 @@ static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 // client_print_subscribed
 // client_print_unsubscribed
 
-// Todo
-
 // client_event_team_created
 // client_event_channel_created
 // client_event_thread_created
 // client_event_thread_reply_received
+
+// Todo
 
 // client_print_channel_created
 // client_print_reply_created

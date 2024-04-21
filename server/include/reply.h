@@ -39,7 +39,7 @@
 // User
 #define _008_ "008 [%s]  [%s]  [%d] \n"
 
-// Creation Success
+// Event Creation
 #define _009_ "009 Team [%s]  [%s] about [%s] created.\n"
 #define _010_ "010 Channel [%s]  [%s] about [%s] created.\n"
 #define _011_ "011 Thread [%s] created by [%s] at [%ld] -> [%s] : [%s] .\n"
@@ -96,3 +96,9 @@
 // Event: Connection
 #define _037_ "037 Event -> User Connected : [%s]  [%s] .\n"
 #define _038_ "038 Event -> User Disconnected : [%s]  [%s] .\n"
+
+// Creation Non-Event
+#define _039_ "039 Team [%s]  [%s]  [%s] \n"
+#define _040_ "040 Channel [%s]  [%s]  [%s] \n"
+#define _041_ "041 Thread [%s]  [%s]  [%ld]  [%s]  [%s] \n"
+#define _042_ "042 Reply  [%s]  [%s]  [%ld]  [%s] \n"
