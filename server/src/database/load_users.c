@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../libs/myteams/logging_server.h"
 #include "database.h"
 #include "libs/arr.h"
 #include "libs/file.h"
@@ -29,6 +30,7 @@ user_t **load_users(void)
         curr->uuid = strcreate(tokens[i]);
         curr->name = strcreate(tokens[i + 1]);
         curr->loged = false;
+        server_event_user_loaded(curr->uuid, curr->name);
         arr_pushback(&users, curr);
     }
     return users;

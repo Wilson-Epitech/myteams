@@ -48,7 +48,6 @@ static int try_load_user(server_t *server, client_t *client, char *username)
         show_logout(client);
         client->user = user;
         client->user->loged = true;
-        server_event_user_loaded(client->user->uuid, client->user->name);
     }
     return (user == client->user) ? SUCCESS : FAILURE;
 }
@@ -79,7 +78,6 @@ static int update_user(server_t *server, client_t *client, char *name)
         return FAILURE;
     }
     server_event_user_logged_out(client->user->uuid);
-    server_event_user_loaded(user->uuid, user->name);
     server_event_user_logged_in(user->uuid);
     dprintf(client->fd, _036_, client->user->uuid, client->user->name,
         user->uuid, user->name);
