@@ -24,6 +24,7 @@ SRC			=	$(SRC_DIR)main.c				\
 				$(SRC_DIR)dolib4.c				\
 				$(SRC_DIR)dolib5.c				\
 				$(SRC_DIR)dolib6.c				\
+				$(SRC_DIR)dolib7.c				\
 
 # -------------------------------------------------------------------------- #
 

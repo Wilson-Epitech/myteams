@@ -76,10 +76,10 @@
 #define _028_ "028 List of teams %s \n"
 
 // Info
-#define _029_ "029 Info Thread [%s]  [%s] \n"
-#define _030_ "030 Info Channel [%s]  [%s] \n"
-#define _031_ "031 Info Team [%s]  [%s] \n"
-#define _032_ "032 Info User [%s]  [%s] \n"
+#define _029_ "029 Info Team [%s]  [%s]  [%s] \n"
+#define _030_ "030 Info Channel [%s]  [%s]  [%s] \n"
+#define _031_ "031 Info Thread [%s]  [%s]  [%ld]  [%s]  [%s] \n"
+#define _032_ _008_
 
 // Send
 #define _033_ "033 To [%s] : [%s] \n"
@@ -89,9 +89,6 @@
 
 // Event Message Sent
 #define _035_ "035 Event -> From [%s] : [%s] \n"
-
-// Change user
-#define _036_ "036 User changed from [%s]  [%s] to [%s]  [%s] \n"
 
 // Event: Connection
 #define _037_ "037 Event -> User Connected : [%s]  [%s] .\n"

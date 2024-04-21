@@ -36,9 +36,13 @@ DECLARE(do025);
 DECLARE(do026);
 DECLARE(do027);
 DECLARE(do028);
+DECLARE(do029);
+DECLARE(do030);
+DECLARE(do031);
+DECLARE(do032);
 DECLARE(do034);
 DECLARE(do035);
-DECLARE(do036);
+// DECLARE(do036);
 DECLARE(do039);
 DECLARE(do040);
 DECLARE(do041);
@@ -55,17 +59,27 @@ static const cmd_t COMMANDS[] = {
     // Success
     ARGUMENTS(do003), /* /login */
     ARGUMENTS(do004), /* /logout */
+    //
     ARGUMENTS(do007), /* /users */
     ARGUMENTS(do008), /* /user */
+    //
     ARGUMENTS(do023), /* subscribe to a team */
     ARGUMENTS(do024), /* unsubscribe from a team */
+    //
     ARGUMENTS(do025), /* list replies (when in a thread) */
     ARGUMENTS(do026), /* list threads (when in a channel) */
     ARGUMENTS(do027), /* list channels (when in a team) */
     ARGUMENTS(do028), /* list teams (when at the root) */
+    //
+    ARGUMENTS(do029), /* info team */
+    ARGUMENTS(do030), /* info channel */
+    ARGUMENTS(do031), /* info thread */
+    ARGUMENTS(do032), /* info user */
+    //
     ARGUMENTS(do034), /* show messages with a user */
     ARGUMENTS(do035), /* you received a dm */
-    ARGUMENTS(do036), /* change user (login when already logged) */
+    //
+    // ARGUMENTS(do036), /* change user (login when already logged) */
     //
     ARGUMENTS(do039), /* you created a team */
     ARGUMENTS(do040), /* you created a channel */
@@ -86,15 +100,9 @@ static const cmd_t COMMANDS[] = {
 
 static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 
-/* -- Commands --
-/login
-/logout
-/users
-
-
- * -- Commands -- */
-
-// Done
+/*           */
+/* __ Done__ */
+/*           */
 // client_event_logged_in
 // client_event_logged_out
 
@@ -121,17 +129,20 @@ static const size_t NB_COMMANDS = sizeof(COMMANDS) / sizeof(cmd_t);
 // client_event_thread_created
 // client_event_thread_reply_received
 
-// Todo
-
 // client_print_channel_created
 // client_print_reply_created
 // client_print_team_created
 // client_print_thread_created
 
-// client_error_already_exist
-
 // client_print_user
+
 // client_print_team
 // client_print_channel
 // client_print_thread
 // client_team_print_channels
+
+/*           */
+/* __ Todo __*/
+/*           */
+
+// client_error_already_exist

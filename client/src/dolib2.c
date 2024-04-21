@@ -11,16 +11,16 @@
 #include "cmd.h"
 #include "libs/mem.h"
 
-void do036(char *buf)
-{
-    SMART char *old_uuid = get_info(buf, 0);
-    SMART char *old_name = get_info(buf, 1);
-    SMART char *new_uuid = get_info(buf, 2);
-    SMART char *new_name = get_info(buf, 3);
+// void do036(char *buf)
+// {
+//     SMART char *old_uuid = get_info(buf, 0);
+//     SMART char *old_name = get_info(buf, 1);
+//     SMART char *new_uuid = get_info(buf, 2);
+//     SMART char *new_name = get_info(buf, 3);
 
-    client_event_logged_out(old_uuid, old_name);
-    client_event_logged_in(new_uuid, new_name);
-}
+//     client_event_logged_out(old_uuid, old_name);
+//     client_event_logged_in(new_uuid, new_name);
+// }
 
 void do028(char *buf)
 {

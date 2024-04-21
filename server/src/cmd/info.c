@@ -14,25 +14,27 @@
 
 static void info_thread(client_t *client)
 {
-    dprintf(client->fd, _029_, client->thread_ctx->title,
-        client->thread_ctx->message);
+    dprintf(client->fd, _031_, client->thread_ctx->uuid,
+        client->thread_ctx->creator->uuid, client->thread_ctx->time,
+        client->thread_ctx->title, client->thread_ctx->message);
 }
 
 static void info_channel(client_t *client)
 {
-    dprintf(client->fd, _030_, client->channel_ctx->name,
-        client->channel_ctx->description);
+    dprintf(client->fd, _030_, client->channel_ctx->uuid,
+        client->channel_ctx->name, client->channel_ctx->description);
 }
 
 static void info_team(client_t *client)
 {
-    dprintf(client->fd, _031_, client->team_ctx->name,
+    dprintf(client->fd, _029_, client->team_ctx->uuid, client->team_ctx->name,
         client->team_ctx->description);
 }
 
 static void info_user(client_t *client)
 {
-    dprintf(client->fd, _032_, client->user->name, client->user->uuid);
+    dprintf(client->fd, _032_, client->user->name, client->user->uuid,
+        client->user->loged);
 }
 
 void info(server_t *server, client_t *client, char **argv, size_t argc)
