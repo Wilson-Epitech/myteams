@@ -35,7 +35,7 @@ static void show_logout(client_t *client)
 {
     if (client->user) {
         client->user->loged = false;
-        dprintf(client->fd, _004_, client->user->name, client->user->uuid);
+        dprintf(client->fd, _004_, client->user->uuid, client->user->name);
         server_event_user_logged_out(client->user->uuid);
     }
 }
@@ -120,6 +120,6 @@ void login(server_t *server, client_t *client, char **argv, size_t argc)
     if (try_load_user(server, client, username) == FAILURE)
         return;
     server_event_user_logged_in(client->user->uuid);
-    dprintf(client->fd, _003_, client->user->name, client->user->uuid);
+    dprintf(client->fd, _003_, client->user->uuid, client->user->name);
 }
 // arr_foreach_arg(server->clients, event_login, client);

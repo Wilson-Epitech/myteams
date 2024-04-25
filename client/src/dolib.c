@@ -52,8 +52,8 @@ void do003(char *buf)
 
 void do004(char *buf)
 {
-    SMART char *user = get_info(buf, 0);
-    SMART char *uuid = get_info(buf, 1);
+    SMART char *uuid = get_info(buf, 0);
+    SMART char *user = get_info(buf, 1);
 
     client_event_logged_out(uuid, user);
     return;
@@ -83,8 +83,8 @@ bool dolibteams(client_t *client, char *buf)
             continue;
         COMMANDS[i].function(buf);
         if (strcmp(COMMANDS[i].name, "do003") == 0) {
-            client->name = get_info(buf, 0);
-            client->uuid = get_info(buf, 1);
+            client->uuid = get_info(buf, 0);
+            client->name = get_info(buf, 1);
         }
     }
     return false;
