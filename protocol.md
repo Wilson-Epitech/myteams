@@ -10,7 +10,7 @@ The following commands are essential for communication between the MyTeams serve
     /logout: Disconnect the client from the server.
     /users: Retrieve the list of all users on the domain.
     /user [“user_uuid”]: Fetch details about the specified user.
-    /send [“user_uuid”] [“message_body”]: Send a message to a specific user.
+    /send [“user_uuid”] [“message_body”]: Send a message to the specific user.
     /messages [“user_uuid”]: List all messages exchanged with the specified user.
     /subscribe [“team_uuid”]: Subscribe to events of a team and its subdirectories.
     /subscribed ?[“team_uuid”]: List all subscribed teams or users subscribed to a team.
