@@ -14,7 +14,7 @@
 
 <p align="center"><img src=".github/assets/term-myteams.png" alt="myTeams" width="820"/></p>
 
-## En deux mots
+## Le projet en quelques mots
 
 Un serveur et un client en C pour discuter comme sur Teams : on se connecte, on crée des équipes, des canaux et des fils de discussion, on s'envoie des messages privés. Tout est sauvegardé et revient au redémarrage du serveur.
 
@@ -25,10 +25,6 @@ Un serveur et un client en C pour discuter comme sur Teams : on se connecte, on 
 - Abonnements aux équipes (`/subscribe`) et notifications en temps réel
 - **Protocole** client / serveur conçu par l'équipe et documenté dans [protocol.md](protocol.md)
 - **Sauvegarde** de toutes les données et restauration au redémarrage
-
-## Sous le capot
-
-Le serveur multiplexe les clients, parse les commandes (`/login`, `/create`, `/send`…) et répond selon le protocole commun. Chaque entité a un UUID. À l'arrêt, tout est écrit dans des fichiers, et le serveur recharge l'état au démarrage.
 
 ## Lancer le projet
 
@@ -46,4 +42,4 @@ make
 
 Marius Rousset, Edouard Bocquet, Wilson Bordichon
 
-**Ma part :** J'ai fait toute la **persistance** : l'architecture du dossier `database/`, la création automatique des fichiers, la sauvegarde des utilisateurs, équipes, fils et réponses, et leur rechargement au démarrage du serveur.
+**Ma partition :** J'ai fait toute la **persistance** : l'architecture du dossier `database/`, la création automatique des fichiers, la sauvegarde des utilisateurs, équipes, fils et réponses, et leur rechargement au démarrage du serveur.
